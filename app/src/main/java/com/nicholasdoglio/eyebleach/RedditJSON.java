@@ -1,17 +1,14 @@
 package com.nicholasdoglio.eyebleach;
 
+import com.nicholasdoglio.eyebleach.model.ListOfRedditPosts;
 
-
-import com.nicholasdoglio.eyebleach.model.RedditPost;
-
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RedditJSON {
 
-    @GET("{subreddit}/.json")
-    Call<RedditPost> getPosts(@Path("subreddit") String subreddit,
-                              @Query("limit") int limit);
+    @GET(".json")
+    Observable<ListOfRedditPosts> getPosts(@Query("limit") int limit, @Query("after") String after);
 }

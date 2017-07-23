@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.malinskiy.superrecyclerview.OnMoreListener;
+import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nicholasdoglio.eyebleach.model.Child;
 import com.nicholasdoglio.eyebleach.model.ListOfRedditPosts;
 
@@ -26,11 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String REDDIT_MULTI_BASE = "https://www.reddit.com/user/NicholasDoglio/m/cuteanimals/";
-    private EndlessRecyclerViewScrollListener scrollListener;
-    private RecyclerView recyclerView;
+    private SuperRecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private List<Child> posts;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private List<Child> posts = new ArrayList<>();
     private ImageGridAdapter imageGridAdapter;
     private CompositeDisposable compositeDisposable;
 
@@ -46,13 +46,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            fetchData("");
-            imageGridAdapter.notifyDataSetChanged();
+
+        recyclerView = (SuperRecyclerView) findViewById(R.id.super_recycler);
+
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchData("");
+                recyclerView.setRefreshing(false);
+            }
         });
-        recyclerView = (RecyclerView) findViewById(R.id.picture_recycler);
-        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setupMoreListener(new OnMoreListener() {
+            @Override
+            public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
+                loadMorePosts();
+            }
+        }, 10);
 
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -61,55 +71,54 @@ public class MainActivity extends AppCompatActivity {
             layoutManager = new GridLayoutManager(getApplicationContext(), 6);
         }
 
-
         recyclerView.setLayoutManager(layoutManager);
 
-        scrollListener = new EndlessRecyclerViewScrollListener((GridLayoutManager) layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadMorePosts();
-            }
-        };
+
+
     }
 
     private void loadMorePosts() {
         int lastPost = posts.size() - 1;
         String lastPostId = posts.get(lastPost).getData().getId();
         String after = "t3_" + lastPostId;
-        fetchData(after);
-        imageGridAdapter.notifyDataSetChanged();
-    }
+        RedditJSON redditJSON = buildRetrofit();
 
-    public void fetchData(String after) {
-        RedditJSON redditJSON = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(REDDIT_MULTI_BASE)
-                .build().create(RedditJSON.class);
-
-       compositeDisposable.add(redditJSON.getPosts(100, after)
+        compositeDisposable.add(redditJSON.getPosts(32, after)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleResponse, this::handleError));
-
-        swipeRefreshLayout.setRefreshing(false);
+                .subscribe(this::handleLoadMoreResponses, this::handleError));
     }
 
-    private void handleResponse(ListOfRedditPosts listOfRedditPosts) {
-        posts = new ArrayList<>();
+    private void fetchData(String after) {
+        RedditJSON redditJSON = buildRetrofit();
 
+        compositeDisposable.add(redditJSON.getPosts(32, after)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleInitialResponse, this::handleError));
+    }
 
+    private void handleInitialResponse(ListOfRedditPosts listOfRedditPosts) {
+        removeNonPhotoPosts(listOfRedditPosts);
+        imageGridAdapter = new ImageGridAdapter(MainActivity.this, posts);
+        recyclerView.setAdapter(imageGridAdapter);
+
+    }
+
+    private void removeNonPhotoPosts(ListOfRedditPosts listOfRedditPosts) {
         for (int i = 0; i < listOfRedditPosts.getData().getChildren().size(); i++) {
-            if (listOfRedditPosts.getData().getChildren().get(i).getData().getSelftextHtml() == null) {
+            if ((listOfRedditPosts.getData().getChildren().get(i).getData().getSelftextHtml() == null) &&
+                    listOfRedditPosts.getData().getChildren().get(i).getData().getThumbnail() != null) {
                 posts.add(listOfRedditPosts.getData().getChildren().get(i));
             } else {
                 continue;
             }
         }
+    }
 
-        imageGridAdapter = new ImageGridAdapter(MainActivity.this, posts);
-        recyclerView.setAdapter(imageGridAdapter);
-
+    private void handleLoadMoreResponses(ListOfRedditPosts listOfRedditPosts) {
+        removeNonPhotoPosts(listOfRedditPosts);
+        imageGridAdapter.notifyDataSetChanged();
     }
 
 
@@ -117,6 +126,16 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Error " + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         Log.e(TAG, "handleError: " + error.getLocalizedMessage(), error);
+    }
+
+    private RedditJSON buildRetrofit() {
+        RedditJSON redditJSON = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(REDDIT_MULTI_BASE)
+                .build().create(RedditJSON.class);
+
+        return redditJSON;
     }
 
 

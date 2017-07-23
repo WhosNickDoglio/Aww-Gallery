@@ -31,6 +31,7 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Glide.with(context).load(data.get(position).getData().getThumbnail())
+                .placeholder(R.drawable.ic_photo_black)
                 .fitCenter()
                 .into(holder.imageView);
     }

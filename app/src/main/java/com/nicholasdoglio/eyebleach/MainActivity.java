@@ -1,20 +1,26 @@
 package com.nicholasdoglio.eyebleach;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nicholasdoglio.eyebleach.model.Child;
-import com.nicholasdoglio.eyebleach.model.ListOfRedditPosts;
+import com.nicholasdoglio.eyebleach.model.Multireddit;
+import com.squareup.moshi.Moshi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +28,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,24 +52,41 @@ public class MainActivity extends AppCompatActivity {
         fetchData("");
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about_item:
+                Intent aboutItent = new Intent(this, AboutActivity.class);
+                startActivity(aboutItent);
+                return true;
+            case R.id.gallery_item:
+                Intent galleryIntent = new Intent(this, GalleryActivity.class);
+                galleryIntent.putParcelableArrayListExtra("POSTS", (ArrayList<Child>) posts);
+                startActivity(galleryIntent);
+                return true;
+        }
+
+        return false;
+    }
+
     private void initViews() {
 
         recyclerView = (SuperRecyclerView) findViewById(R.id.super_recycler);
 
-        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchData("");
-                recyclerView.setRefreshing(false);
-            }
+        recyclerView.setRefreshListener(() -> {
+            fetchData("");
+            recyclerView.setRefreshing(false);
         });
 
-        recyclerView.setupMoreListener(new OnMoreListener() {
-            @Override
-            public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-                loadMorePosts();
-            }
-        }, 10);
+        recyclerView.setupMoreListener((overallItemsCount, itemsBeforeMore, maxLastVisiblePosition) -> loadMorePosts(), 10);
 
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -72,15 +96,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         recyclerView.setLayoutManager(layoutManager);
-
-
-
     }
 
     private void loadMorePosts() {
-        int lastPost = posts.size() - 1;
-        String lastPostId = posts.get(lastPost).getData().getId();
-        String after = "t3_" + lastPostId;
+        String after = "t3_" + posts.get(posts.size() - 1).getData().getId();
         RedditJSON redditJSON = buildRetrofit();
 
         compositeDisposable.add(redditJSON.getPosts(32, after)
@@ -98,46 +117,45 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(this::handleInitialResponse, this::handleError));
     }
 
-    private void handleInitialResponse(ListOfRedditPosts listOfRedditPosts) {
-        removeNonPhotoPosts(listOfRedditPosts);
+    private void handleInitialResponse(Multireddit multireddit) {
+        removeNonPhotoPosts(multireddit);
         imageGridAdapter = new ImageGridAdapter(MainActivity.this, posts);
         recyclerView.setAdapter(imageGridAdapter);
-
     }
 
-    private void removeNonPhotoPosts(ListOfRedditPosts listOfRedditPosts) {
-        for (int i = 0; i < listOfRedditPosts.getData().getChildren().size(); i++) {
-            if ((listOfRedditPosts.getData().getChildren().get(i).getData().getSelftextHtml() == null) &&
-                    listOfRedditPosts.getData().getChildren().get(i).getData().getThumbnail() != null) {
-                posts.add(listOfRedditPosts.getData().getChildren().get(i));
-            } else {
-                continue;
+    private void removeNonPhotoPosts(Multireddit multireddit) {
+        for (int i = 0; i < multireddit.getData().getChildren().size(); i++) {
+            if ((multireddit.getData().getChildren().get(i).getData().getSelftextHtml() == null) &&
+                    multireddit.getData().getChildren().get(i).getData().getUrl().contains(".jpg")) {
+                posts.add(multireddit.getData().getChildren().get(i));
             }
         }
     }
 
-    private void handleLoadMoreResponses(ListOfRedditPosts listOfRedditPosts) {
-        removeNonPhotoPosts(listOfRedditPosts);
+    private void handleLoadMoreResponses(Multireddit multireddit) {
+        removeNonPhotoPosts(multireddit);
         imageGridAdapter.notifyDataSetChanged();
     }
 
 
     private void handleError(Throwable error) {
-
-        Toast.makeText(this, "Error " + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         Log.e(TAG, "handleError: " + error.getLocalizedMessage(), error);
     }
 
     private RedditJSON buildRetrofit() {
-        RedditJSON redditJSON = new Retrofit.Builder()
+
+        return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl(REDDIT_MULTI_BASE)
                 .build().create(RedditJSON.class);
-
-        return redditJSON;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        compositeDisposable.clear();
+    }
 
     @Override
     protected void onDestroy() {

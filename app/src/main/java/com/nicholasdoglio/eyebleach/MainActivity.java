@@ -3,9 +3,6 @@ package com.nicholasdoglio.eyebleach;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nicholasdoglio.eyebleach.model.Child;
 import com.nicholasdoglio.eyebleach.model.Multireddit;
-import com.squareup.moshi.Moshi;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String REDDIT_MULTI_BASE = "https://www.reddit.com/user/NicholasDoglio/m/cuteanimals/";
+    private static final int IMAGES_LOADED =  40;
     private SuperRecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<Child> posts = new ArrayList<>();
@@ -102,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         String after = "t3_" + posts.get(posts.size() - 1).getData().getId();
         RedditJSON redditJSON = buildRetrofit();
 
-        compositeDisposable.add(redditJSON.getPosts(32, after)
+        compositeDisposable.add(redditJSON.getPosts(IMAGES_LOADED, after)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleLoadMoreResponses, this::handleError));
@@ -111,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchData(String after) {
         RedditJSON redditJSON = buildRetrofit();
 
-        compositeDisposable.add(redditJSON.getPosts(32, after)
+        compositeDisposable.add(redditJSON.getPosts(IMAGES_LOADED, after)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleInitialResponse, this::handleError));
@@ -154,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 }

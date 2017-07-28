@@ -1,6 +1,8 @@
 package com.nicholasdoglio.eyebleach;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.nicholasdoglio.eyebleach.model.Child;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.ViewHolder> {
     private Context context;
@@ -34,13 +37,19 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.View
                 .placeholder(R.mipmap.photo_placeholder)
                 .fitCenter()
                 .into(holder.imageView);
+
+        Intent imageGalleryIntent = new Intent(context, GalleryActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("ImagePosition", position);
+        bundle.putParcelableArrayList("POSTS", (ArrayList<Child>) data);
+        imageGalleryIntent.putExtras(bundle);
+        holder.imageView.setOnClickListener(view -> context.startActivity(imageGalleryIntent));
     }
 
     @Override
     public int getItemCount() {
         return data.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;

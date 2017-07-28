@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
@@ -42,6 +43,13 @@ public class GalleryPagerAdapter extends PagerAdapter {
         View itemView = layoutInflater.inflate(R.layout.gallery_item, container, false);
 
         ImageView imageView = itemView.findViewById(R.id.gallery_photo);
+        TextView title = itemView.findViewById(R.id.post_title);
+        TextView author = itemView.findViewById(R.id.post_author);
+        TextView source = itemView.findViewById(R.id.post_source);
+
+        title.setText(images.get(position).getData().getTitle());
+        author.setText("/u/" +images.get(position).getData().getAuthor());
+        source.setText("/r/" +images.get(position).getData().getSubreddit());
 
 
         if (images.get(position).getData().getUrl().contains(".gif")) {

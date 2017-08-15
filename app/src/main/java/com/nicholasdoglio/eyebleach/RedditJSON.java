@@ -1,6 +1,6 @@
 package com.nicholasdoglio.eyebleach;
 
-import com.nicholasdoglio.eyebleach.model.Multireddit;
+import com.nicholasdoglio.eyebleach.model.reddit.Multireddit;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

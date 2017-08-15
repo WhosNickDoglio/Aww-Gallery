@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nicholasdoglio.eyebleach.GalleryActivity">
+    tools:context="com.nicholasdoglio.eyebleach.PhotoDetailPagerActivity">
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/gallery_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/gallery_view_pager">
-
-
-
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
 </LinearLayout>

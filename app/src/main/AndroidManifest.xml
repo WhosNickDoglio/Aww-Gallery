@@ -8,10 +8,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".PhotoGalleryGridActivity"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,9 +21,10 @@
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".GalleryActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".PhotoGalleryGridActivity" />
+        <activity
+            android:name=".PhotoDetailPagerActivity"
+            android:parentActivityName=".PhotoGalleryGridActivity" />
     </application>
 
 </manifest>

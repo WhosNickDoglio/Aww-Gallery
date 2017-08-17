@@ -14,6 +14,9 @@ import com.nicholasdoglio.eyebleach.model.reddit.Child;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class PhotoGalleryGridAdapter extends RecyclerView.Adapter<PhotoGalleryGridAdapter.ViewHolder> {
     private Context context;
@@ -36,7 +39,7 @@ public class PhotoGalleryGridAdapter extends RecyclerView.Adapter<PhotoGalleryGr
                 .error(R.drawable.cat_crying);
 
 
-        Glide.with(context).load(images.get(position).getData().getThumbnail())
+        Glide.with(context).load(images.get(position).getChildData().getThumbnail())
                 .apply(options)
                 .into(holder.imageView);
     }
@@ -62,14 +65,13 @@ public class PhotoGalleryGridAdapter extends RecyclerView.Adapter<PhotoGalleryGr
         }
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
+        @BindView(R.id.image_grid)
+        ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            imageView = itemView.findViewById(R.id.image_grid);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

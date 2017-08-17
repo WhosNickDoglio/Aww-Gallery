@@ -19,6 +19,8 @@ import com.nicholasdoglio.eyebleach.model.reddit.Multireddit;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -31,9 +33,13 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
 
     private static final String TAG = PhotoGalleryGridActivity.class.getSimpleName();
     private static final String REDDIT_MULTI_BASE = "https://www.reddit.com/user/NicholasDoglio/m/cuteanimals/";
-    private static final int IMAGES_LOADED = 100;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private ProgressBar progressBar;
+    private static final int IMAGES_LOADED = 50;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.grid_progress)
+    ProgressBar progressBar;
+    @BindView(R.id.grid_recycler)
+    RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private List<Child> posts = new ArrayList<>();
     private List<Child> loadMore = new ArrayList<>();
@@ -51,6 +57,7 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_grid);
+        ButterKnife.bind(this);
 
         compositeDisposable = new CompositeDisposable();
 
@@ -61,7 +68,6 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_menu, menu);
-
         return true;
     }
 
@@ -78,12 +84,6 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid_recycler);
-
-        progressBar = (ProgressBar) findViewById(R.id.grid_progress);
-
         photoGalleryGridAdapter = new PhotoGalleryGridAdapter(PhotoGalleryGridActivity.this, posts);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -93,11 +93,8 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
         }
 
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.setAdapter(photoGalleryGridAdapter);
-
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -138,17 +135,17 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
     private void fetchData() {
         RedditJSON redditJSON = buildRetrofit();
 
-        compositeDisposable.add(redditJSON.getPosts(IMAGES_LOADED, "")
+        compositeDisposable.add(redditJSON.getMultiPosts(IMAGES_LOADED, "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleInitialResponse, this::handleError));
     }
 
     private void loadMorePosts() {
-        String after = "t3_" + posts.get(posts.size() - 1).getData().getId();
+        String after = "t3_" + posts.get(posts.size() - 1).getChildData().getId();
         RedditJSON redditJSON = buildRetrofit();
 
-        compositeDisposable.add(redditJSON.getPosts(IMAGES_LOADED, after)
+        compositeDisposable.add(redditJSON.getMultiPosts(IMAGES_LOADED, after)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleLoadMoreResponses, this::handleError));
@@ -172,8 +169,8 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
 
     private void addImagesToList(Multireddit multireddit, List<Child> childArrayList) {
         for (int i = 0; i < multireddit.getData().getChildren().size(); i++) {
-            if (multireddit.getData().getChildren().get(i).getData().getUrl().contains(".jpg") ||
-                    multireddit.getData().getChildren().get(i).getData().getUrl().contains(".png")) {
+            if (multireddit.getData().getChildren().get(i).getChildData().getUrl().contains(".jpg") ||
+                    multireddit.getData().getChildren().get(i).getChildData().getUrl().contains(".png")) {
                 childArrayList.add(multireddit.getData().getChildren().get(i));
             }
         }
@@ -184,7 +181,6 @@ public class PhotoGalleryGridActivity extends AppCompatActivity {
     }
 
     private RedditJSON buildRetrofit() {
-
         return new Retrofit.Builder()
                 .baseUrl(REDDIT_MULTI_BASE)
                 .addConverterFactory(MoshiConverterFactory.create())

@@ -7,7 +7,7 @@ public class Child {
     @Json(name = "kind")
     private String kind;
     @Json(name = "data")
-    private Data_ data;
+    private ChildData data;
 
     public String getKind() {
         return kind;
@@ -17,11 +17,11 @@ public class Child {
         this.kind = kind;
     }
 
-    public Data_ getData() {
+    public ChildData getChildData() {
         return data;
     }
 
-    public void setData(Data_ data) {
+    public void setChildData(ChildData data) {
         this.data = data;
     }
 

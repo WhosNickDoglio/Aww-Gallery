@@ -3,13 +3,10 @@ package com.nicholasdoglio.eyebleach.model.reddit;
 import com.squareup.moshi.Json;
 
 
-public class Data_ {
-
+public class ChildData {
 
     @Json(name = "selftext")
     private String selftext;
-    @Json(name = "preview")
-    private Preview preview;
     @Json(name = "thumbnail")
     private String thumbnail;
     @Json(name = "permalink")
@@ -25,14 +22,6 @@ public class Data_ {
 
     public void setSelftext(String selftext) {
         this.selftext = selftext;
-    }
-
-    public Preview getPreview() {
-        return preview;
-    }
-
-    public void setPreview(Preview preview) {
-        this.preview = preview;
     }
 
     public String getThumbnail() {

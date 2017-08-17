@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.nicholasdoglio.eyebleach.model.reddit.Child;
 
 import java.util.List;
@@ -40,27 +39,15 @@ public class PhotoDetailPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.gallery_photo_detail, container, false);
 
+        String postUrl = "https://reddit.com" + images.get(position).getChildData().getPermalink();
+
+        ImageButton openInBrowserButton = itemView.findViewById(R.id.open_in_browser);
+        ImageButton shareButton = itemView.findViewById(R.id.share_source);
+
         ImageView imageView = itemView.findViewById(R.id.gallery_photo);
 
-        ImageButton imageButton = imageView.findViewById(R.id.open_in_browser);
-
-        RequestOptions options = new RequestOptions()
-                .error(R.drawable.cat_crying);
-
-
-        if (images.get(position).getData().getUrl().contains(".gif")) {
-
-
-            Glide.with(context).load(images.get(position).getData().getUrl())
-                    .apply(options)
-                    .into(imageView);
-
-        } else {
-            Glide.with(context).load(images.get(position).getData().getUrl())
-                    .apply(options)
-                    .into(imageView);
-
-        }
+        Glide.with(context).load(images.get(position).getChildData().getUrl())
+                .into(imageView);
 
         container.addView(itemView);
 

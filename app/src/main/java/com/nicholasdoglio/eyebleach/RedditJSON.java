@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 public interface RedditJSON {
 
     @GET(".json")
-    Observable<Multireddit> getPosts(@Query("limit") int limit, @Query("after") String after);
+    Observable<Multireddit> getMultiPosts(@Query("limit") int limit, @Query("after") String after);
 }

@@ -9,19 +9,21 @@ import com.nicholasdoglio.eyebleach.model.reddit.Child;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class PhotoDetailPagerActivity extends AppCompatActivity {
+    @BindView(R.id.gallery_view_pager)
+    ViewPager viewPager;
     private List<Child> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        int photoPosition = getIntent().getIntExtra("ImagePosition", 0);
+        ButterKnife.bind(this);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.gallery_view_pager);
         viewPager.setAdapter(new PhotoDetailPagerAdapter(this, posts));
-
-        viewPager.setCurrentItem(photoPosition);
     }
 }

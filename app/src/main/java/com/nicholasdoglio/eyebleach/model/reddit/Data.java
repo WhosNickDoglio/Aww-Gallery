@@ -37,5 +37,4 @@ public class Data {
     public void setAfter(String after) {
         this.after = after;
     }
-
 }

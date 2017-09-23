@@ -4,28 +4,22 @@
 
 An Android application that aggregate cute animal photos from reddit implemented with the MVP architecture pattern. 
 
-![Aww Galley Gif](https://i.imgur.com/DciZgFN.gifv)
-
-![Aww Gallery Grid](https://i.imgur.com/84Oc8Kg.png)
-
-![Aww Gallery Single Image](https://i.imgur.com/p4GgtVy.png)
-
-#Sources
+# Sources
 
 [List of subreddits](sources.txt)
 
 [Direct link for Multireddit](https://www.reddit.com/user/NicholasDoglio/m/awwgallery/)
 
 
-#To-Do
+# To-Do
 
 All planned work is detailed [here](https://docs.google.com/spreadsheets/d/1obxJnpqz13x_06i73_Eo9gyBx5_Q-4d78GDwvzWqvQg/edit?usp=sharing) 
 
-#Changelog
+# Changelog
 
 Full channgelog is available [here](https://docs.google.com/document/d/1KriXSuIBzZmCEcSCxeP1XKUS8CCNRQiMPCmnc9YHvK8/edit?usp=sharing)
 
-#Libraries
+# Libraries
 
 - [Glide](https://bumptech.github.io/glide/)
 - [Retrofit 2](https://square.github.io/retrofit/)
@@ -34,7 +28,7 @@ Full channgelog is available [here](https://docs.google.com/document/d/1KriXSuIB
 - [Butterknife](https://jakewharton.github.io/butterknife/)
 - [Dagger2](https://google.github.io/dagger/)
 
-#Feedback
+# Feedback
 
 Bugs found? Suggestions? Requests?
 

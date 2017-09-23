@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PhotoGalleryGridActivity">
+    tools:context=".ui.photogrid.PhotoGridActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,12 +18,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/grid_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
 
     <ProgressBar
         android:id="@+id/grid_progress"

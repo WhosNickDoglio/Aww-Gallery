@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <item android:drawable="@color/colorPrimary" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/cat_launch_screen_image" />
+    </item>
+</layer-list>

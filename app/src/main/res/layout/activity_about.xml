@@ -1,64 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="248dp"
-        android:layout_height="191dp"
+        android:layout_width="249dp"
+        android:layout_height="236dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.095"
-        app:srcCompat="@drawable/cat_splash" />
+        app:layout_constraintVertical_bias="0.18"
+        app:srcCompat="@drawable/cat_launch_screen_image" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="368dp"
-        android:layout_height="296dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteX="8dp">
 
         <TextView
             android:id="@+id/version_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="3dp" />
 
         <TextView
             android:id="@+id/developer_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developed by Nicholas Doglio" />
+            android:padding="3dp"
+            android:text="@string/developer" />
+
 
         <TextView
             android:id="@+id/designer_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Icon and Graphics by Guzman Gonzalez" />
+            android:padding="3dp"
+            android:text="@string/designer" />
+
 
         <TextView
             android:id="@+id/source_code_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Source Code" />
+            android:padding="3dp"
+            android:text="@string/source_code" />
+
 
         <TextView
-            android:id="@+id/libaries_text_view"
+            android:id="@+id/feedback_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="@string/feedback" />
+
+        <TextView
+            android:id="@+id/faq_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/f_a_q" />
+
+        <TextView
+            android:id="@+id/libraries_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/libraries" />
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

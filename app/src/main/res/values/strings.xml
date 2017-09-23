@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Aww Gallery</string>
+    <string name="feedback">Feedback</string>
+    <string name="source_code">Source Code</string>
+    <string name="designer">Icon and Graphics by Guzman Gonzalez</string>
+    <string name="developer">Developed by Nicholas Doglio</string>
+    <string name="share_button">Share button</string>
+    <string name="open_in_browser">Open image source in browser</string>
+    <string name="f_a_q">F.A.Q</string>
+    <string name="libraries">Libraries</string>
+    <string name="empty_view_text">There seems to be a problem loading images</string>
 </resources>

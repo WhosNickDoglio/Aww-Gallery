@@ -37,18 +37,11 @@
         tools:layout_editor_absoluteX="8dp">
 
         <TextView
-            android:id="@+id/version_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp" />
-
-        <TextView
             android:id="@+id/developer_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:text="@string/developer" />
-
 
         <TextView
             android:id="@+id/designer_text_view"
@@ -57,14 +50,12 @@
             android:padding="3dp"
             android:text="@string/designer" />
 
-
         <TextView
             android:id="@+id/source_code_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:text="@string/source_code" />
-
 
         <TextView
             android:id="@+id/feedback_text_view"
@@ -74,16 +65,16 @@
             android:text="@string/feedback" />
 
         <TextView
-            android:id="@+id/faq_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/f_a_q" />
-
-        <TextView
             android:id="@+id/libraries_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/libraries" />
+
+        <TextView
+            android:id="@+id/version_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp" />
 
     </LinearLayout>
 

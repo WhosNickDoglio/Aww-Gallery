@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RedditService {
-    @GET("user/NicholasDoglio/m/cuteanimals/.json")
+    @GET("user/NicholasDoglio/m/awwgallery/.json")
     fun getMultiPosts(@Query("limit") limit: Int, @Query("after") after: String): Flowable<Multireddit>
 
     @GET("r/{subreddit}/.json")

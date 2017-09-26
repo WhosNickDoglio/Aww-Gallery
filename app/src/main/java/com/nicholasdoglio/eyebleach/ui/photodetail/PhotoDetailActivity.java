@@ -23,7 +23,6 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
     @Inject
     PhotoDetailPresenter photoDetailPresenter;
     private List<ChildData> posts;
-    private int position;
 
 
     @Override
@@ -32,18 +31,12 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
         setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
         removeActionBar();
-        getExtras();
         initViews();
-    }
-
-    private void getExtras() {
-        position = getIntent().getIntExtra("POSITION", 0);
-        posts = getIntent().getParcelableArrayListExtra("POSTS");
     }
 
     private void initViews() {
         viewPager.setAdapter(new PhotoDetailAdapter(this, posts));
-        viewPager.setCurrentItem(position);
+        viewPager.setCurrentItem(0);
     }
 
     private void removeActionBar() {
@@ -92,5 +85,21 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
     protected void onResume() {
         super.onResume();
         photoDetailPresenter.takeView(this);
+    }
+
+    @Override
+    public void updateList(List<ChildData> childDataList) {
+        String id = getIntent().getStringExtra("ID");
+        int index = 0;
+        viewPager.setAdapter(new PhotoDetailAdapter(this, childDataList));
+
+        for (int i = 0; i < childDataList.size(); i++) {
+            if (childDataList.get(i).getId().contains(id)) {
+                index = childDataList.indexOf(childDataList.get(i).getId());
+            }
+
+        }
+
+        viewPager.setCurrentItem(index);
     }
 }

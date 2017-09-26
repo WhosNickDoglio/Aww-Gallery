@@ -1,5 +1,6 @@
 package com.nicholasdoglio.eyebleach.data.model;
 
+
 import com.squareup.moshi.Json;
 
 public class Child {

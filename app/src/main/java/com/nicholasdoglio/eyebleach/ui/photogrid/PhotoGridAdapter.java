@@ -1,6 +1,10 @@
 package com.nicholasdoglio.eyebleach.ui.photogrid;
 
+
+import android.arch.paging.PagedListAdapter;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.DiffCallback;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +15,27 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.ChildData;
-import com.nicholasdoglio.eyebleach.util.Intents;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.ViewHolder> {
-    private Context context;
-    private List<ChildData> posts;
+public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapter.ViewHolder> {
+    private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
 
-    PhotoGridAdapter(Context context, List<ChildData> posts) {
+        @Override
+        public boolean areContentsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+    private Context context;
+
+    PhotoGridAdapter(Context context) {
+        super(DIFF_CALLBACK);
         this.context = context;
-        this.posts = posts;
     }
 
     @Override
@@ -36,17 +46,13 @@ class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        RequestOptions options = new RequestOptions()
-                .error(R.drawable.cat_error);
+        ChildData childData = getItem(position);
+        String id = "";
 
-        Glide.with(context).load(posts.get(position).getThumbnail())
-                .apply(options)
-                .into(holder.imageView);
-    }
-
-    @Override
-    public int getItemCount() {
-        return posts.size();
+        if (childData != null) {
+            holder.bindTo(childData);
+            id = childData.getId();
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,8 +62,15 @@ class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.ViewHolder>
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
 
-            imageView.setOnClickListener(view -> Intents.startDetailActivityFromParcelable(view, getAdapterPosition(), (ArrayList<ChildData>) posts));
+        void bindTo(ChildData childData) {
+            RequestOptions options = new RequestOptions()
+                    .error(R.drawable.cat_error);
+
+            Glide.with(context).load(childData.getThumbnail())
+                    .apply(options)
+                    .into(imageView);
         }
     }
 }

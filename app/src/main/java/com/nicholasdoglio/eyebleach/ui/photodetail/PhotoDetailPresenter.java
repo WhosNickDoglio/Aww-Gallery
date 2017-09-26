@@ -21,11 +21,10 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     }
 
     public void load() {
-        compositeDisposable.add(repository.getInitialLoad(IMAGES_LOAD_VIEWPAGER)
+        compositeDisposable.add(repository.getPosts(IMAGES_LOAD_VIEWPAGER)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
-
+                .subscribe(childData -> view.updateList(childData)));
         //load more posts for horizontal swiping
     }
 

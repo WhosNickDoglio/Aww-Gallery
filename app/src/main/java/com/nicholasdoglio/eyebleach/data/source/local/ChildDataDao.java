@@ -1,5 +1,6 @@
 package com.nicholasdoglio.eyebleach.data.source.local;
 
+import android.arch.paging.LivePagedListProvider;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -19,6 +20,9 @@ public interface ChildDataDao {
     @Query("SELECT * FROM ChildData")
     Flowable<List<ChildData>> getAllPosts();
 
+    @Query("SELECT * FROM ChildData")
+    LivePagedListProvider<Integer, ChildData> getPosts();
+
     @Query("SELECT thumbnail FROM ChildData")
     List<String> getAllThumbnailUrls();
 
@@ -28,10 +32,11 @@ public interface ChildDataDao {
     @Query("SELECT url FROM ChildData ")
     List<String> getAllImageUrl();
 
+    @Query("SELECT id FROM ChildData ORDER BY id DESC LIMIT 1")
+    String getLastItemId();
 
     @Query("SELECT url FROM ChildData WHERE id = (:id)")
     String getImageById(String id);
-
 
     @Query("SELECT id FROM ChildData WHERE thumbnail = (:thumbnail)")
     String getIdbythumbnailUrl(String thumbnail);

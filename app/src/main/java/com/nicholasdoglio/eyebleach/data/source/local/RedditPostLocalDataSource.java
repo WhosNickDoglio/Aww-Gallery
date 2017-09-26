@@ -1,5 +1,7 @@
 package com.nicholasdoglio.eyebleach.data.source.local;
 
+import android.arch.paging.LivePagedListProvider;
+
 import com.nicholasdoglio.eyebleach.data.model.ChildData;
 
 import java.util.List;
@@ -11,7 +13,6 @@ import io.reactivex.Flowable;
 
 @Singleton
 public class RedditPostLocalDataSource {
-
     private final RedditPostDatabase redditPostDatabase;
 
     @Inject
@@ -33,5 +34,16 @@ public class RedditPostLocalDataSource {
         new Thread(() -> databaseCount[0] = redditPostDatabase.childDataDao().getNumberofPosts()).start();
 
         return databaseCount[0] <= 0;
+    }
+
+    public String getLastPostId() {
+        final String[] id = new String[1];
+        new Thread(() -> id[0] = redditPostDatabase.childDataDao().getLastItemId());
+
+        return id[0];
+    }
+
+    public LivePagedListProvider<Integer, ChildData> PagedList() {
+        return redditPostDatabase.childDataDao().getPosts();
     }
 }

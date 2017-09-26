@@ -11,12 +11,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.nicholasdoglio.eyebleach.R;
-import com.nicholasdoglio.eyebleach.data.model.ChildData;
-import com.nicholasdoglio.eyebleach.data.model.Multireddit;
 import com.nicholasdoglio.eyebleach.util.Intents;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,7 +26,6 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
     ProgressBar progressBar;
     @BindView(R.id.grid_recycler)
     RecyclerView recyclerView;
-    PhotoGridAdapter photoGridAdapter;
 
     @Inject
     PhotoGridPresenter photoGridPresenter;
@@ -64,7 +58,9 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
     @Override
     public void initViews() {
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
+
+        PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(this);
 
         GridLayoutManager layoutManager;//TODO: This will be 6 and 9 for tablets
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -81,28 +77,16 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+
+        photoGridPresenter.childData.observe(this, photoGridAdapter::setList);
+        recyclerView.setAdapter(photoGridAdapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void fetchData() {
         photoGridPresenter.load();
         swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void updateListMulti(Multireddit multireddit) {
-        List<ChildData> childData = new ArrayList<>();
-        photoGridPresenter.filterForImages(multireddit, childData);
-        photoGridAdapter = new PhotoGridAdapter(PhotoGridActivity.this, childData);
-        recyclerView.setAdapter(photoGridAdapter);
-        progressBar.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void updateListChildData(List<ChildData> childData) {
-        photoGridAdapter = new PhotoGridAdapter(PhotoGridActivity.this, childData);
-        recyclerView.setAdapter(photoGridAdapter);
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

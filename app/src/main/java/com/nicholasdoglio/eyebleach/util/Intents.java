@@ -31,7 +31,7 @@ public class Intents {
 
     public static void composeEmail(Context context) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto: NicholasDoglioDev@Gmail.com"));
+        intent.setData(Uri.parse("mailto: NicholasDoglio@Gmail.com"));
         intent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback");
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
@@ -41,7 +41,14 @@ public class Intents {
     public static void startDetailActivityFromParcelable(View view, int position, ArrayList<ChildData> posts) {
         Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
         photoDetailIntent.putExtra("POSITION", position);
-        photoDetailIntent.putParcelableArrayListExtra("POSTS", posts);
+//        photoDetailIntent.putParcelableArrayListExtra("POSTS", posts);
+        view.getContext().startActivity(photoDetailIntent);
+    }
+
+
+    public static void startDetailActivity(View view, String id) {
+        Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
+        photoDetailIntent.putExtra("ID", id);
         view.getContext().startActivity(photoDetailIntent);
     }
 

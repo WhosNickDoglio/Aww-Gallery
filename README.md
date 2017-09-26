@@ -2,6 +2,15 @@
 
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 
+
+<img src="https://i.imgur.com/84Oc8Kg.png" width="75" height="100">
+
+<img src="https://i.imgur.com/p4GgtVy.png" width="75" height="100">
+
+
+![Aww Gallery gif](https://i.imgur.com/DciZgFN.gifv)
+
+
 An Android application that aggregate cute animal photos from reddit implemented with the MVP architecture pattern. 
 
 # Sources
@@ -25,6 +34,7 @@ Full channgelog is available [here](https://docs.google.com/document/d/1KriXSuIB
 - [Retrofit 2](https://square.github.io/retrofit/)
 - [Moshi](https://github.com/square/moshi)
 - [RxJava2](https://github.com/ReactiveX/RxJava)
+- [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 - [Butterknife](https://jakewharton.github.io/butterknife/)
 - [Dagger2](https://google.github.io/dagger/)
 
@@ -40,5 +50,5 @@ Feel free to contact me:
 
 # License 
 
-This project is licensed under GNU General Public License v3.0. see the [LICENSE](LICENSE.md) for more details. 
+This project is licensed under GNU General Public License v3.0. see the [LICENSE](LICENSE) for more details. 
                                

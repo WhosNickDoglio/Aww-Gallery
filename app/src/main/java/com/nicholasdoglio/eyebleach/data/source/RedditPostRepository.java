@@ -1,5 +1,7 @@
 package com.nicholasdoglio.eyebleach.data.source;
 
+import android.arch.paging.LivePagedListProvider;
+
 import com.nicholasdoglio.eyebleach.data.model.ChildData;
 import com.nicholasdoglio.eyebleach.data.model.Multireddit;
 import com.nicholasdoglio.eyebleach.data.source.local.RedditPostLocalDataSource;
@@ -15,50 +17,42 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 @Singleton
 public class RedditPostRepository {
     private final RedditPostLocalDataSource localSource;
-
     @Inject
     RedditService redditService;
+    private List<ChildData> firstLoadList;
+    private List<ChildData> loadMoreList;
 
     @Inject
     RedditPostRepository(RedditPostLocalDataSource redditPostLocalDataSource) {
         localSource = redditPostLocalDataSource;
     }
 
-    public Flowable<Multireddit> getInitialLoad(int limit) {
-        return redditService.getMultiPosts(limit, "");
-    }
-
-    public void SwipeLoad(int limit) {
-        List<ChildData> swpeChildData = new ArrayList<>();
-
-        /*
-        Initial load will pull from network if DB is empty, if DB is full will check for differences and update accordingly
-        ONLY USED FOR SWIPE
-         */
+    public Flowable<List<ChildData>> getPosts(int limit) {
+        firstLoadList = new ArrayList<>();
         if (localSource.databaseIsEmpty()) {
-            getInitialLoad(limit)
-                    .observeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Multireddit>() {
+            return redditService.getMultiPosts(limit, "")
+                    .map(multireddit -> {
+                        filterForImages(multireddit, firstLoadList);
+                        return firstLoadList;
+                    }).doOnEach(new Subscriber<List<ChildData>>() {
                         @Override
                         public void onSubscribe(Subscription s) {
 
                         }
 
                         @Override
-                        public void onNext(Multireddit multireddit) {
-                            filterForImages(multireddit, swpeChildData);
+                        public void onNext(List<ChildData> childData) {
+                            localSource.savePostsToDb(childData);
+
                         }
 
                         @Override
                         public void onError(Throwable t) {
-
+                            t.getMessage();
                         }
 
                         @Override
@@ -66,54 +60,51 @@ public class RedditPostRepository {
 
                         }
                     });
-            localSource.savePostsToDb(swpeChildData);
         } else {
-
-            //check for conflicts and update DB
+            return localSource.getPostsFlow();
         }
     }
 
-    public void loadMore() {
-        /*
-        Need to figure out how to use this with the Paging Library, can I call it at a location in the RecyclerView?
-         */
+    public Flowable<List<ChildData>> getMorePosts(int limit) {
+        loadMoreList = new ArrayList<>();
+        return redditService.getMultiPosts(limit, "t3_" + localSource.getLastPostId())
+                .map(multireddit -> {
+                    filterForImages(multireddit, loadMoreList);
+                    return loadMoreList;
+                }).doOnEach(new Subscriber<List<ChildData>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ChildData> childData) {
+                        localSource.savePostsToDb(childData);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        t.getMessage();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadMoreList.clear();
+                    }
+                });
     }
 
-
-    public List<ChildData> getPostsRemote(int limit) {
-        List<ChildData> childData = new ArrayList<>();
-
-        redditService.getMultiPosts(limit, "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(multireddit -> filterForImages(multireddit, childData));
-
-        return childData;
-    }
-
-
-    public Flowable<List<ChildData>> getPosts(int limit) {
-        if (localSource.databaseIsEmpty()) {
-
-        } else {
-
-        }
-
-
-        return null;
+    public LivePagedListProvider<Integer, ChildData> pagedList() {
+        return localSource.PagedList();
     }
 
     private void filterForImages(Multireddit networkMulti, List<ChildData> childDataList) {
         for (int i = 0; i < networkMulti.getData().getChildren().size(); i++) {
-//            if (networkMulti.getData().getChildren().get(i).getChildData().getUrl().contains(".jpg") ||
-//                    networkMulti.getData().getChildren().get(i).getChildData().getUrl().contains(".png")) {
-            childDataList.add(networkMulti.getData().getChildren().get(i).getChildData());
+            if (networkMulti.getData().getChildren().get(i).getChildData().getUrl().contains(".jpg") ||
+                    networkMulti.getData().getChildren().get(i).getChildData().getUrl().contains(".png")) {
+                childDataList.add(networkMulti.getData().getChildren().get(i).getChildData());
+            }
         }
-//        }
     }
-
-    private void saveToDb(List<ChildData> childData) {
-        localSource.savePostsToDb(childData);
-    }
-
 }

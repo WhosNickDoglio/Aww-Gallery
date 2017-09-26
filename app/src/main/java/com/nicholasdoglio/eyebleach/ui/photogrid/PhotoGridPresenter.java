@@ -36,6 +36,8 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
+
+
     }
 
     public void loadMore() {

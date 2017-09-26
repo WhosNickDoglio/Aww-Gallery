@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.photogrid.PhotoGridActivity"
-            android:theme="@style/SplashScreen">
+            android:theme="@style/LaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

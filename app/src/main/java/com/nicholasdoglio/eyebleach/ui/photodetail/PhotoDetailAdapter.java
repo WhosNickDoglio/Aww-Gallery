@@ -18,7 +18,6 @@ class PhotoDetailAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private List<ChildData> images;
 
-
     //TODO: add a loading screen for images instead of just appearing, looking into Glide transitions
 
     PhotoDetailAdapter(Context context, List<ChildData> images) {

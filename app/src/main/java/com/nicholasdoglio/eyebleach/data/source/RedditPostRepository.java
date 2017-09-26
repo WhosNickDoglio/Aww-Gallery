@@ -65,7 +65,7 @@ public class RedditPostRepository {
         }
     }
 
-    public Flowable<List<ChildData>> getMorePosts(int limit) {
+    public Flowable<List<ChildData>> getMorePosts(int limit) {//Can/should I combine this with getPosts()?
         loadMoreList = new ArrayList<>();
         return redditService.getMultiPosts(limit, "t3_" + localSource.getLastPostId())
                 .map(multireddit -> {
@@ -100,6 +100,10 @@ public class RedditPostRepository {
     }
 
     private void filterForImages(Multireddit networkMulti, List<ChildData> childDataList) {
+        /*
+        Will eventually change this when I add support for gifs, imgur albums, youtube links, and reddit videos/images
+        Will only need to filter out text posts
+         */
         for (int i = 0; i < networkMulti.getData().getChildren().size(); i++) {
             if (networkMulti.getData().getChildren().get(i).getChildData().getUrl().contains(".jpg") ||
                     networkMulti.getData().getChildren().get(i).getChildData().getUrl().contains(".png")) {

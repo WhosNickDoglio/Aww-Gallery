@@ -53,6 +53,9 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
             holder.bindTo(childData);
             id = childData.getId();
         }
+
+        //onClick send id
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

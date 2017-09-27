@@ -4,7 +4,7 @@ import android.arch.paging.LivePagedListProvider;
 
 import com.nicholasdoglio.eyebleach.data.model.ChildData;
 import com.nicholasdoglio.eyebleach.data.model.Multireddit;
-import com.nicholasdoglio.eyebleach.data.source.local.RedditPostLocalDataSource;
+import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
 import com.nicholasdoglio.eyebleach.data.source.remote.RedditService;
 
 import org.reactivestreams.Subscriber;
@@ -20,24 +20,25 @@ import io.reactivex.Flowable;
 
 @Singleton
 public class RedditPostRepository {
-    private final RedditPostLocalDataSource localSource;
-    @Inject
-    RedditService redditService;
-    private List<ChildData> firstLoadList;
-    private List<ChildData> loadMoreList;
+    private final RedditPostDatabase postDatabase;
 
     @Inject
-    RedditPostRepository(RedditPostLocalDataSource redditPostLocalDataSource) {
-        localSource = redditPostLocalDataSource;
+    RedditService redditService;
+
+    private List<ChildData> posts = new ArrayList<>();
+    private List<ChildData> loadMoreList = new ArrayList<>();
+
+    @Inject
+    public RedditPostRepository(RedditPostDatabase postDatabase) {
+        this.postDatabase = postDatabase;
     }
 
     public Flowable<List<ChildData>> getPosts(int limit) {
-        firstLoadList = new ArrayList<>();
-        if (localSource.databaseIsEmpty()) {
+        if (databaseIsEmpty()) {
             return redditService.getMultiPosts(limit, "")
                     .map(multireddit -> {
-                        filterForImages(multireddit, firstLoadList);
-                        return firstLoadList;
+                        filterForImages(multireddit, posts);
+                        return posts;
                     }).doOnEach(new Subscriber<List<ChildData>>() {
                         @Override
                         public void onSubscribe(Subscription s) {
@@ -46,8 +47,14 @@ public class RedditPostRepository {
 
                         @Override
                         public void onNext(List<ChildData> childData) {
-                            localSource.savePostsToDb(childData);
+                            postDatabase.beginTransaction();
+                            try {
+                                postDatabase.childDataDao().insertChildDataList(childData);
+                                postDatabase.setTransactionSuccessful();
 
+                            } finally {
+                                postDatabase.endTransaction();
+                            }
                         }
 
                         @Override
@@ -57,17 +64,15 @@ public class RedditPostRepository {
 
                         @Override
                         public void onComplete() {
-
                         }
                     });
         } else {
-            return localSource.getPostsFlow();
+            return postDatabase.childDataDao().getAllPosts();
         }
     }
 
     public Flowable<List<ChildData>> getMorePosts(int limit) {//Can/should I combine this with getPosts()?
-        loadMoreList = new ArrayList<>();
-        return redditService.getMultiPosts(limit, "t3_" + localSource.getLastPostId())
+        return redditService.getMultiPosts(limit, "t3_" + posts.get(posts.size() - 1).getId())
                 .map(multireddit -> {
                     filterForImages(multireddit, loadMoreList);
                     return loadMoreList;
@@ -79,7 +84,15 @@ public class RedditPostRepository {
 
                     @Override
                     public void onNext(List<ChildData> childData) {
-                        localSource.savePostsToDb(childData);
+                        postDatabase.beginTransaction();
+                        try {
+                            postDatabase.childDataDao().insertChildDataList(childData);
+                            postDatabase.setTransactionSuccessful();
+
+                        } finally {
+                            postDatabase.endTransaction();
+                        }
+                        posts.addAll(childData);
 
                     }
 
@@ -96,7 +109,15 @@ public class RedditPostRepository {
     }
 
     public LivePagedListProvider<Integer, ChildData> pagedList() {
-        return localSource.PagedList();
+        return postDatabase.childDataDao().getPosts();
+    }
+
+    private Boolean databaseIsEmpty() {
+        final int[] databaseCount = new int[1];
+
+        new Thread(() -> databaseCount[0] = postDatabase.childDataDao().getNumberofPosts()).start();
+
+        return databaseCount[0] <= 0;
     }
 
     private void filterForImages(Multireddit networkMulti, List<ChildData> childDataList) {

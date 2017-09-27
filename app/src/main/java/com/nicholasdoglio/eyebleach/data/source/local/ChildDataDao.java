@@ -32,9 +32,6 @@ public interface ChildDataDao {
     @Query("SELECT url FROM ChildData ")
     List<String> getAllImageUrl();
 
-    @Query("SELECT id FROM ChildData ORDER BY id DESC LIMIT 1")
-    String getLastItemId();
-
     @Query("SELECT url FROM ChildData WHERE id = (:id)")
     String getImageById(String id);
 
@@ -44,11 +41,8 @@ public interface ChildDataDao {
     @Query("SELECT COUNT(*) FROM ChildData")
     int getNumberofPosts();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertChildDataList(List<ChildData> childData);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertChildData(ChildData childData);
 
     @Update
     void updateChildData(List<ChildData> childData);
@@ -60,5 +54,5 @@ public interface ChildDataDao {
     void deleteAllData(List<ChildData> childData);
 
     @Update
-    void updateData(List<ChildData> childData);
+    void updateData(ChildData childData);
 }

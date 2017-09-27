@@ -26,9 +26,15 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
     ProgressBar progressBar;
     @BindView(R.id.grid_recycler)
     RecyclerView recyclerView;
-
     @Inject
     PhotoGridPresenter photoGridPresenter;
+
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 10;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +78,43 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             fetchData();
-            photoGridAdapter.notifyDataSetChanged();
+            resetSwipe();
         });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
         photoGridPresenter.childData.observe(this, photoGridAdapter::setList);
         recyclerView.setAdapter(photoGridAdapter);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = recyclerView.getChildCount();
+                totalItemCount = layoutManager.getItemCount();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    photoGridPresenter.loadMore();
+                    loading = true;
+                }
+            }
+        });
+
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void resetSwipe() {
+        previousTotal = 0;
+        firstVisibleItem = 0;
+        visibleItemCount = 0;
+        totalItemCount = 0;
     }
 
     @Override

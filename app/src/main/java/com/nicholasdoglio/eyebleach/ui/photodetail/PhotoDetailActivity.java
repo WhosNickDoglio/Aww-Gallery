@@ -9,6 +9,7 @@ import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.ChildData;
 import com.nicholasdoglio.eyebleach.util.Intents;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,8 +23,7 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
     ViewPager viewPager;
     @Inject
     PhotoDetailPresenter photoDetailPresenter;
-    private List<ChildData> posts;
-
+    private List<ChildData> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,7 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
         setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
         removeActionBar();
-        initViews();
-    }
-
-    private void initViews() {
-        viewPager.setAdapter(new PhotoDetailAdapter(this, posts));
-        viewPager.setCurrentItem(0);
+        photoDetailPresenter.load();
     }
 
     private void removeActionBar() {
@@ -89,17 +84,20 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
 
     @Override
     public void updateList(List<ChildData> childDataList) {
-        String id = getIntent().getStringExtra("ID");
+        String id = getIntent().getStringExtra("ID");//This works
         int index = 0;
         viewPager.setAdapter(new PhotoDetailAdapter(this, childDataList));
 
         for (int i = 0; i < childDataList.size(); i++) {
-            if (childDataList.get(i).getId().contains(id)) {
-                index = childDataList.indexOf(childDataList.get(i).getId());
+            if (childDataList.get(i).getId().equals(id)) {
+                index = childDataList.indexOf(childDataList.get(i));//Sort of works
             }
-
         }
 
+        //Swiping is really broken crazy weird order, seemingly random
+        posts.addAll(childDataList);
+
+        viewPager.setAdapter(new PhotoDetailAdapter(this, posts));
         viewPager.setCurrentItem(index);
     }
 }

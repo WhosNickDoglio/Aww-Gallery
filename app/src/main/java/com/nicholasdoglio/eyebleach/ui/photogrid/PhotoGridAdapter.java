@@ -15,6 +15,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.ChildData;
+import com.nicholasdoglio.eyebleach.util.Intents;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +26,7 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
     private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
         @Override
         public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return oldItem.getId() == newItem.getId();
+            return Objects.equals(oldItem.getId(), newItem.getId());
         }
 
         @Override
@@ -54,8 +57,8 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
             id = childData.getId();
         }
 
-        //onClick send id
-
+        String finalId = id;
+        holder.imageView.setOnClickListener(view -> Intents.startDetailActivity(view, finalId));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

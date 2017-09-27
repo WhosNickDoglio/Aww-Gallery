@@ -25,7 +25,6 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(childData -> view.updateList(childData)));
-        //load more posts for horizontal swiping
     }
 
     @Override

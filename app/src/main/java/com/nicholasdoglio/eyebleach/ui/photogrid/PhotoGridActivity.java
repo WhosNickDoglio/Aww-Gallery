@@ -31,7 +31,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
     private int previousTotal = 0;
     private boolean loading = true;
-    private int visibleThreshold = 10;
+    private int visibleThreshold = 6;
     private int firstVisibleItem;
     private int visibleItemCount;
     private int totalItemCount;
@@ -64,7 +64,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
     @Override
     public void initViews() {
-        progressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
+//        progressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
 
         PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(this);
 
@@ -83,7 +83,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        photoGridPresenter.childData.observe(this, photoGridAdapter::setList);
+        photoGridPresenter.childData.observe(PhotoGridActivity.this, photoGridAdapter::setList);
         recyclerView.setAdapter(photoGridAdapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

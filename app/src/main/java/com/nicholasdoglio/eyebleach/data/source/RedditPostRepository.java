@@ -68,10 +68,11 @@ public class RedditPostRepository {
                     });
         } else {
             return postDatabase.childDataDao().getAllPosts();
+//            return null;
         }
     }
 
-    public Flowable<List<ChildData>> getMorePosts(int limit) {//Can/should I combine this with getPosts()?
+    public Flowable<List<ChildData>> getMorePosts(int limit) {
         return redditService.getMultiPosts(limit, "t3_" + posts.get(posts.size() - 1).getId())
                 .map(multireddit -> {
                     filterForImages(multireddit, loadMoreList);
@@ -93,7 +94,6 @@ public class RedditPostRepository {
                             postDatabase.endTransaction();
                         }
                         posts.addAll(childData);
-
                     }
 
                     @Override

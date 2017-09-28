@@ -23,12 +23,17 @@ class PhotoDetailAdapter extends PagerAdapter {
     PhotoDetailAdapter(Context context, List<ChildData> images) {
         this.context = context;
         this.images = images;
-        layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
         return images.size();
+    }
+
+
+    public int loadMoreCallPosition() {
+        return images.size() - 3;
     }
 
     @Override
@@ -41,7 +46,6 @@ class PhotoDetailAdapter extends PagerAdapter {
         View itemView = layoutInflater.inflate(R.layout.gallery_photo_detail, container, false);
 
         ImageView imageView = itemView.findViewById(R.id.gallery_photo);
-
 
         if (images.get(position).getUrl().contains("gif")) {
             //Load gif

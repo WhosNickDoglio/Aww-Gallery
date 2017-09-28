@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 
-import com.nicholasdoglio.eyebleach.data.model.ChildData;
 import com.nicholasdoglio.eyebleach.ui.about.AboutDialogActivity;
 import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
-
-import java.util.ArrayList;
 
 public class Intents {
 
@@ -37,14 +34,6 @@ public class Intents {
             context.startActivity(intent);
         }
     }
-
-    public static void startDetailActivityFromParcelable(View view, int position, ArrayList<ChildData> posts) {
-        Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
-        photoDetailIntent.putExtra("POSITION", position);
-//        photoDetailIntent.putParcelableArrayListExtra("POSTS", posts);
-        view.getContext().startActivity(photoDetailIntent);
-    }
-
 
     public static void startDetailActivity(View view, String id) {
         Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);

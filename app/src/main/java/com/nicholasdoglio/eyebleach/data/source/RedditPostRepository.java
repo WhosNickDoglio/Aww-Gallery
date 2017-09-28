@@ -29,11 +29,47 @@ public class RedditPostRepository {
     private List<ChildData> loadMoreList = new ArrayList<>();
 
     @Inject
-    public RedditPostRepository(RedditPostDatabase postDatabase) {
+    RedditPostRepository(RedditPostDatabase postDatabase) {
         this.postDatabase = postDatabase;
     }
 
-    public Flowable<List<ChildData>> getPosts(int limit) {
+    public Flowable<List<ChildData>> getPostsSwipe(int limit) {
+        return redditService.getMultiPosts(limit, "")
+                .map(multireddit -> {
+                    posts.clear();
+                    filterForImages(multireddit, posts);
+                    return posts;
+                }).doOnEach(new Subscriber<List<ChildData>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ChildData> childData) {
+                        postDatabase.beginTransaction();
+                        try {
+                            postDatabase.childDataDao().deleteAll();
+                            postDatabase.childDataDao().insertChildDataList(childData);
+                            postDatabase.setTransactionSuccessful();
+                        } finally {
+                            postDatabase.endTransaction();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public Flowable<List<ChildData>> getPosts(int limit) {//This only pulls from remote once, need to fix this
         if (databaseIsEmpty()) {
             return redditService.getMultiPosts(limit, "")
                     .map(multireddit -> {
@@ -68,7 +104,6 @@ public class RedditPostRepository {
                     });
         } else {
             return postDatabase.childDataDao().getAllPosts();
-//            return null;
         }
     }
 

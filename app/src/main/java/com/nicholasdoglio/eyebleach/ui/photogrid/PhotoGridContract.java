@@ -9,7 +9,6 @@ public interface PhotoGridContract {
         void initViews();
 
         void fetchData();
-
     }
 
     interface Presenter extends BasePresenter<View> {

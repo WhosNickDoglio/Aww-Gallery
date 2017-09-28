@@ -25,9 +25,16 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
         disposable = new CompositeDisposable();
         childData = repository.pagedList().create(0,
                 new PagedList.Config.Builder()
-                        .setPageSize(24)
-                        .setPrefetchDistance(30)
+                        .setPageSize(18)
+                        .setPrefetchDistance(24)
                         .build());
+    }
+
+    public void swipeLoad() {
+        disposable.add(repository.getPostsSwipe(IMAGES_LOADED_RECYCLERVIEW)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 
     @Override

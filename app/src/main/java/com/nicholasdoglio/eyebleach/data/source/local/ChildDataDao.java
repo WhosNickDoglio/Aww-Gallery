@@ -28,6 +28,9 @@ public interface ChildDataDao {
     @Query("SELECT COUNT(*) FROM ChildData")
     int getNumberofPosts();
 
+    @Query("DELETE FROM ChildData")
+    void deleteAll();
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertChildDataList(List<ChildData> childData);
 }

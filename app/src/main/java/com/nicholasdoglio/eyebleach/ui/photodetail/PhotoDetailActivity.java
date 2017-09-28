@@ -24,6 +24,7 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
     @Inject
     PhotoDetailPresenter photoDetailPresenter;
     private List<ChildData> posts = new ArrayList<>();
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,19 +85,13 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
 
     @Override
     public void updateList(List<ChildData> childDataList) {
-        String id = getIntent().getStringExtra("ID");//This works
-        int index = 0;
-        viewPager.setAdapter(new PhotoDetailAdapter(this, childDataList));
-
+        String id = getIntent().getStringExtra("ID");
         for (int i = 0; i < childDataList.size(); i++) {
             if (childDataList.get(i).getId().equals(id)) {
-                index = childDataList.indexOf(childDataList.get(i));//Sort of works
+                index = childDataList.indexOf(childDataList.get(i));
             }
         }
-
-        //Swiping is really broken crazy weird order, seemingly random
         posts.addAll(childDataList);
-
         viewPager.setAdapter(new PhotoDetailAdapter(this, posts));
         viewPager.setCurrentItem(index);
     }

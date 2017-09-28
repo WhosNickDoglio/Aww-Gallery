@@ -64,7 +64,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
     @Override
     public void initViews() {
-//        progressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
+        progressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
 
         PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(this);
 
@@ -77,7 +77,8 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            fetchData();
+            photoGridPresenter.swipeLoad();
+            swipeRefreshLayout.setRefreshing(false);
             resetSwipe();
         });
 

@@ -34,9 +34,9 @@ public class RedditPostRepository {
     }
 
     public Flowable<List<ChildData>> getPostsSwipe(int limit) {
+        posts.clear();
         return redditService.getMultiPosts(limit, "")
                 .map(multireddit -> {
-                    posts.clear();
                     filterForImages(multireddit, posts);
                     return posts;
                 }).doOnEach(new Subscriber<List<ChildData>>() {
@@ -69,7 +69,7 @@ public class RedditPostRepository {
                 });
     }
 
-    public Flowable<List<ChildData>> getPosts(int limit) {//This only pulls from remote once, need to fix this
+    public Flowable<List<ChildData>> getPosts(int limit) {
         if (databaseIsEmpty()) {
             return redditService.getMultiPosts(limit, "")
                     .map(multireddit -> {

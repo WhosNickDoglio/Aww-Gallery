@@ -1,3 +1,20 @@
+/*
+    Aww Gallery
+    Copyright (C) 2017  Nicholas Doglio
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import android.content.Context;
@@ -9,21 +26,25 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.nicholasdoglio.eyebleach.R;
-import com.nicholasdoglio.eyebleach.data.model.ChildData;
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nicholas Doglio
+ */
 class PhotoDetailAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<ChildData> images;
+    private List<ChildData> images = new ArrayList<>();
 
     //TODO: add a loading screen for images instead of just appearing, looking into Glide transitions
 
-    PhotoDetailAdapter(Context context, List<ChildData> images) {
+    PhotoDetailAdapter(Context context, List<ChildData> posts) {
         this.context = context;
-        this.images = images;
         layoutInflater = LayoutInflater.from(context);
+        images = posts;
     }
 
     @Override
@@ -47,16 +68,9 @@ class PhotoDetailAdapter extends PagerAdapter {
 
         ImageView imageView = itemView.findViewById(R.id.gallery_photo);
 
-        if (images.get(position).getUrl().contains("gif")) {
-            //Load gif
-            Glide.with(context)
-                    .load(images.get(position).getUrl())
-                    .into(imageView);
-        } else {
-            Glide.with(context)
-                    .load(images.get(position).getUrl())
-                    .into(imageView);
-        }
+        Glide.with(context)
+                .load(images.get(position).getUrl())
+                .into(imageView);
 
         container.addView(itemView);
 

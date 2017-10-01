@@ -1,12 +1,24 @@
+<!--
+    Aww Gallery
+    Copyright (C) 2017  Nicholas Doglio
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    -->
 <resources>
     <string name="app_name">Aww Gallery</string>
-    <string name="feedback">Feedback</string>
-    <string name="source_code">Source Code</string>
-    <string name="designer">Icon and Graphics by Guzman Gonzalez</string>
-    <string name="developer">Developed by Nicholas Doglio</string>
     <string name="share_button">Share button</string>
     <string name="open_in_browser">Open image source in browser</string>
-    <string name="f_a_q">F.A.Q</string>
-    <string name="libraries">Libraries</string>
-    <string name="empty_view_text">There seems to be a problem loading images</string>
+    <string name="empty_view_text">Unable to download images</string>
+    <string name="about_image_content_description">Cute photo of a cat</string>
 </resources>

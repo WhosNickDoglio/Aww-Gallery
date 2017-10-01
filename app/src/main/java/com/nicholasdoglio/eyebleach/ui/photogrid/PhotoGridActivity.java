@@ -1,3 +1,20 @@
+/*
+    Aww Gallery
+    Copyright (C) 2017  Nicholas Doglio
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nicholasdoglio.eyebleach.ui.photogrid;
 
 import android.content.res.Configuration;
@@ -19,13 +36,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 
+/**
+ * @author Nicholas Doglio
+ */
 public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoGridContract.View {
     @BindView(R.id.swipe_container)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout photoGridSwipeRefreshLayout;
     @BindView(R.id.grid_progress)
-    ProgressBar progressBar;
+    ProgressBar photoGridProgressBar;
     @BindView(R.id.grid_recycler)
-    RecyclerView recyclerView;
+    RecyclerView photoGridRecyclerView;
     @Inject
     PhotoGridPresenter photoGridPresenter;
 
@@ -42,29 +62,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_grid);
         ButterKnife.bind(this);
-        initViews();
         fetchData();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.grid_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about_item:
-                Intents.startAboutActivity(this);
-                return true;
-        }
-        return true;
-    }
-
-    @Override
-    public void initViews() {
-        progressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
 
         PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(this);
 
@@ -75,19 +73,25 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
             layoutManager = new GridLayoutManager(getApplicationContext(), 6);
         }
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
+        photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        photoGridSwipeRefreshLayout.setOnRefreshListener(() -> {
             photoGridPresenter.swipeLoad();
-            swipeRefreshLayout.setRefreshing(false);
-            resetSwipe();
+            photoGridSwipeRefreshLayout.setRefreshing(false);
+            previousTotal = 0;
+            firstVisibleItem = 0;
+            visibleItemCount = 0;
+            totalItemCount = 0;
+
         });
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
+        photoGridRecyclerView.setHasFixedSize(true);
+        photoGridRecyclerView.setLayoutManager(layoutManager);
         photoGridPresenter.childData.observe(PhotoGridActivity.this, photoGridAdapter::setList);
-        recyclerView.setAdapter(photoGridAdapter);
+        photoGridRecyclerView.setAdapter(photoGridAdapter);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        photoGridProgressBar.setVisibility(View.INVISIBLE);
+
+        photoGridRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -107,21 +111,29 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
                 }
             }
         });
-
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
-    private void resetSwipe() {
-        previousTotal = 0;
-        firstVisibleItem = 0;
-        visibleItemCount = 0;
-        totalItemCount = 0;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.grid_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about_item:
+                Intents.startAboutActivity(this);
+                return true;
+        }
+        return true;
     }
 
     @Override
     public void fetchData() {
+        photoGridProgressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
         photoGridPresenter.load();
-        swipeRefreshLayout.setRefreshing(false);
+        photoGridSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

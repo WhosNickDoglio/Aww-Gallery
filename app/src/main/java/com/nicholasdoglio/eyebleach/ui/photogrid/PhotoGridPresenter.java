@@ -1,17 +1,36 @@
+/*
+    Aww Gallery
+    Copyright (C) 2017  Nicholas Doglio
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.nicholasdoglio.eyebleach.ui.photogrid;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
 
-import com.nicholasdoglio.eyebleach.data.model.ChildData;
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.source.RedditPostRepository;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * @author Nicholas Doglio
+ */
 public class PhotoGridPresenter implements PhotoGridContract.Presenter {
     private static final int IMAGES_LOADED_RECYCLERVIEW = 96;
     final LiveData<PagedList<ChildData>> childData;
@@ -30,10 +49,10 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
                         .build());
     }
 
+    @Override
     public void swipeLoad() {
         disposable.add(repository.getPostsSwipe(IMAGES_LOADED_RECYCLERVIEW)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
     }
 
@@ -41,14 +60,12 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
     public void load() {
         disposable.add(repository.getPosts(IMAGES_LOADED_RECYCLERVIEW)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
     }
 
     void loadMore() {
         disposable.add(repository.getMorePosts(IMAGES_LOADED_RECYCLERVIEW)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
     }
 

@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.about.AboutDialogActivity"
+            android:name=".ui.about.AboutActivity"
             android:parentActivityName=".ui.photogrid.PhotoGridActivity" />
         <activity
             android:name=".ui.photodetail.PhotoDetailActivity"

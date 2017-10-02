@@ -40,11 +40,17 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
         compositeDisposable = new CompositeDisposable();
     }
 
-    public void firstLoad() {
-        compositeDisposable.add(repository.getFirstLoadPosts(IMAGES_LOAD_VIEWPAGER)
+    public void load() {
+        compositeDisposable.add(repository.getPostsFromDb()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(childData -> view.updateList(childData)));
+    }
+
+    public void loadMore() {
+        compositeDisposable.add(repository.getMorePosts(IMAGES_LOAD_VIEWPAGER)
+                .subscribeOn(Schedulers.io())
+                .subscribe());
     }
 
     @Override
@@ -61,4 +67,5 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     public void dropView() {
         view = null;
     }
+
 }

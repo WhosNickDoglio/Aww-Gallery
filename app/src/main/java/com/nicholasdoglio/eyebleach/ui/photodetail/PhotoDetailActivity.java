@@ -63,7 +63,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        photoDetailPresenter.firstLoad();
+        photoDetailPresenter.load();
     }
 
     @Override
@@ -97,6 +97,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
                 index = childDataList.indexOf(childDataList.get(i));
             }
         }
+
         posts.addAll(childDataList);
         photoDetailViewPager.setAdapter(photoDetailAdapter);
         photoDetailViewPager.setCurrentItem(index);

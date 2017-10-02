@@ -17,6 +17,7 @@
  */
 package com.nicholasdoglio.eyebleach.data.source;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.paging.LivePagedListProvider;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
@@ -57,44 +58,39 @@ public class RedditPostRepository {
 
     public Flowable<List<ChildData>> getFirstLoadPosts(int limit) {//No network connection crashes the app
         posts.clear();
+        return redditService.getMultiPosts(limit, "")
+                .map(multireddit -> {
+                    filterForImages(multireddit, posts);
+                    return posts;
+                }).doOnEach(new Subscriber<List<ChildData>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
 
-        if (databaseIsEmpty()) {
-            return redditService.getMultiPosts(limit, "")
-                    .map(multireddit -> {
-                        filterForImages(multireddit, posts);
-                        return posts;
-                    }).doOnEach(new Subscriber<List<ChildData>>() {
-                        @Override
-                        public void onSubscribe(Subscription s) {
+                    }
 
+                    @Override
+                    public void onNext(List<ChildData> childData) {
+                        postDatabase.beginTransaction();
+                        try {
+                            postDatabase.childDataDao().deleteAll();
+                            postDatabase.childDataDao().insertChildDataList(childData);
+                            postDatabase.setTransactionSuccessful();
+                        } finally {
+                            postDatabase.endTransaction();
                         }
+                    }
 
-                        @Override
-                        public void onNext(List<ChildData> childData) {
-                            postDatabase.beginTransaction();
-                            try {
-                                postDatabase.childDataDao().deleteAll();
-                                postDatabase.childDataDao().insertChildDataList(childData);
-                                postDatabase.setTransactionSuccessful();
-                            } finally {
-                                postDatabase.endTransaction();
-                            }
-                        }
+                    @Override
+                    public void onError(Throwable t) {
+                        t.getMessage();
+                    }
 
-                        @Override
-                        public void onError(Throwable t) {
-                            t.getMessage();
-                        }
+                    @Override
+                    public void onComplete() {
 
-                        @Override
-                        public void onComplete() {
+                    }
+                });
 
-                        }
-                    });
-
-        } else {
-            return postDatabase.childDataDao().getAllPosts();
-        }
     }
 
     public Flowable<List<ChildData>> getMorePosts(int limit) {
@@ -133,16 +129,16 @@ public class RedditPostRepository {
                 });
     }
 
+    public Flowable<List<ChildData>> getPostsFromDb() {
+        return postDatabase.childDataDao().getAllPosts();
+    }
+
     public LivePagedListProvider<Integer, ChildData> pagedList() {
         return postDatabase.childDataDao().getPosts();
     }
 
-    private Boolean databaseIsEmpty() {
-        final int[] databaseCount = new int[1];
-
-        new Thread(() -> databaseCount[0] = postDatabase.childDataDao().getNumberofPosts()).start();
-
-        return databaseCount[0] <= 0;
+    public LiveData<List<ChildData>> getPostsLive() {
+        return postDatabase.childDataDao().getPostsLive();
     }
 
     private void filterForImages(Multireddit networkMulti, List<ChildData> childDataList) {

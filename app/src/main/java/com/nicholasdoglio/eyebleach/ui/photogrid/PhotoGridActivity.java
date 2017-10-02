@@ -52,7 +52,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
 
     private int previousTotal = 0;
     private boolean loading = true;
-    private int visibleThreshold = 6;
+    private int visibleThreshold = 3;
     private int firstVisibleItem;
     private int visibleItemCount;
     private int totalItemCount;
@@ -77,7 +77,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
 
         photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         photoGridSwipeRefreshLayout.setOnRefreshListener(() -> {
-            photoGridPresenter.firstLoad();
+            photoGridPresenter.load();
             photoGridSwipeRefreshLayout.setRefreshing(false);
             previousTotal = 0;
             firstVisibleItem = 0;
@@ -132,9 +132,9 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
     }
 
     @Override
-    public void fetchData() {
+    public void fetchData() {// TODO: Sometimes the scroll position gets messed up
         photoGridProgressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
-        photoGridPresenter.firstLoad();
+        photoGridPresenter.load();
         photoGridSwipeRefreshLayout.setRefreshing(false);
     }
 

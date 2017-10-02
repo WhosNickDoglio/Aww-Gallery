@@ -42,11 +42,12 @@ public interface ChildDataDao {
     @Query("SELECT * FROM ChildData")
     LiveData<List<ChildData>> getPostsLive();
 
+    @Query("SELECT thumbnail FROM ChildData")
+//Maybe do it like this instead?
+    LiveData<List<String>> getThumbnails();
+
     @Query("SELECT * FROM ChildData")
     LivePagedListProvider<Integer, ChildData> getPosts();
-
-    @Query("SELECT COUNT(*) FROM ChildData")
-    int getNumberofPosts();
 
     @Query("DELETE FROM ChildData")
     void deleteAll();

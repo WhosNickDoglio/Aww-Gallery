@@ -32,6 +32,8 @@ import butterknife.ButterKnife;
  */
 public class AboutActivity extends AppCompatActivity {
 
+    // TODO: Move this into a dialog fragment
+
     @BindView(R.id.about_recycler_view)
     RecyclerView aboutRecycerlView;
 

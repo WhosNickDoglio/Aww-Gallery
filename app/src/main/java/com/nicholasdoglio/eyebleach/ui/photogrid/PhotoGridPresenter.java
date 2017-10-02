@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author Nicholas Doglio
  */
 public class PhotoGridPresenter implements PhotoGridContract.Presenter {
-    private static final int IMAGES_LOADED_RECYCLERVIEW = 96;
+    private static final int IMAGES_LOADED_RECYCLERVIEW = 48;
     final LiveData<PagedList<ChildData>> childData;
     private final RedditPostRepository repository;
     public PhotoGridContract.View view;
@@ -44,13 +44,13 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
         disposable = new CompositeDisposable();
         childData = repository.pagedList().create(0,
                 new PagedList.Config.Builder()
-                        .setPageSize(24)
-                        .setPrefetchDistance(9)
+                        .setPageSize(18)
+                        .setPrefetchDistance(6)
                         .build());
     }
 
     @Override
-    public void firstLoad() {
+    public void load() {
         disposable.add(repository.getFirstLoadPosts(IMAGES_LOADED_RECYCLERVIEW)
                 .subscribeOn(Schedulers.io())
                 .subscribe());

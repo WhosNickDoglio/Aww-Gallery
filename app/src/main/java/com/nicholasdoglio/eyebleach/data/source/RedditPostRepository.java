@@ -45,51 +45,19 @@ public class RedditPostRepository {
     @Inject
     RedditService redditService;
 
-    private List<ChildData> posts = new ArrayList<>();
-    private List<ChildData> loadMoreList = new ArrayList<>();
+    private List<ChildData> posts;
+    private List<ChildData> loadMoreList;
 
     @Inject
     RedditPostRepository(RedditPostDatabase postDatabase) {
         this.postDatabase = postDatabase;
+        posts = new ArrayList<>();
+        loadMoreList = new ArrayList<>();
     }
 
-    public Flowable<List<ChildData>> getPostsSwipe(int limit) {
+    public Flowable<List<ChildData>> getFirstLoadPosts(int limit) {//No network connection crashes the app
         posts.clear();
-        return redditService.getMultiPosts(limit, "")
-                .map(multireddit -> {
-                    filterForImages(multireddit, posts);
-                    return posts;
-                }).doOnEach(new Subscriber<List<ChildData>>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
 
-                    }
-
-                    @Override
-                    public void onNext(List<ChildData> childData) {
-                        postDatabase.beginTransaction();
-                        try {
-                            postDatabase.childDataDao().deleteAll();
-                            postDatabase.childDataDao().insertChildDataList(childData);
-                            postDatabase.setTransactionSuccessful();
-                        } finally {
-                            postDatabase.endTransaction();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    public Flowable<List<ChildData>> getPosts(int limit) {
         if (databaseIsEmpty()) {
             return redditService.getMultiPosts(limit, "")
                     .map(multireddit -> {
@@ -105,9 +73,9 @@ public class RedditPostRepository {
                         public void onNext(List<ChildData> childData) {
                             postDatabase.beginTransaction();
                             try {
+                                postDatabase.childDataDao().deleteAll();
                                 postDatabase.childDataDao().insertChildDataList(childData);
                                 postDatabase.setTransactionSuccessful();
-
                             } finally {
                                 postDatabase.endTransaction();
                             }
@@ -120,8 +88,10 @@ public class RedditPostRepository {
 
                         @Override
                         public void onComplete() {
+
                         }
                     });
+
         } else {
             return postDatabase.childDataDao().getAllPosts();
         }

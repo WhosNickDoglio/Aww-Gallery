@@ -20,6 +20,7 @@ package com.nicholasdoglio.eyebleach.ui.photogrid;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -34,12 +35,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.AndroidInjection;
 
 /**
  * @author Nicholas Doglio
  */
-public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoGridContract.View {
+public class PhotoGridActivity extends AppCompatActivity implements PhotoGridContract.View {
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout photoGridSwipeRefreshLayout;
     @BindView(R.id.grid_progress)
@@ -61,6 +62,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_grid);
+        AndroidInjection.inject(this);
         ButterKnife.bind(this);
         fetchData();
 
@@ -75,7 +77,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
 
         photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         photoGridSwipeRefreshLayout.setOnRefreshListener(() -> {
-            photoGridPresenter.swipeLoad();
+            photoGridPresenter.firstLoad();
             photoGridSwipeRefreshLayout.setRefreshing(false);
             previousTotal = 0;
             firstVisibleItem = 0;
@@ -132,7 +134,7 @@ public class PhotoGridActivity extends DaggerAppCompatActivity implements PhotoG
     @Override
     public void fetchData() {
         photoGridProgressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
-        photoGridPresenter.load();
+        photoGridPresenter.firstLoad();
         photoGridSwipeRefreshLayout.setRefreshing(false);
     }
 

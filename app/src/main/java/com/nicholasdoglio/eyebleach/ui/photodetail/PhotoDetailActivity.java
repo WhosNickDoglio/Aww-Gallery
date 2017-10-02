@@ -19,6 +19,7 @@ package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -33,12 +34,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.AndroidInjection;
 
 /**
  * @author Nicholas Doglio
  */
-public class PhotoDetailActivity extends DaggerAppCompatActivity implements PhotoDetailContract.View {
+public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetailContract.View {
     @BindView(R.id.gallery_view_pager)
     ViewPager photoDetailViewPager;
     @Inject
@@ -52,18 +53,17 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        AndroidInjection.inject(this);
         ButterKnife.bind(this);
 
         posts = new ArrayList<>();
         photoDetailAdapter = new PhotoDetailAdapter(this, posts);
 
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-
-        photoDetailPresenter.load();
+        photoDetailPresenter.firstLoad();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class PhotoDetailActivity extends DaggerAppCompatActivity implements Phot
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String postUrl = "https://reddit.com" + posts.get(photoDetailViewPager.getCurrentItem()).getPermalink();
+        String postUrl = "https://reddit.com" + posts.get(photoDetailViewPager.getCurrentItem()).getPermalink();//Move this to ChildData as fullUrl
 
         switch (item.getItemId()) {
             case android.R.id.home:

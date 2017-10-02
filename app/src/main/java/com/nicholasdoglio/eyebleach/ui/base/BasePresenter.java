@@ -26,7 +26,7 @@ public interface BasePresenter<T> {
 
     void dropView();
 
-    void load();
+    void firstLoad();
 
     void clear();
 }

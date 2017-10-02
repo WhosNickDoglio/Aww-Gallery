@@ -41,10 +41,8 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
-        AboutAdapter aboutAdapter = new AboutAdapter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        aboutRecycerlView.setLayoutManager(linearLayoutManager);
-        aboutRecycerlView.setAdapter(aboutAdapter);
+        aboutRecycerlView.setLayoutManager(new LinearLayoutManager(this));
+        aboutRecycerlView.setAdapter(new AboutAdapter(this));
         aboutRecycerlView.setHasFixedSize(true);
     }
 }

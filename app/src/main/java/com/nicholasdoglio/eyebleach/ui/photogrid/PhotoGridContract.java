@@ -30,6 +30,5 @@ public interface PhotoGridContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void swipeLoad();
     }
 }

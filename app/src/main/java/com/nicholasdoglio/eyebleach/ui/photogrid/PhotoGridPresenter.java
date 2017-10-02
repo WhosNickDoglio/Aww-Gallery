@@ -50,15 +50,8 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
     }
 
     @Override
-    public void swipeLoad() {
-        disposable.add(repository.getPostsSwipe(IMAGES_LOADED_RECYCLERVIEW)
-                .subscribeOn(Schedulers.io())
-                .subscribe());
-    }
-
-    @Override
-    public void load() {
-        disposable.add(repository.getPosts(IMAGES_LOADED_RECYCLERVIEW)
+    public void firstLoad() {
+        disposable.add(repository.getFirstLoadPosts(IMAGES_LOADED_RECYCLERVIEW)
                 .subscribeOn(Schedulers.io())
                 .subscribe());
     }

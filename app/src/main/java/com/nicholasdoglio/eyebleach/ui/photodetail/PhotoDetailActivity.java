@@ -22,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
@@ -45,7 +46,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
     @Inject
     PhotoDetailPresenter photoDetailPresenter;
 
-    private List<ChildData> posts;
+    private List<ChildData> posts = new ArrayList<>();
     private int index = 0;
     private PhotoDetailAdapter photoDetailAdapter;
 
@@ -56,14 +57,32 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         AndroidInjection.inject(this);
         ButterKnife.bind(this);
 
-        posts = new ArrayList<>();
-        photoDetailAdapter = new PhotoDetailAdapter(this, posts);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         photoDetailPresenter.load();
+
+        photoDetailViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == photoDetailAdapter.loadMoreCallPosition()) {
+                    photoDetailPresenter.loadMore();
+                    Toast.makeText(PhotoDetailActivity.this, "THIS IS WHERE I WOULD LOAD", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -92,14 +111,24 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public void updateList(List<ChildData> childDataList) {
-        for (int i = 0; i < childDataList.size(); i++) {
-            if (childDataList.get(i).getId().equals(getIntent().getStringExtra("ID"))) {
-                index = childDataList.indexOf(childDataList.get(i));
+        posts.addAll(childDataList);
+        photoDetailAdapter = new PhotoDetailAdapter(this, posts);
+        photoDetailViewPager.setAdapter(photoDetailAdapter);
+        setPosition();
+
+    }
+
+    public void addMorePosts(List<ChildData> childData) {
+        posts.addAll(childData);
+        photoDetailAdapter.notifyDataSetChanged();
+    }
+
+    public void setPosition() {
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(getIntent().getStringExtra("ID"))) {
+                index = posts.indexOf(posts.get(i));
             }
         }
-
-        posts.addAll(childDataList);
-        photoDetailViewPager.setAdapter(photoDetailAdapter);
         photoDetailViewPager.setCurrentItem(index);
     }
 

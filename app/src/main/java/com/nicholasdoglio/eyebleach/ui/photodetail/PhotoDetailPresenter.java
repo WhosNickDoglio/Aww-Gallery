@@ -50,7 +50,7 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     public void loadMore() {
         compositeDisposable.add(repository.getMorePosts(IMAGES_LOAD_VIEWPAGER)
                 .subscribeOn(Schedulers.io())
-                .subscribe());
+                .subscribe(childData -> view.addMorePosts(childData)));
     }
 
     @Override

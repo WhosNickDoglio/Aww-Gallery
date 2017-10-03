@@ -29,6 +29,8 @@ import java.util.List;
 public interface PhotoDetailContract {
     interface View extends BaseView<Presenter> {
         void updateList(List<ChildData> childDataList);
+
+        void addMorePosts(List<ChildData> childData);
     }
 
     interface Presenter extends BasePresenter<View> {

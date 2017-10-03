@@ -22,7 +22,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
-import com.nicholasdoglio.eyebleach.data.source.remote.RedditService;
+import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
 
 import javax.inject.Singleton;
 
@@ -45,13 +45,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RedditService providesRedditService() {
+    RedditAPI providesRedditService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.reddit.com/")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        return retrofit.create(RedditService.class);
+        return retrofit.create(RedditAPI.class);
     }
 
     @Provides

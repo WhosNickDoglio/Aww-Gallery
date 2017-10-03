@@ -19,6 +19,7 @@ package com.nicholasdoglio.eyebleach.data.source.remote
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit
 import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -26,9 +27,9 @@ import retrofit2.http.Query
 /**
  * @author Nicholas Doglio
  */
-interface RedditService {
+interface RedditAPI {
     @GET("user/NicholasDoglio/m/awwgallery/.json")
-    fun getMultiPosts(@Query("limit") limit: Int, @Query("after") after: String): Flowable<Multireddit>
+    fun getMultiPosts(@Query("limit") limit: Int, @Query("after") after: String): Single<Multireddit>
 
     @GET("r/{subreddit}/.json")
     fun getSubPosts(@Path("subreddit") subreddit: String, @Query("limit") limit: Int, @Query("after") after: String): Flowable<Multireddit>

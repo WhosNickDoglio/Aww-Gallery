@@ -78,7 +78,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
         photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         photoGridSwipeRefreshLayout.setOnRefreshListener(() -> {
             photoGridPresenter.load();
-            photoGridSwipeRefreshLayout.setRefreshing(false);
+            photoGridSwipeRefreshLayout.setRefreshing(false);//Connect this with network request
             previousTotal = 0;
             firstVisibleItem = 0;
             visibleItemCount = 0;
@@ -90,8 +90,6 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
         photoGridRecyclerView.setLayoutManager(layoutManager);
         photoGridPresenter.childData.observe(PhotoGridActivity.this, photoGridAdapter::setList);
         photoGridRecyclerView.setAdapter(photoGridAdapter);
-
-        photoGridProgressBar.setVisibility(View.INVISIBLE);
 
         photoGridRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -113,6 +111,8 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
                 }
             }
         });
+
+        photoGridProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -53,8 +53,8 @@ class PhotoDetailAdapter extends PagerAdapter {
     }
 
 
-    public int loadMoreCallPosition() {
-        return images.size() - 5;
+    int loadMoreCallPosition() {
+        return images.size() - 8;
     }
 
     @Override

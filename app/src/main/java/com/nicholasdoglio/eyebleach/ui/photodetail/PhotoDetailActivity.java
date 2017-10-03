@@ -22,7 +22,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
@@ -30,6 +29,7 @@ import com.nicholasdoglio.eyebleach.util.Intents;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -73,9 +73,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
             public void onPageSelected(int position) {
                 if (position == photoDetailAdapter.loadMoreCallPosition()) {
                     photoDetailPresenter.loadMore();
-                    Toast.makeText(PhotoDetailActivity.this, "THIS IS WHERE I WOULD LOAD", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -125,7 +123,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     public void setPosition() {
         for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId().equals(getIntent().getStringExtra("ID"))) {
+            if (Objects.equals(posts.get(i).getId(), getIntent().getStringExtra("ID"))) {
                 index = posts.indexOf(posts.get(i));
             }
         }

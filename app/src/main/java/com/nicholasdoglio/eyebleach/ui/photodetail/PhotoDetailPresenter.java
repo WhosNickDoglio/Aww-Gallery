@@ -77,28 +77,6 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     }
 
 
-    public void loadPosition(List<ChildData> childDataList) {
-        compositeDisposable.add(repository.getPostsPosition()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<ChildData>() {
-                    @Override
-                    public void onNext(ChildData childData) {
-                        childDataList.add(childData);
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                }));
-    }
-
     public void loadMore() {
         compositeDisposable.add(repository.getMorePosts(IMAGES_LOAD_PHOTODETAIL)
                 .subscribeOn(Schedulers.io())

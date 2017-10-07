@@ -18,6 +18,7 @@
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -27,11 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nicholasdoglio.eyebleach.R;
-import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.util.Intents;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -50,9 +47,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
     PhotoDetailPresenter photoDetailPresenter;
 
     private PhotoDetailAdapter photoDetailAdapter;
-    private String postUrl;
-    private int position;
-    private List<ChildData> childDataList = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
 
     private int previousTotal = 0;
     private boolean loading = true;
@@ -69,23 +64,25 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         AndroidInjection.inject(this);
         ButterKnife.bind(this);
         photoDetailPresenter.load();
-        photoDetailPresenter.loadPosition(childDataList);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        position = getIntent().getIntExtra("POSITION", 0);
-
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(photoDetailRecyclerView);
         photoDetailAdapter = new PhotoDetailAdapter(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         photoDetailRecyclerView.setAdapter(photoDetailAdapter);
         photoDetailRecyclerView.setLayoutManager(layoutManager);
+        photoDetailRecyclerView.setHasFixedSize(true);
+
+        //I don't like this but it seems like the only thing that consistently opens up to the right photo
+        new Handler().postDelayed(() -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(getIntent().getExtras().getInt("POSITION")), 200);
+
         photoDetailPresenter.photoDetailPagedList.observe(PhotoDetailActivity.this, childData -> photoDetailAdapter.setList(childData));
-        photoDetailRecyclerView.getLayoutManager().scrollToPosition(position);
         photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);
+
 
         photoDetailRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -102,11 +99,16 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    photoDetailPresenter.loadMore();
+                    loadMore();
                     loading = true;
                 }
             }
         });
+    }
+
+    public void loadMore() {
+        photoDetailPresenter.loadMore();
+        photoDetailAdapter.notifyItemRangeChanged(0, photoDetailAdapter.getItemCount());
     }
 
     @Override
@@ -117,6 +119,8 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String postUrl = photoDetailAdapter.getCurrentList().get(layoutManager.findFirstVisibleItemPosition()).fullUrl();
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();

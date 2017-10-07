@@ -63,7 +63,6 @@ public class Intents {
         view.getContext().startActivity(photoDetailIntent);
     }
 
-
     public static void startAboutActivity(Context context) {
         Intent aboutIntent = new Intent(context, AboutActivity.class);
         context.startActivity(aboutIntent);

@@ -42,6 +42,7 @@ import butterknife.ButterKnife;
  * @author Nicholas Doglio
  */
 public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapter.PhotoGridViewHolder> {
+
     private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
         @Override
         public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
@@ -53,7 +54,6 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
             return oldItem.equals(newItem);
         }
     };
-
     // TODO: Need to add loading footer
     private Context photoGridContext;
 
@@ -75,16 +75,15 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
         if (childData != null) {
             holder.bindTo(childData);
         }
-
-        holder.photoGridThumbnailImageView.setOnClickListener(view -> Intents.startDetailActivity(view, position));
     }
 
-    class PhotoGridViewHolder extends RecyclerView.ViewHolder {
+    class PhotoGridViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.image_grid)
         ImageView photoGridThumbnailImageView;
 
         PhotoGridViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
         }
 
@@ -96,6 +95,11 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
                     .load(childData.getThumbnail())
                     .apply(options)
                     .into(photoGridThumbnailImageView);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intents.startDetailActivity(view, getAdapterPosition());
         }
     }
 }

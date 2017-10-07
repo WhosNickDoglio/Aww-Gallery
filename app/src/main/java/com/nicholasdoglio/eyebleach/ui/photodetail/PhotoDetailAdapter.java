@@ -88,5 +88,7 @@ public class PhotoDetailAdapter extends PagedListAdapter<ChildData, PhotoDetailA
                     .load(childData.getUrl())
                     .into(photoDetailImageView);
         }
+
+
     }
 }

@@ -39,12 +39,14 @@ public interface ChildDataDao {
     @Query("SELECT * FROM ChildData")
     Flowable<List<ChildData>> getAllPosts();
 
+    @Query("SELECT * FROM ChildData ")
+    Flowable<ChildData> getPostsForPosition();
+
     @Query("SELECT * FROM ChildData")
     LiveData<List<ChildData>> getPostsLive();
 
     @Query("SELECT thumbnail FROM ChildData")
-//Maybe do it like this instead?
-    LiveData<List<String>> getThumbnails();
+    LiveData<List<String>> getThumbnails(); //Maybe do it like this instead?
 
     @Query("SELECT * FROM ChildData")
     LivePagedListProvider<Integer, ChildData> getPosts();

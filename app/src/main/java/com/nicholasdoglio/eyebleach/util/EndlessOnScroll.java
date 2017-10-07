@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,13 +14,24 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+ */
+package com.nicholasdoglio.eyebleach.util;
 
-    <item
-        android:id="@+id/about_item"
-        android:icon="@drawable/ic_about"
-        android:title="@string/about_menu_item"
-        app:showAsAction="never" />
-</menu>
+import android.support.v7.widget.RecyclerView;
+
+/**
+ * @author Nicholas Doglio
+ */
+public class EndlessOnScroll extends RecyclerView.OnScrollListener {
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 3;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int totalItemCount;
+
+    @Override
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
+    }
+}

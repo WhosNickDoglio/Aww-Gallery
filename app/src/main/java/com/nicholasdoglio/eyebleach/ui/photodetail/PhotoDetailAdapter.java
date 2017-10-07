@@ -17,8 +17,11 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
+import android.arch.paging.PagedListAdapter;
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
+import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,57 +31,62 @@ import com.bumptech.glide.Glide;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author Nicholas Doglio
  */
-class PhotoDetailAdapter extends PagerAdapter {
-    private Context context;
-    private LayoutInflater layoutInflater;
-    private List<ChildData> images = new ArrayList<>();
+public class PhotoDetailAdapter extends PagedListAdapter<ChildData, PhotoDetailAdapter.PhotoDetailViewHolder> {
+    private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
+            return Objects.equals(oldItem.getId(), newItem.getId());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 
     //TODO: add a loading screen for images instead of just appearing, looking into Glide transitions
+    private Context photoDetailContext;
 
-    PhotoDetailAdapter(Context context, List<ChildData> posts) {
-        this.context = context;
-        layoutInflater = LayoutInflater.from(context);
-        images = posts;
+    PhotoDetailAdapter(Context photoDetailContext) {
+        super(DIFF_CALLBACK);
+        this.photoDetailContext = photoDetailContext;
     }
 
     @Override
-    public int getCount() {
-        return images.size();
-    }
-
-
-    int loadMoreCallPosition() {
-        return images.size() - 8;
+    public PhotoDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View regularView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_gallery_item, parent, false);
+        return new PhotoDetailViewHolder(regularView);
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+    public void onBindViewHolder(PhotoDetailViewHolder holder, int position) {
+        ChildData childData = getItem(position);
+        if (childData != null) {
+            holder.bindTo(childData);
+        }
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        View itemView = layoutInflater.inflate(R.layout.gallery_photo_detail, container, false);
+    class PhotoDetailViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.gallery_photo)
+        ImageView photoDetailImageView;
 
-        ImageView imageView = itemView.findViewById(R.id.gallery_photo);
+        PhotoDetailViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
 
-        Glide.with(context)
-                .load(images.get(position).getUrl())
-                .into(imageView);
-
-        container.addView(itemView);
-
-        return itemView;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+        void bindTo(ChildData childData) {
+            Glide.with(photoDetailContext)
+                    .load(childData.getUrl())
+                    .into(photoDetailImageView);
+        }
     }
 }

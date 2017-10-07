@@ -17,20 +17,15 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
-import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.ui.base.BasePresenter;
 import com.nicholasdoglio.eyebleach.ui.base.BaseView;
-
-import java.util.List;
 
 /**
  * @author Nicholas Doglio
  */
 public interface PhotoDetailContract {
     interface View extends BaseView<Presenter> {
-        void updateList(List<ChildData> childDataList);
 
-        void addMorePosts(List<ChildData> childData);
     }
 
     interface Presenter extends BasePresenter<View> {

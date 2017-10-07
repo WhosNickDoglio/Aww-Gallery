@@ -57,11 +57,12 @@ public class Intents {
         }
     }
 
-    public static void startDetailActivity(View view, String id) {
+    public static void startDetailActivity(View view, int position) {
         Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
-        photoDetailIntent.putExtra("ID", id);
+        photoDetailIntent.putExtra("POSITION", position);
         view.getContext().startActivity(photoDetailIntent);
     }
+
 
     public static void startAboutActivity(Context context) {
         Intent aboutIntent = new Intent(context, AboutActivity.class);

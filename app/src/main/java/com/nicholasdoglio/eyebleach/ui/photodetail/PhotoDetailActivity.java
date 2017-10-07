@@ -18,8 +18,11 @@
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,7 +32,6 @@ import com.nicholasdoglio.eyebleach.util.Intents;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -41,14 +43,24 @@ import dagger.android.AndroidInjection;
  * @author Nicholas Doglio
  */
 public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetailContract.View {
-    @BindView(R.id.gallery_view_pager)
-    ViewPager photoDetailViewPager;
+    @BindView(R.id.gallery_recyclerview)
+    RecyclerView photoDetailRecyclerView;
+
     @Inject
     PhotoDetailPresenter photoDetailPresenter;
 
-    private List<ChildData> posts = new ArrayList<>();
-    private int index = 0;
     private PhotoDetailAdapter photoDetailAdapter;
+    private String postUrl;
+    private int position;
+    private List<ChildData> childDataList = new ArrayList<>();
+
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 1;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int totalItemCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,29 +68,43 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         setContentView(R.layout.activity_gallery);
         AndroidInjection.inject(this);
         ButterKnife.bind(this);
+        photoDetailPresenter.load();
+        photoDetailPresenter.loadPosition(childDataList);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        photoDetailPresenter.load();
+        position = getIntent().getIntExtra("POSITION", 0);
 
-        photoDetailViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(photoDetailRecyclerView);
+        photoDetailAdapter = new PhotoDetailAdapter(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        photoDetailRecyclerView.setAdapter(photoDetailAdapter);
+        photoDetailRecyclerView.setLayoutManager(layoutManager);
+        photoDetailPresenter.photoDetailPagedList.observe(PhotoDetailActivity.this, childData -> photoDetailAdapter.setList(childData));
+        photoDetailRecyclerView.getLayoutManager().scrollToPosition(position);
+        photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);
+
+        photoDetailRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = recyclerView.getChildCount();
+                totalItemCount = layoutManager.getItemCount();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == photoDetailAdapter.loadMoreCallPosition()) {
-                    photoDetailPresenter.loadMore();
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
                 }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    photoDetailPresenter.loadMore();
+                    loading = true;
+                }
             }
         });
     }
@@ -91,8 +117,6 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String postUrl = "https://reddit.com" + posts.get(photoDetailViewPager.getCurrentItem()).getPermalink();//Move this to ChildData as fullUrl
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -105,29 +129,6 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
                 return true;
         }
         return true;
-    }
-
-    @Override
-    public void updateList(List<ChildData> childDataList) {
-        posts.addAll(childDataList);
-        photoDetailAdapter = new PhotoDetailAdapter(this, posts);
-        photoDetailViewPager.setAdapter(photoDetailAdapter);
-        setPosition();
-
-    }
-
-    public void addMorePosts(List<ChildData> childData) {
-        posts.addAll(childData);
-        photoDetailAdapter.notifyDataSetChanged();
-    }
-
-    public void setPosition() {
-        for (int i = 0; i < posts.size(); i++) {
-            if (Objects.equals(posts.get(i).getId(), getIntent().getStringExtra("ID"))) {
-                index = posts.indexOf(posts.get(i));
-            }
-        }
-        photoDetailViewPager.setCurrentItem(index);
     }
 
     @Override

@@ -21,7 +21,7 @@ All planned work is detailed [here](https://docs.google.com/spreadsheets/d/1obxJ
 
 # Changelog
 
-Full channgelog is available [here](https://docs.google.com/document/d/1KriXSuIBzZmCEcSCxeP1XKUS8CCNRQiMPCmnc9YHvK8/edit?usp=sharing)
+Full channgelog is available [here]()
 
 # Libraries
 

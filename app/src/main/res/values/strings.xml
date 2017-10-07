@@ -21,4 +21,7 @@
     <string name="open_in_browser">Open image source in browser</string>
     <string name="empty_view_text">Unable to download images</string>
     <string name="about_image_content_description">Cute photo of a cat</string>
+    <string name="open_source_menu_item">Open source</string>
+    <string name="share_menu_item">Share</string>
+    <string name="about_menu_item">About</string>
 </resources>

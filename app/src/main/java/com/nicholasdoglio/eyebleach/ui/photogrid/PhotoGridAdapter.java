@@ -41,7 +41,7 @@ import butterknife.ButterKnife;
 /**
  * @author Nicholas Doglio
  */
-public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapter.ViewHolder> {
+public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapter.PhotoGridViewHolder> {
     private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
         @Override
         public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
@@ -53,38 +53,37 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
             return oldItem.equals(newItem);
         }
     };
-    private Context context;
 
-    PhotoGridAdapter(Context context) {
+    // TODO: Need to add loading footer
+    private Context photoGridContext;
+
+    PhotoGridAdapter(Context photoGridContext) {
         super(DIFF_CALLBACK);
-        this.context = context;
+        this.photoGridContext = photoGridContext;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PhotoGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View regularView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_grid_item, parent, false);
-        return new ViewHolder(regularView);
+        return new PhotoGridViewHolder(regularView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(PhotoGridViewHolder holder, int position) {
         ChildData childData = getItem(position);
-        String id = "";
 
         if (childData != null) {
             holder.bindTo(childData);
-            id = childData.getId();
         }
 
-        String finalId = id;
-        holder.imageView.setOnClickListener(view -> Intents.startDetailActivity(view, finalId));
+        holder.photoGridThumbnailImageView.setOnClickListener(view -> Intents.startDetailActivity(view, position));
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class PhotoGridViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.image_grid)
-        ImageView imageView;
+        ImageView photoGridThumbnailImageView;
 
-        ViewHolder(View itemView) {
+        PhotoGridViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -93,9 +92,10 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
             RequestOptions options = new RequestOptions()
                     .error(R.drawable.cat_error);
 
-            Glide.with(context).load(childData.getThumbnail())
+            Glide.with(photoGridContext)
+                    .load(childData.getThumbnail())
                     .apply(options)
-                    .into(imageView);
+                    .into(photoGridThumbnailImageView);
         }
     }
 }

@@ -39,13 +39,30 @@ import butterknife.ButterKnife;
  * @author Nicholas Doglio
  */
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> {
-    private Context context;
+    private Context aboutContext;
 
     private List<AboutInfo> aboutList = new ArrayList<>();
 
-    AboutAdapter(Context context) {
-        this.context = context;
-        populateList(context);
+    AboutAdapter(Context aboutContext) {
+        this.aboutContext = aboutContext;
+        populateList(aboutContext);
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_about_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.aboutContentImageView.setImageResource(aboutList.get(position).getImageID());
+        holder.aboutContentDescriptionImageView.setText(aboutList.get(position).getContentName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return aboutList.size();
     }
 
     private void populateList(Context context) {
@@ -57,28 +74,11 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         aboutList.add(new AboutInfo(R.drawable.designer_photo, "Icon & Graphics by Guzman Gonzalez", "http://guzzgonzalez.com/"));
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_about_item, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.contentPhoto.setImageResource(aboutList.get(position).getImageID());
-        holder.contentDescription.setText(aboutList.get(position).getContentName());
-    }
-
-    @Override
-    public int getItemCount() {
-        return aboutList.size();
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.content_photo)
-        ImageView contentPhoto;
+        ImageView aboutContentImageView;
         @BindView(R.id.content_description)
-        TextView contentDescription;
+        TextView aboutContentDescriptionImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -89,9 +89,9 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
             if (getAdapterPosition() == 1) {
-                Intents.composeEmail(context);
+                Intents.composeEmail(aboutContext);
             } else {
-                Intents.openWebPage(context, aboutList.get(getAdapterPosition()).getContentLink());
+                Intents.openWebPage(aboutContext, aboutList.get(getAdapterPosition()).getContentLink());
 
             }
         }

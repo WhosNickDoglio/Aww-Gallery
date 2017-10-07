@@ -39,4 +39,6 @@ class ChildData {
     @NotNull
     @Json(name = "id")
     var id: String? = null
+
+    fun fullUrl() = "https://reddit.com$permalink"
 }

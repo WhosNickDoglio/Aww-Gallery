@@ -21,12 +21,12 @@
     <item
         android:id="@+id/share_item"
         android:icon="@drawable/ic_share"
-        android:title="Share"
+        android:title="@string/share_menu_item"
         app:showAsAction="never" />
     <item
         android:id="@+id/open_source"
         android:icon="@drawable/ic_open_source"
-        android:title="Open source"
+        android:title="@string/open_source_menu_item"
         app:showAsAction="never" />
 </menu>
 

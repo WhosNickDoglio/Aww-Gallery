@@ -76,20 +76,13 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
         }
 
         photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        photoGridSwipeRefreshLayout.setOnRefreshListener(() -> {
-            photoGridPresenter.load();
-            photoGridSwipeRefreshLayout.setRefreshing(false);//Connect this with network request
-            previousTotal = 0;
-            firstVisibleItem = 0;
-            visibleItemCount = 0;
-            totalItemCount = 0;
-
-        });
+        photoGridSwipeRefreshLayout.setOnRefreshListener(this::refresh);
 
         photoGridRecyclerView.setHasFixedSize(true);
         photoGridRecyclerView.setLayoutManager(layoutManager);
-        photoGridPresenter.childData.observe(PhotoGridActivity.this, photoGridAdapter::setList);
+        photoGridPresenter.photoGridPagedList.observe(PhotoGridActivity.this, photoGridAdapter::setList);
         photoGridRecyclerView.setAdapter(photoGridAdapter);
+        photoGridRecyclerView.getItemAnimator().setChangeDuration(0);
 
         photoGridRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -111,8 +104,6 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
                 }
             }
         });
-
-        photoGridProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -131,10 +122,27 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
         return true;
     }
 
+    public void refresh() {//Sometimes position moves, want it to stay at the top
+        photoGridPresenter.load();
+        previousTotal = 0;
+        firstVisibleItem = 0;
+        visibleItemCount = 0;
+        totalItemCount = 0;
+        photoGridRecyclerView.getLayoutManager().scrollToPosition(0);
+    }
+
     @Override
     public void fetchData() {// TODO: Sometimes the scroll position gets messed up
-        photoGridProgressBar.setVisibility(View.VISIBLE); //Stopped working with addition of Paging library
         photoGridPresenter.load();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        photoGridProgressBar.setVisibility(View.INVISIBLE); //I only want the progress bar when photoGridRecyclerView is empty, how?
+    }
+
+    @Override
+    public void hideRefreshLayoutLoad() {
         photoGridSwipeRefreshLayout.setRefreshing(false);
     }
 

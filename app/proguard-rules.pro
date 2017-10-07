@@ -26,3 +26,6 @@
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
+-keep class * implements android.arch.lifecycle.GeneratedAdapter {<init>(...);}

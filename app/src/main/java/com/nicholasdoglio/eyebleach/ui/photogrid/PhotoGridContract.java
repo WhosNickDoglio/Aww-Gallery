@@ -27,6 +27,11 @@ import com.nicholasdoglio.eyebleach.ui.base.BaseView;
 public interface PhotoGridContract {
     interface View extends BaseView<Presenter> {
         void fetchData();
+
+        void hideProgressBar();
+
+        void hideRefreshLayoutLoad();
+
     }
 
     interface Presenter extends BasePresenter<View> {

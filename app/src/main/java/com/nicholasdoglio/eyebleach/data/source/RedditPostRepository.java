@@ -19,6 +19,7 @@ package com.nicholasdoglio.eyebleach.data.source;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.LivePagedListProvider;
+import android.util.Log;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit;
@@ -39,8 +40,8 @@ import io.reactivex.Single;
  */
 @Singleton
 public class RedditPostRepository {
+    private static final String TAG = RedditPostRepository.class.getSimpleName();
     private final RedditPostDatabase postDatabase;
-
     @Inject
     RedditAPI redditAPI;
 
@@ -69,9 +70,8 @@ public class RedditPostRepository {
                     } finally {
                         postDatabase.endTransaction();
                     }
-                });
+                }).doOnError(throwable -> Log.d(TAG, "accept: " + throwable.getMessage()));
     }
-
 
     public Single<List<ChildData>> getMorePosts(int limit) {
         return redditAPI.getMultiPosts(limit, "t3_" + posts.get(posts.size() - 1).getId())
@@ -89,14 +89,18 @@ public class RedditPostRepository {
                     }
                     posts.addAll(childData);
                     loadMoreList.clear();
-                });
+                }).doOnError(throwable -> Log.d(TAG, "accept: " + throwable.getMessage()));
+    }
+
+    public Flowable<ChildData> getPostsPosition() {
+        return postDatabase.childDataDao().getPostsForPosition();
     }
 
     public Flowable<List<ChildData>> getPostsFromDb() {
         return postDatabase.childDataDao().getAllPosts();
     }
 
-    public LivePagedListProvider<Integer, ChildData> pagedList() {
+    public LivePagedListProvider<Integer, ChildData> getPostsForPagedList() {
         return postDatabase.childDataDao().getPosts();
     }
 

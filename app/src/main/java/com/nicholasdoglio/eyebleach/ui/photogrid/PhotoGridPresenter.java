@@ -19,30 +19,35 @@ package com.nicholasdoglio.eyebleach.ui.photogrid;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
+import android.util.Log;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.source.RedditPostRepository;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Nicholas Doglio
  */
 public class PhotoGridPresenter implements PhotoGridContract.Presenter {
-    private static final int IMAGES_LOADED_RECYCLERVIEW = 48;
-    final LiveData<PagedList<ChildData>> childData;
+    private static final String TAG = PhotoGridPresenter.class.getSimpleName();
+    private static final int IMAGES_LOADED_PHOTOGRIDVIEW = 48;
+    final LiveData<PagedList<ChildData>> photoGridPagedList;
     private final RedditPostRepository repository;
-    public PhotoGridContract.View view;
-    private CompositeDisposable disposable;
+    private PhotoGridContract.View photoGridView;
+    private CompositeDisposable photoGridDisposable;
 
     @Inject
     PhotoGridPresenter(RedditPostRepository redditPostRepository) {
         repository = redditPostRepository;
-        disposable = new CompositeDisposable();
-        childData = repository.pagedList().create(0,
+        photoGridDisposable = new CompositeDisposable();
+        photoGridPagedList = repository.getPostsForPagedList().create(0,
                 new PagedList.Config.Builder()
                         .setPageSize(18)
                         .setPrefetchDistance(6)
@@ -51,29 +56,50 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
 
     @Override
     public void load() {
-        disposable.add(repository.getPostsFirstLoad(IMAGES_LOADED_RECYCLERVIEW)
+        photoGridDisposable.add(repository.getPostsFirstLoad(IMAGES_LOADED_PHOTOGRIDVIEW)
                 .subscribeOn(Schedulers.io())
-                .subscribe());
+                .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
+                    @Override
+                    public void onSuccess(List<ChildData> childData) {
+                        photoGridView.hideProgressBar();
+                        photoGridView.hideRefreshLayoutLoad();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
+                    }
+                }));
     }
 
     void loadMore() {
-        disposable.add(repository.getMorePosts(IMAGES_LOADED_RECYCLERVIEW)
+        photoGridDisposable.add(repository.getMorePosts(IMAGES_LOADED_PHOTOGRIDVIEW)
                 .subscribeOn(Schedulers.io())
-                .subscribe());
+                .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
+                    @Override
+                    public void onSuccess(List<ChildData> childData) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
+                    }
+                }));
     }
 
     @Override
     public void clear() {
-        disposable.clear();
+        photoGridDisposable.clear();
     }
 
     @Override
     public void takeView(PhotoGridContract.View view) {
-        this.view = view;
+        this.photoGridView = view;
     }
 
     @Override
     public void dropView() {
-        view = null;
+        photoGridView = null;
     }
 }

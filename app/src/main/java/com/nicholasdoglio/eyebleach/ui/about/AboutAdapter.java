@@ -68,7 +68,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
     private void populateList(Context context) {
         aboutList.add(new AboutInfo(R.drawable.ic_info, Intents.provideVersion(context), ""));//Add Github releases link
         aboutList.add(new AboutInfo(R.drawable.ic_feedback, "Feedback", ""));
-        aboutList.add(new AboutInfo(R.drawable.ic_info, "Libraries", "https://htmlpreview.github.io/?"));//create HTML for libs
+        aboutList.add(new AboutInfo(R.drawable.ic_info, "Libraries", "https://htmlpreview.github.io/?https://github.com/WhosNickDoglio/Aww-Gallery/blob/master/libaries.html"));//create HTML for libs
         aboutList.add(new AboutInfo(R.drawable.ic_github, "Source code", "https://github.com/WhosNickDoglio/Aww-Gallery"));
         aboutList.add(new AboutInfo(R.drawable.dev_photo, "Developed by Nicholas Doglio", "https://whosnickdoglio.github.io/"));
         aboutList.add(new AboutInfo(R.drawable.designer_photo, "Icon & Graphics by Guzman Gonzalez", "http://guzzgonzalez.com/"));

@@ -21,10 +21,10 @@ All planned work is detailed [here](https://docs.google.com/spreadsheets/d/1obxJ
 
 # Changelog
 
-Full channgelog is available [here]()
+Full channgelog is available [here](https://github.com/WhosNickDoglio/Aww-Gallery/releases)
 
 # Libraries
-
+- [Android Support](https://developer.android.com/topic/libraries/support-library/index.html) 
 - [Glide](https://bumptech.github.io/glide/)
 - [Retrofit 2](https://square.github.io/retrofit/)
 - [Moshi](https://github.com/square/moshi)
@@ -32,6 +32,10 @@ Full channgelog is available [here]()
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 - [Butterknife](https://jakewharton.github.io/butterknife/)
 - [Dagger2](https://google.github.io/dagger/)
+- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html)
+  - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
+  - [Paging](https://developer.android.com/topic/libraries/architecture/paging.html)
+  
 
 # Feedback
 
@@ -44,6 +48,24 @@ Feel free to contact me:
 [Email](mailto:NicholasDoglio@Gmail.com)
 
 # License 
-
-This project is licensed under GNU General Public License v3.0. see the [LICENSE](LICENSE) for more details. 
+  
+      Aww Gallery
+      
+      Copyright (C) 2017  Nicholas Doglio
+      
+  
+      This program is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+      
+  
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+      
+  
+      You should have received a copy of the GNU General Public License
+      along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                

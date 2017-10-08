@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photogrid;
+package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.arch.paging.PagedListAdapter;
 import android.content.Context;

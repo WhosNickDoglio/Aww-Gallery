@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photogrid;
+package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -40,7 +40,7 @@ import dagger.android.AndroidInjection;
 /**
  * @author Nicholas Doglio
  */
-public class PhotoGridActivity extends AppCompatActivity implements PhotoGridContract.View {
+public class PhotoListActivity extends AppCompatActivity implements PhotoListContract.View {
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout photoGridSwipeRefreshLayout;
     @BindView(R.id.grid_progress)
@@ -48,7 +48,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
     @BindView(R.id.grid_recycler)
     RecyclerView photoGridRecyclerView;
     @Inject
-    PhotoGridPresenter photoGridPresenter;
+    PhotoListPresenter photoListPresenter;
 
     private int previousTotal = 0;
     private boolean loading = true;
@@ -80,7 +80,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
 
         photoGridRecyclerView.setHasFixedSize(true);
         photoGridRecyclerView.setLayoutManager(layoutManager);
-        photoGridPresenter.photoGridPagedList.observe(PhotoGridActivity.this, photoGridAdapter::setList);
+        photoListPresenter.photoGridPagedList.observe(PhotoListActivity.this, photoGridAdapter::setList);
         photoGridRecyclerView.setAdapter(photoGridAdapter);
         photoGridRecyclerView.getItemAnimator().setChangeDuration(0);
 
@@ -99,7 +99,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    photoGridPresenter.loadMore();
+                    photoListPresenter.loadMore();
                     loading = true;
                 }
             }
@@ -123,7 +123,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
     }
 
     public void refresh() {//Sometimes position moves, want it to stay at the top
-        photoGridPresenter.load();
+        photoListPresenter.load();
         previousTotal = 0;
         firstVisibleItem = 0;
         visibleItemCount = 0;
@@ -133,7 +133,7 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
 
     @Override
     public void fetchData() {// TODO: Sometimes the scroll position gets messed up
-        photoGridPresenter.load();
+        photoListPresenter.load();
     }
 
     @Override
@@ -149,18 +149,18 @@ public class PhotoGridActivity extends AppCompatActivity implements PhotoGridCon
     @Override
     protected void onResume() {
         super.onResume();
-        photoGridPresenter.takeView(this);
+        photoListPresenter.takeView(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        photoGridPresenter.clear();
+        photoListPresenter.clear();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        photoGridPresenter.clear();
+        photoListPresenter.clear();
     }
 }

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.photogrid.PhotoGridActivity"
+            android:name=".ui.photolist.PhotoListActivity"
             android:theme="@style/LaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,10 @@
         </activity>
         <activity
             android:name=".ui.about.AboutActivity"
-            android:parentActivityName=".ui.photogrid.PhotoGridActivity" />
+            android:parentActivityName=".ui.photolist.PhotoListActivity" />
         <activity
             android:name=".ui.photodetail.PhotoDetailActivity"
-            android:parentActivityName=".ui.photogrid.PhotoGridActivity"
+            android:parentActivityName=".ui.photolist.PhotoListActivity"
             android:theme="@style/PhotoDetailScreen" />
     </application>
 

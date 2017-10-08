@@ -19,8 +19,8 @@ package com.nicholasdoglio.eyebleach.di;
 
 import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
 import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailModule;
-import com.nicholasdoglio.eyebleach.ui.photogrid.PhotoGridActivity;
-import com.nicholasdoglio.eyebleach.ui.photogrid.PhotoGridModule;
+import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListActivity;
+import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -32,8 +32,8 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = PhotoGridModule.class)
-    abstract PhotoGridActivity bindPhotoGridActivity();
+    @ContributesAndroidInjector(modules = PhotoListModule.class)
+    abstract PhotoListActivity bindPhotoGridActivity();
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = PhotoDetailModule.class)

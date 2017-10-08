@@ -15,20 +15,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photogrid;
+package com.nicholasdoglio.eyebleach.ui.photolist;
 
-import com.nicholasdoglio.eyebleach.di.ActivityScoped;
 
-import dagger.Binds;
-import dagger.Module;
+import com.nicholasdoglio.eyebleach.ui.base.BasePresenter;
+import com.nicholasdoglio.eyebleach.ui.base.BaseView;
 
 /**
  * @author Nicholas Doglio
  */
-@Module
-public abstract class PhotoGridModule {
+public interface PhotoListContract {
+    interface View extends BaseView<Presenter> {
+        void fetchData();
 
-    @ActivityScoped
-    @Binds
-    abstract PhotoGridContract.Presenter photoGridPresenter(PhotoGridPresenter presenter);
+        void hideProgressBar();
+
+        void hideRefreshLayoutLoad();
+
+    }
+
+    interface Presenter extends BasePresenter<View> {
+    }
 }

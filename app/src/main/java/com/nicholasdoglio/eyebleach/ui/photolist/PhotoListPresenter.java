@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photogrid;
+package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
@@ -35,16 +35,16 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * @author Nicholas Doglio
  */
-public class PhotoGridPresenter implements PhotoGridContract.Presenter {
-    private static final String TAG = PhotoGridPresenter.class.getSimpleName();
+public class PhotoListPresenter implements PhotoListContract.Presenter {
+    private static final String TAG = PhotoListPresenter.class.getSimpleName();
     private static final int IMAGES_LOADED_PHOTOGRIDVIEW = 48;
     final LiveData<PagedList<ChildData>> photoGridPagedList;
     private final RedditPostRepository repository;
-    private PhotoGridContract.View photoGridView;
+    private PhotoListContract.View photoGridView;
     private CompositeDisposable photoGridDisposable;
 
     @Inject
-    PhotoGridPresenter(RedditPostRepository redditPostRepository) {
+    PhotoListPresenter(RedditPostRepository redditPostRepository) {
         repository = redditPostRepository;
         photoGridDisposable = new CompositeDisposable();
         photoGridPagedList = repository.getPostsForPagedList().create(0,
@@ -94,7 +94,7 @@ public class PhotoGridPresenter implements PhotoGridContract.Presenter {
     }
 
     @Override
-    public void takeView(PhotoGridContract.View view) {
+    public void takeView(PhotoListContract.View view) {
         this.photoGridView = view;
     }
 

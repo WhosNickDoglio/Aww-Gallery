@@ -28,6 +28,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -58,6 +59,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     public void load() {
         photoGridDisposable.add(repository.getPostsFirstLoad(IMAGES_LOADED_PHOTOGRIDVIEW)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
                     @Override
                     public void onSuccess(List<ChildData> childData) {

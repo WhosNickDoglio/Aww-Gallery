@@ -128,7 +128,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
         firstVisibleItem = 0;
         visibleItemCount = 0;
         totalItemCount = 0;
-        photoGridRecyclerView.getLayoutManager().scrollToPosition(0);
     }
 
     @Override

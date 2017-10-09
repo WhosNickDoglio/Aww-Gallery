@@ -54,7 +54,6 @@ public class PhotoGridAdapter extends PagedListAdapter<ChildData, PhotoGridAdapt
             return oldItem.equals(newItem);
         }
     };
-    // TODO: Need to add loading footer
     private Context photoGridContext;
 
     PhotoGridAdapter(Context photoGridContext) {

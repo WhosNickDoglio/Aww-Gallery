@@ -18,7 +18,6 @@
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -30,11 +29,15 @@ import android.view.MenuItem;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.util.Intents;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * @author Nicholas Doglio
@@ -73,12 +76,17 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         snapHelper.attachToRecyclerView(photoDetailRecyclerView);
         photoDetailAdapter = new PhotoDetailAdapter(this);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+
+        //I don't like this but it seems like the only thing that consistently opens up to the right photo
+        Flowable.timer(200, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(getIntent().getExtras().getInt("POSITION")));
+
         photoDetailRecyclerView.setAdapter(photoDetailAdapter);
         photoDetailRecyclerView.setLayoutManager(layoutManager);
         photoDetailRecyclerView.setHasFixedSize(true);
 
-        //I don't like this but it seems like the only thing that consistently opens up to the right photo
-        new Handler().postDelayed(() -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(getIntent().getExtras().getInt("POSITION")), 200);
 
         photoDetailPresenter.photoDetailPagedList.observe(PhotoDetailActivity.this, childData -> photoDetailAdapter.setList(childData));
         photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);

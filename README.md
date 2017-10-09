@@ -3,6 +3,15 @@
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 
 
+<a href="https://play.google.com/store/apps/details?id=com.nicholasdoglio.eyebleach">
+    <img alt="Get it on Google Play"
+        height="80"
+        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
+</a>
+
+
+
+
 <img src="https://i.imgur.com/84Oc8Kg.png" width="250" height="450"> <img src="https://i.imgur.com/p4GgtVy.png" width="250" height="450">
 
 

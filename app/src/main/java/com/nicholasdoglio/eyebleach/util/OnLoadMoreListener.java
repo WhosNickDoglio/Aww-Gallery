@@ -15,20 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photolist;
-
-
-import com.nicholasdoglio.eyebleach.ui.base.BasePresenter;
-import com.nicholasdoglio.eyebleach.ui.base.BaseView;
+package com.nicholasdoglio.eyebleach.util;
 
 /**
  * @author Nicholas Doglio
  */
-public interface PhotoListContract {
-    interface View extends BaseView<Presenter> {
-        void fetchData();
-    }
-
-    interface Presenter extends BasePresenter<View> {
-    }
+public interface OnLoadMoreListener {
+    void onLoadMore();
 }

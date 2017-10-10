@@ -88,7 +88,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
 
         @Override
         public void onClick(View view) {
-            if (getAdapterPosition() == 1) {
+            if (aboutList.get(getAdapterPosition()).getContentName().equalsIgnoreCase("Feedback")) {
                 Intents.composeEmail(aboutContext);
             } else {
                 Intents.openWebPage(aboutContext, aboutList.get(getAdapterPosition()).getContentLink());

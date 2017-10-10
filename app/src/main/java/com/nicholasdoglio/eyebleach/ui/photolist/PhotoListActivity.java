@@ -29,7 +29,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.nicholasdoglio.eyebleach.R;
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.util.Intents;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -43,30 +47,27 @@ import dagger.android.AndroidInjection;
 public class PhotoListActivity extends AppCompatActivity implements PhotoListContract.View {
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout photoGridSwipeRefreshLayout;
-    @BindView(R.id.grid_progress)
+    @BindView(R.id.list_progress)
     ProgressBar photoGridProgressBar;
-    @BindView(R.id.grid_recycler)
+    @BindView(R.id.list_recycler)
     RecyclerView photoGridRecyclerView;
     @Inject
     PhotoListPresenter photoListPresenter;
 
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 3;
-    private int firstVisibleItem;
-    private int visibleItemCount;
-    private int totalItemCount;
+    private PhotoGridAdapter photoGridAdapter;
+    private List<ChildData> photoGridList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
-        setContentView(R.layout.activity_grid);
+        setContentView(R.layout.activity_list);
         AndroidInjection.inject(this);
         ButterKnife.bind(this);
-        fetchData();
 
-        PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(this);
+        photoGridList = new ArrayList<>();
+
+        fetchData();
 
         GridLayoutManager layoutManager;//TODO: This will be 6 and 9 for tablets
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -75,35 +76,17 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
             layoutManager = new GridLayoutManager(getApplicationContext(), 6);
         }
 
-        photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        photoGridSwipeRefreshLayout.setOnRefreshListener(this::refresh);
-
-        photoGridRecyclerView.setHasFixedSize(true);
         photoGridRecyclerView.setLayoutManager(layoutManager);
-        photoListPresenter.photoGridPagedList.observe(PhotoListActivity.this, photoGridAdapter::setList);
-        photoGridRecyclerView.setAdapter(photoGridAdapter);
+        photoGridRecyclerView.setHasFixedSize(true);
         photoGridRecyclerView.getItemAnimator().setChangeDuration(0);
 
-        photoGridRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                visibleItemCount = recyclerView.getChildCount();
-                totalItemCount = layoutManager.getItemCount();
-                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+        photoGridAdapter = new PhotoGridAdapter(this, photoGridList, photoGridRecyclerView);
+        photoListPresenter.photoLiveList.observe(this, childData -> photoGridAdapter.addMore(childData));
+        photoGridRecyclerView.setAdapter(photoGridAdapter);
+        photoGridAdapter.setOnLoadMoreListener(this::loadMore);
 
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    photoListPresenter.loadMore();
-                    loading = true;
-                }
-            }
-        });
+        photoGridSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        photoGridSwipeRefreshLayout.setOnRefreshListener(this::refresh);
     }
 
     @Override
@@ -122,27 +105,26 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
         return true;
     }
 
+    public void loadMore() {
+        photoListPresenter.loadMore();
+    }
+
+
     public void refresh() {//Sometimes position moves, want it to stay at the top
         photoListPresenter.load();
-        previousTotal = 0;
-        firstVisibleItem = 0;
-        visibleItemCount = 0;
-        totalItemCount = 0;
+        photoGridAdapter.swipeRefresh();
+    }
+
+    @Override
+    public void load(List<ChildData> childDataList) {
+        photoGridList.addAll(childDataList);
+        photoGridSwipeRefreshLayout.setRefreshing(false);
+        photoGridProgressBar.setVisibility(View.INVISIBLE); //I only want the progress bar when photoGridRecyclerView is empty, how?
     }
 
     @Override
     public void fetchData() {// TODO: Sometimes the scroll position gets messed up
         photoListPresenter.load();
-    }
-
-    @Override
-    public void hideProgressBar() {
-        photoGridProgressBar.setVisibility(View.INVISIBLE); //I only want the progress bar when photoGridRecyclerView is empty, how?
-    }
-
-    @Override
-    public void hideRefreshLayoutLoad() {
-        photoGridSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

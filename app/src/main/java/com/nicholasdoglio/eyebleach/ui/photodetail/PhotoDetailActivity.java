@@ -27,8 +27,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nicholasdoglio.eyebleach.R;
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.util.Intents;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -50,15 +53,8 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
     PhotoDetailPresenter photoDetailPresenter;
 
     private PhotoDetailAdapter photoDetailAdapter;
-    private LinearLayoutManager layoutManager;
-
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 1;
-    private int firstVisibleItem;
-    private int visibleItemCount;
-    private int totalItemCount;
-
+    private List<ChildData> photoDetailList;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +63,8 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         AndroidInjection.inject(this);
         ButterKnife.bind(this);
         photoDetailPresenter.load();
+        photoDetailList = new ArrayList<>();
+        position = getIntent().getExtras().getInt("POSITION");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -74,49 +72,30 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(photoDetailRecyclerView);
-        photoDetailAdapter = new PhotoDetailAdapter(this);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        photoDetailRecyclerView.setLayoutManager(layoutManager);
+        photoDetailRecyclerView.setHasFixedSize(true);
+        photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);
+        photoDetailAdapter = new PhotoDetailAdapter(this, photoDetailList, photoDetailRecyclerView);
+        photoDetailRecyclerView.setAdapter(photoDetailAdapter);
 
+        photoDetailPresenter.photoDetailList.observe(this, childData -> photoDetailAdapter.addMore(childData));
+
+        photoDetailAdapter.setOnLoadMoreListener(() -> loadMore());
 
         //I don't like this but it seems like the only thing that consistently opens up to the right photo
         Flowable.timer(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(getIntent().getExtras().getInt("POSITION")));
-
-        photoDetailRecyclerView.setAdapter(photoDetailAdapter);
-        photoDetailRecyclerView.setLayoutManager(layoutManager);
-        photoDetailRecyclerView.setHasFixedSize(true);
-
-
-        photoDetailPresenter.photoDetailPagedList.observe(PhotoDetailActivity.this, childData -> photoDetailAdapter.setList(childData));
-        photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);
-
-
-        photoDetailRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                visibleItemCount = recyclerView.getChildCount();
-                totalItemCount = layoutManager.getItemCount();
-                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
-
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    loadMore();
-                    loading = true;
-                }
-            }
-        });
+                .subscribe(aLong -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(position));
     }
 
     public void loadMore() {
         photoDetailPresenter.loadMore();
-        photoDetailAdapter.notifyItemRangeChanged(0, photoDetailAdapter.getItemCount());
+    }
+
+    @Override
+    public void load(List<ChildData> childData) {
+        photoDetailList.addAll(childData);
     }
 
     @Override
@@ -127,7 +106,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String postUrl = photoDetailAdapter.getCurrentList().get(layoutManager.findFirstVisibleItemPosition()).fullUrl();
+        String postUrl = photoDetailList.get(position).fullUrl();
 
         switch (item.getItemId()) {
             case android.R.id.home:

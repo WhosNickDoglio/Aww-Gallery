@@ -72,7 +72,9 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(photoDetailRecyclerView);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
         photoDetailRecyclerView.setLayoutManager(layoutManager);
         photoDetailRecyclerView.setHasFixedSize(true);
         photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);
@@ -81,7 +83,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
         photoDetailPresenter.photoDetailList.observe(this, childData -> photoDetailAdapter.addMore(childData));
 
-        photoDetailAdapter.setOnLoadMoreListener(() -> loadMore());
+        photoDetailAdapter.setOnLoadMoreListener(this::loadMore);
 
         //I don't like this but it seems like the only thing that consistently opens up to the right photo
         Flowable.timer(200, TimeUnit.MILLISECONDS)

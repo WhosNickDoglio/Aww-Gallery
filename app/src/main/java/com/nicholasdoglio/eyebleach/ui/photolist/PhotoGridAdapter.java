@@ -33,9 +33,9 @@ import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.util.Intents;
 import com.nicholasdoglio.eyebleach.util.OnLoadMoreListener;
+import com.nicholasdoglio.eyebleach.util.RedditListDiffUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +46,6 @@ import butterknife.ButterKnife;
 public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // TODO: Support Glide-RecyclerView
     // TODO: Need to add loading footer
-    public static final int VIEW_TYPE_ITEM = 0;
-    public static final int VIEW_TYPE_LOADING = 1;
     private OnLoadMoreListener onLoadMoreListener;
     private int previousTotal = 0;
     private boolean loading = true;
@@ -91,38 +89,21 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return photoGridList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-    }
-
-
-    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_grid_item, parent, false);
-            return new PhotoGridViewHolder(view);
-        } else if (viewType == VIEW_TYPE_LOADING) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_list_loading_item, parent, false);
-            return new LoadingViewHolder(view);
-        }
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_grid_item, parent, false);
+        return new PhotoGridViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof PhotoGridViewHolder) {
-            ChildData childData = photoGridList.get(position);
-            PhotoGridViewHolder userViewHolder = (PhotoGridViewHolder) holder;
-            userViewHolder.bindTo(childData);
-        } else if (holder instanceof LoadingViewHolder) {
-            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-            loadingViewHolder.progressBar.setIndeterminate(true);
-        }
+        ChildData childData = photoGridList.get(position);
+        PhotoGridViewHolder userViewHolder = (PhotoGridViewHolder) holder;
+        userViewHolder.bindTo(childData);
     }
 
     @Override
     public int getItemCount() {
-        return photoGridList == null ? 0 : photoGridList.size();
+        return photoGridList.size();
     }
 
     void setLoaded() {
@@ -145,36 +126,12 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             photoGridList = childData;
             notifyItemRangeInserted(0, childData.size());
         } else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return photoGridList.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return childData.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return Objects.equals(photoGridList.get(oldItemPosition).getId(), childData.get(newItemPosition).getId());
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ChildData newPost = childData.get(newItemPosition);
-                    ChildData oldPost = photoGridList.get(oldItemPosition);
-                    return Objects.equals(newPost.getId(), oldPost.getId())
-                            && Objects.equals(newPost.getPermalink(), oldPost.getPermalink())
-                            && Objects.equals(newPost.getUrl(), oldPost.getUrl())
-                            && Objects.equals(newPost.getThumbnail(), oldPost.getThumbnail());
-                }
-            });
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new RedditListDiffUtil(photoGridList, childData), true);
             photoGridList = childData;
             result.dispatchUpdatesTo(this);
         }
     }
+
 
     public class PhotoGridViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.image_grid)

@@ -113,6 +113,7 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
     public void refresh() {//Sometimes position moves, want it to stay at the top
         photoListPresenter.load();
         photoGridAdapter.swipeRefresh();
+        photoGridRecyclerView.scrollToPosition(0);
     }
 
     @Override

@@ -30,9 +30,9 @@ import com.bumptech.glide.Glide;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.util.OnLoadMoreListener;
+import com.nicholasdoglio.eyebleach.util.RedditListDiffUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,32 +105,7 @@ public class PhotoDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             photoDetailList = childData;
             notifyItemRangeInserted(0, childData.size());
         } else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return photoDetailList.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return childData.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return Objects.equals(photoDetailList.get(oldItemPosition).getId(), childData.get(newItemPosition).getId());
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ChildData newPost = childData.get(newItemPosition);
-                    ChildData oldPost = photoDetailList.get(oldItemPosition);
-                    return Objects.equals(newPost.getId(), oldPost.getId())
-                            && Objects.equals(newPost.getPermalink(), oldPost.getPermalink())
-                            && Objects.equals(newPost.getUrl(), oldPost.getUrl())
-                            && Objects.equals(newPost.getThumbnail(), oldPost.getThumbnail());
-                }
-            });
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new RedditListDiffUtil(photoDetailList, childData));
             photoDetailList = childData;
             result.dispatchUpdatesTo(this);
         }

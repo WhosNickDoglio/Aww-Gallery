@@ -37,7 +37,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     private static final int IMAGES_LOAD_PHOTODETAIL = 24;
-    final LiveData<List<ChildData>> photoDetailList;
+    private final LiveData<List<ChildData>> photoDetailList;
     private PhotoDetailContract.View photoDetailView;
     private RedditPostRepository repository;
     private CompositeDisposable compositeDisposable;
@@ -88,6 +88,10 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
                         e.printStackTrace();
                     }
                 }));
+    }
+
+    public LiveData<List<ChildData>> getPhotoDetailList() {
+        return photoDetailList;
     }
 
     @Override

@@ -36,7 +36,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PhotoListPresenter implements PhotoListContract.Presenter {
     private static final int IMAGES_LOADED_PHOTOGRIDVIEW = 48;
-    final LiveData<List<ChildData>> photoLiveList;
+    private final LiveData<List<ChildData>> photoList;
     private final RedditPostRepository repository;
     private PhotoListContract.View photoGridView;
     private CompositeDisposable photoGridDisposable;
@@ -45,7 +45,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     PhotoListPresenter(RedditPostRepository redditPostRepository) {
         repository = redditPostRepository;
         photoGridDisposable = new CompositeDisposable();
-        photoLiveList = repository.getPostsLive();
+        photoList = repository.getPostsLive();
     }
 
     @Override
@@ -80,6 +80,10 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
                         e.printStackTrace();
                     }
                 }));
+    }
+
+    public LiveData<List<ChildData>> getPhotoList() {
+        return photoList;
     }
 
     @Override

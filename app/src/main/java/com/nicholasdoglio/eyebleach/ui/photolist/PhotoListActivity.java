@@ -81,7 +81,7 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
         photoGridRecyclerView.getItemAnimator().setChangeDuration(0);
 
         photoGridAdapter = new PhotoGridAdapter(this, photoGridList, photoGridRecyclerView);
-        photoListPresenter.photoLiveList.observe(this, childData -> photoGridAdapter.addMore(childData));
+        photoListPresenter.getPhotoList().observe(this, childData -> photoGridAdapter.addMore(childData));
         photoGridRecyclerView.setAdapter(photoGridAdapter);
         photoGridAdapter.setOnLoadMoreListener(this::loadMore);
 

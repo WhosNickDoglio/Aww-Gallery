@@ -53,6 +53,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
     PhotoDetailPresenter photoDetailPresenter;
 
     private PhotoDetailAdapter photoDetailAdapter;
+    private LinearLayoutManager layoutManager;
     private List<ChildData> photoDetailList;
     private int position;
 
@@ -62,18 +63,21 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         setContentView(R.layout.activity_gallery);
         AndroidInjection.inject(this);
         ButterKnife.bind(this);
-        photoDetailPresenter.load();
-        photoDetailList = new ArrayList<>();
-        position = getIntent().getExtras().getInt("POSITION");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        photoDetailPresenter.load();
+
+        photoDetailList = new ArrayList<>();
+
+        position = getIntent().getExtras().getInt("POSITION");
+
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(photoDetailRecyclerView);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         photoDetailRecyclerView.setLayoutManager(layoutManager);
         photoDetailRecyclerView.setHasFixedSize(true);
@@ -81,7 +85,8 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         photoDetailAdapter = new PhotoDetailAdapter(this, photoDetailList, photoDetailRecyclerView);
         photoDetailRecyclerView.setAdapter(photoDetailAdapter);
 
-        photoDetailPresenter.photoDetailList.observe(this, childData -> photoDetailAdapter.addMore(childData));
+
+        photoDetailPresenter.getPhotoDetailList().observe(this, childData -> photoDetailAdapter.addMore(childData));
 
         photoDetailAdapter.setOnLoadMoreListener(this::loadMore);
 
@@ -108,7 +113,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String postUrl = photoDetailList.get(position).fullUrl();
+        String postUrl = photoDetailList.get(layoutManager.findFirstVisibleItemPosition()).fullUrl();
 
         switch (item.getItemId()) {
             case android.R.id.home:

@@ -43,8 +43,7 @@ Full channgelog is available [here](https://github.com/WhosNickDoglio/Aww-Galler
 - [Dagger2](https://google.github.io/dagger/)
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html)
   - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
-  - [Paging](https://developer.android.com/topic/libraries/architecture/paging.html)
-  
+ 
 
 # Feedback
 

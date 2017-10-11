@@ -18,7 +18,6 @@
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.PagedList;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.source.RedditPostRepository;
@@ -38,7 +37,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     private static final int IMAGES_LOAD_PHOTODETAIL = 24;
-    final LiveData<PagedList<ChildData>> photoDetailPagedList;
+    private final LiveData<List<ChildData>> photoDetailList;
     private PhotoDetailContract.View photoDetailView;
     private RedditPostRepository repository;
     private CompositeDisposable compositeDisposable;
@@ -48,11 +47,7 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     PhotoDetailPresenter(RedditPostRepository redditPostRepository) {
         repository = redditPostRepository;
         compositeDisposable = new CompositeDisposable();
-        photoDetailPagedList = repository.getPostsForPagedList().create(0,
-                new PagedList.Config.Builder()
-                        .setPageSize(1)
-                        .setPrefetchDistance(1)
-                        .build());
+        photoDetailList = repository.getPostsLive();
     }
 
     public void load() {
@@ -62,11 +57,12 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
                 .subscribeWith(new DisposableSubscriber<List<ChildData>>() {
                     @Override
                     public void onNext(List<ChildData> childData) {
+                        photoDetailView.load(childData);
                     }
 
                     @Override
                     public void onError(Throwable t) {
-
+                        t.printStackTrace();
                     }
 
                     @Override
@@ -89,9 +85,13 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
                 }));
+    }
+
+    public LiveData<List<ChildData>> getPhotoDetailList() {
+        return photoDetailList;
     }
 
     @Override

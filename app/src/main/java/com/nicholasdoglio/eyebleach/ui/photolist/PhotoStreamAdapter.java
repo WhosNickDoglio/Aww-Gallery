@@ -17,54 +17,79 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photolist;
 
-import android.arch.paging.PagedListAdapter;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 
-import java.util.Objects;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author Nicholas Doglio
  */
-public class PhotoStreamAdapter extends PagedListAdapter<ChildData, PhotoStreamAdapter.PhotoStreamViewHolder> {
+public class PhotoStreamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return Objects.equals(oldItem.getId(), newItem.getId());
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
     private Context photoStreamContext;
+    private List<ChildData> photoStreamList;
 
-    protected PhotoStreamAdapter(Context context) {
-        super(DIFF_CALLBACK);
-        this.photoStreamContext = context;
+    public PhotoStreamAdapter(Context photoStreamContext, List<ChildData> photoStreamList) {
+        this.photoStreamContext = photoStreamContext;
+        this.photoStreamList = photoStreamList;
     }
 
     @Override
     public PhotoStreamViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View regularView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_stream_item, parent, false);
+        return new PhotoStreamAdapter.PhotoStreamViewHolder(regularView);
     }
 
     @Override
-    public void onBindViewHolder(PhotoStreamViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ChildData childData = photoStreamList.get(position);
+        if (childData != null) {
+            PhotoStreamViewHolder photoStreamViewHolder = (PhotoStreamViewHolder) holder;
+            photoStreamViewHolder.bindTo(childData);
+        }
 
     }
 
-    public class PhotoStreamViewHolder extends RecyclerView.ViewHolder {
-        public PhotoStreamViewHolder(View itemView) {
+    @Override
+    public int getItemCount() {
+        return photoStreamList.size();
+    }
+
+    public class PhotoStreamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.image_stream)
+        ImageView photoStreamFullImageView;
+
+        PhotoStreamViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        void bindTo(ChildData childData) {
+            RequestOptions options = new RequestOptions()
+                    .error(R.drawable.cat_error);
+
+            Glide.with(photoStreamContext)
+                    .load(childData.getUrl())
+                    .apply(options)
+                    .into(photoStreamFullImageView);
+        }
+
+        @Override
+        public void onClick(View view) {
+            // TODO: Create a dialog for Share and open source
         }
     }
 }

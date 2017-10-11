@@ -18,8 +18,13 @@
  */
 package com.nicholasdoglio.eyebleach.ui.base;
 
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
+
+import java.util.List;
+
 /**
  * @author Nicholas Doglio
  */
 public interface BaseView<T> {
+    void load(List<ChildData> childDataList);
 }

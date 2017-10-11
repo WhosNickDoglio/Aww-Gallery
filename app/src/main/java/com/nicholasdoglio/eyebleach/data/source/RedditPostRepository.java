@@ -18,8 +18,6 @@
 package com.nicholasdoglio.eyebleach.data.source;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.LivePagedListProvider;
-import android.util.Log;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit;
@@ -34,6 +32,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author Nicholas Doglio
@@ -62,15 +61,17 @@ public class RedditPostRepository {
                     filterForImages(multireddit, posts);
                     return posts;
                 }).doOnSuccess(childData -> {
-                    postDatabase.beginTransaction();
-                    try {
+                    postDatabase.runInTransaction(() -> {
                         postDatabase.childDataDao().deleteAll();
                         postDatabase.childDataDao().insertChildDataList(childData);
-                        postDatabase.setTransactionSuccessful();
-                    } finally {
-                        postDatabase.endTransaction();
+                    });
+                }).doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                        // TODO: FIGURE OUT HOW TO PROPERLY HANDLE RXERRORS
                     }
-                }).doOnError(throwable -> Log.d(TAG, "accept: " + throwable.getMessage()));
+                });
     }
 
     public Single<List<ChildData>> getMorePosts(int limit) {
@@ -89,18 +90,15 @@ public class RedditPostRepository {
                     }
                     posts.addAll(childData);
                     loadMoreList.clear();
-                }).doOnError(throwable -> Log.d(TAG, "accept: " + throwable.getMessage()));
-    }
-
-    public Flowable<ChildData> getPostsPosition() {
-        return postDatabase.childDataDao().getPostsForPosition();
+                }).doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
     }
 
     public Flowable<List<ChildData>> getPostsFromDb() {
-        return postDatabase.childDataDao().getAllPosts();
-    }
-
-    public LivePagedListProvider<Integer, ChildData> getPostsForPagedList() {
         return postDatabase.childDataDao().getPosts();
     }
 

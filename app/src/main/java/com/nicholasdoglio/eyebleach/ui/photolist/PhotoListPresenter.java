@@ -18,8 +18,6 @@
 package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.PagedList;
-import android.util.Log;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.source.RedditPostRepository;
@@ -37,9 +35,8 @@ import io.reactivex.schedulers.Schedulers;
  * @author Nicholas Doglio
  */
 public class PhotoListPresenter implements PhotoListContract.Presenter {
-    private static final String TAG = PhotoListPresenter.class.getSimpleName();
     private static final int IMAGES_LOADED_PHOTOGRIDVIEW = 48;
-    final LiveData<PagedList<ChildData>> photoGridPagedList;
+    private final LiveData<List<ChildData>> photoList;
     private final RedditPostRepository repository;
     private PhotoListContract.View photoGridView;
     private CompositeDisposable photoGridDisposable;
@@ -48,11 +45,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     PhotoListPresenter(RedditPostRepository redditPostRepository) {
         repository = redditPostRepository;
         photoGridDisposable = new CompositeDisposable();
-        photoGridPagedList = repository.getPostsForPagedList().create(0,
-                new PagedList.Config.Builder()
-                        .setPageSize(18)
-                        .setPrefetchDistance(6)
-                        .build());
+        photoList = repository.getPostsLive();
     }
 
     @Override
@@ -63,13 +56,12 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
                 .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
                     @Override
                     public void onSuccess(List<ChildData> childData) {
-                        photoGridView.hideProgressBar();
-                        photoGridView.hideRefreshLayoutLoad();
+                        photoGridView.load(childData);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }));
     }
@@ -85,9 +77,13 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }));
+    }
+
+    public LiveData<List<ChildData>> getPhotoList() {
+        return photoList;
     }
 
     @Override

@@ -17,54 +17,8 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photolist;
 
-import android.arch.paging.PagedListAdapter;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
-
-import java.util.Objects;
-
 /**
  * @author Nicholas Doglio
  */
-public class PhotoStreamAdapter extends PagedListAdapter<ChildData, PhotoStreamAdapter.PhotoStreamViewHolder> {
-
-    private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return Objects.equals(oldItem.getId(), newItem.getId());
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
-    private Context photoStreamContext;
-
-    protected PhotoStreamAdapter(Context context) {
-        super(DIFF_CALLBACK);
-        this.photoStreamContext = context;
-    }
-
-    @Override
-    public PhotoStreamViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(PhotoStreamViewHolder holder, int position) {
-
-    }
-
-    public class PhotoStreamViewHolder extends RecyclerView.ViewHolder {
-        public PhotoStreamViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
+public class PhotoStreamAdapter {
 }

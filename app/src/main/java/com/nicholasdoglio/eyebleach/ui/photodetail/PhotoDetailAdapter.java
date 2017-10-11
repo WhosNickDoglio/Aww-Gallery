@@ -17,78 +17,8 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
-import android.arch.paging.PagedListAdapter;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.nicholasdoglio.eyebleach.R;
-import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
-
-import java.util.Objects;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * @author Nicholas Doglio
  */
-public class PhotoDetailAdapter extends PagedListAdapter<ChildData, PhotoDetailAdapter.PhotoDetailViewHolder> {
-    private static final DiffCallback<ChildData> DIFF_CALLBACK = new DiffCallback<ChildData>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return Objects.equals(oldItem.getId(), newItem.getId());
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull ChildData oldItem, @NonNull ChildData newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
-
-    //TODO: add a loading screen for images instead of just appearing, looking into Glide transitions
-    private Context photoDetailContext;
-
-    PhotoDetailAdapter(Context photoDetailContext) {
-        super(DIFF_CALLBACK);
-        this.photoDetailContext = photoDetailContext;
-    }
-
-    @Override
-    public PhotoDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View regularView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_gallery_item, parent, false);
-        return new PhotoDetailViewHolder(regularView);
-    }
-
-    @Override
-    public void onBindViewHolder(PhotoDetailViewHolder holder, int position) {
-        ChildData childData = getItem(position);
-        if (childData != null) {
-            holder.bindTo(childData);
-        }
-    }
-
-    class PhotoDetailViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.gallery_photo)
-        ImageView photoDetailImageView;
-
-        PhotoDetailViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-        void bindTo(ChildData childData) {
-            Glide.with(photoDetailContext)
-                    .load(childData.getUrl())
-                    .into(photoDetailImageView);
-        }
-
-
-    }
+public class PhotoDetailAdapter {
 }

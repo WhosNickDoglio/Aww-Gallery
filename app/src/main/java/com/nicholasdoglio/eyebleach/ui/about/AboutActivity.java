@@ -19,32 +19,17 @@ package com.nicholasdoglio.eyebleach.ui.about;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.nicholasdoglio.eyebleach.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author Nicholas Doglio
  */
 public class AboutActivity extends AppCompatActivity {
 
-    // TODO: Move this into a dialog fragment
-
-    @BindView(R.id.about_recycler_view)
-    RecyclerView aboutRecycerlView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
-
-        aboutRecycerlView.setLayoutManager(new LinearLayoutManager(this));
-        aboutRecycerlView.setAdapter(new AboutAdapter(this));
-        aboutRecycerlView.setHasFixedSize(true);
     }
 }

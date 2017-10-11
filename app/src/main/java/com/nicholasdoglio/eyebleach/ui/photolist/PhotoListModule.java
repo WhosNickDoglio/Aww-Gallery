@@ -17,9 +17,6 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photolist;
 
-import com.nicholasdoglio.eyebleach.di.ActivityScoped;
-
-import dagger.Binds;
 import dagger.Module;
 
 /**
@@ -28,7 +25,4 @@ import dagger.Module;
 @Module
 public abstract class PhotoListModule {
 
-    @ActivityScoped
-    @Binds
-    abstract PhotoListContract.Presenter photoGridPresenter(PhotoListPresenter presenter);
 }

@@ -18,6 +18,8 @@
 package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.ListPreloader.PreloadModelProvider;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
@@ -43,7 +47,7 @@ import butterknife.ButterKnife;
 /**
  * @author Nicholas Doglio
  */
-public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements PreloadModelProvider<ChildData> {
     // TODO: Support Glide-RecyclerView
     // TODO: Need to add loading footer
     private OnLoadMoreListener onLoadMoreListener;
@@ -132,6 +136,18 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
+    @NonNull
+    @Override
+    public List<ChildData> getPreloadItems(int position) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public RequestBuilder getPreloadRequestBuilder(ChildData item) {
+        return null;
+    }
+
 
     public class PhotoGridViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.image_grid)
@@ -155,7 +171,7 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         @Override
         public void onClick(View view) {
-            Intents.startDetailActivity(view, getAdapterPosition());
+            Intents.INSTANCE.startDetailActivity(view, getAdapterPosition());
         }
     }
 

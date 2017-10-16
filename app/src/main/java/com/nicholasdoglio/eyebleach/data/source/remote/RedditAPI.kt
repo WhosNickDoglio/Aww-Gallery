@@ -29,8 +29,11 @@ import retrofit2.http.Query
  */
 interface RedditAPI {
     @GET("user/NicholasDoglio/m/awwgallery/.json")
-    fun getMultiPosts(@Query("limit") limit: Int, @Query("after") after: String): Single<Multireddit>
+    fun getMultiPosts(@Query("limit") limit: Int,
+                      @Query("after") after: String): Single<Multireddit>
 
     @GET("r/{subreddit}/.json")
-    fun getSubPosts(@Path("subreddit") subreddit: String, @Query("limit") limit: Int, @Query("after") after: String): Flowable<Multireddit>
+    fun getSubPosts(@Path("subreddit") subreddit: String,
+                    @Query("limit") limit: Int,
+                    @Query("after") after: String): Flowable<Multireddit>
 }

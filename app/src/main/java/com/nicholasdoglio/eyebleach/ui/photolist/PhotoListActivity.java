@@ -59,10 +59,10 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_list);
-        AndroidInjection.inject(this);
         ButterKnife.bind(this);
 
         photoGridList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListCon
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about_item:
-                Intents.startAboutActivity(this);
+                Intents.INSTANCE.startAboutActivity(this);
                 return true;
         }
         return true;

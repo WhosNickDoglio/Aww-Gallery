@@ -66,7 +66,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
     }
 
     private void populateList(Context context) {
-        aboutList.add(new AboutInfo(R.drawable.ic_info, Intents.provideVersion(context), "https://github.com/WhosNickDoglio/Aww-Gallery/releases"));
+        aboutList.add(new AboutInfo(R.drawable.ic_info, Intents.INSTANCE.provideVersion(context), "https://github.com/WhosNickDoglio/Aww-Gallery/releases"));
         aboutList.add(new AboutInfo(R.drawable.ic_feedback, "Feedback", ""));
         aboutList.add(new AboutInfo(R.drawable.ic_info, "Libraries", "https://htmlpreview.github.io/?https://github.com/WhosNickDoglio/Aww-Gallery/blob/master/libaries.html"));
         aboutList.add(new AboutInfo(R.drawable.ic_github, "Source code", "https://github.com/WhosNickDoglio/Aww-Gallery"));
@@ -89,9 +89,9 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
             if (aboutList.get(getAdapterPosition()).getContentName().equalsIgnoreCase("Feedback")) {
-                Intents.composeEmail(aboutContext);
+                Intents.INSTANCE.composeEmail(aboutContext);
             } else {
-                Intents.openWebPage(aboutContext, aboutList.get(getAdapterPosition()).getContentLink());
+                Intents.INSTANCE.openWebPage(aboutContext, aboutList.get(getAdapterPosition()).getContentLink());
 
             }
         }

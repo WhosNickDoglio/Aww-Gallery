@@ -15,14 +15,16 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.util;
+package com.nicholasdoglio.eyebleach.data.model.reddit
 
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
+import com.squareup.moshi.Json
 
 /**
  * @author Nicholas Doglio
  */
-@GlideModule
-public final class GlideAppModule extends AppGlideModule {
+class Child {
+    @Json(name = "kind")
+    var kind: String? = null
+    @Json(name = "data")
+    var childData: ChildData? = null
 }

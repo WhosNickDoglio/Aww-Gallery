@@ -14,12 +14,11 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
  */
-package com.nicholasdoglio.eyebleach.ui.base;
+package com.nicholasdoglio.eyebleach.ui.photolist.stream;
 
 /**
  * @author Nicholas Doglio
  */
-public interface BaseView<T> {
+public class PhotoStreamAdapter {
 }

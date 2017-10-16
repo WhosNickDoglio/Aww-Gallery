@@ -39,6 +39,10 @@ class ChildData {
     @NotNull
     @Json(name = "id")
     var id: String? = null
+    @Json(name = "subreddit")
+    var subreddit: String? = null
+    @Json(name = "over_18")
+    val over18: Boolean? = null
 
     fun fullUrl() = "https://reddit.com$permalink"
 }

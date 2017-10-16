@@ -15,10 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photolist;
+package com.nicholasdoglio.eyebleach.ui.photolist.grid;
 
 /**
  * @author Nicholas Doglio
  */
-public class PhotoStreamAdapter {
+public class PhotoGridAdapter {
+
 }

@@ -29,12 +29,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.ListPreloader.PreloadModelProvider;
 import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.request.RequestOptions;
 import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
+import com.nicholasdoglio.eyebleach.util.GlideApp;
 import com.nicholasdoglio.eyebleach.util.Intents;
 import com.nicholasdoglio.eyebleach.util.OnLoadMoreListener;
 import com.nicholasdoglio.eyebleach.util.RedditListDiffUtil;
@@ -43,6 +42,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * @author Nicholas Doglio
@@ -160,12 +161,10 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         void bindTo(ChildData childData) {
-            RequestOptions options = new RequestOptions()
-                    .error(R.drawable.cat_error);
-
-            Glide.with(photoGridContext)
+            GlideApp.with(photoGridContext)
                     .load(childData.getThumbnail())
-                    .apply(options)
+                    .transition(withCrossFade())
+                    .error(R.drawable.cat_error)
                     .into(photoGridThumbnailImageView);
         }
 

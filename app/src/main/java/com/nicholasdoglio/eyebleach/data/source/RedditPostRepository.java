@@ -31,7 +31,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
@@ -56,6 +55,7 @@ public class RedditPostRepository {
         loadMoreList = new ArrayList<>();
     }
 
+    //Need to figure a better way to handle the loading from network vs local
     public Single<List<ChildData>> getPostsFirstLoad(int limit) {
         posts.clear();
         return redditAPI.getMultiPosts(limit, "")
@@ -113,8 +113,8 @@ public class RedditPostRepository {
         return postDatabase.childDataDao().getPostsLive();
     }
 
-    public Completable getCount() {
-        return Completable.fromAction(() -> postDatabase.childDataDao().getCount());
+    public Single<Integer> getCount() {
+        return postDatabase.childDataDao().getCount();
     }
 
     private void filterForImages(Multireddit networkMulti, List<ChildData> childDataList) {

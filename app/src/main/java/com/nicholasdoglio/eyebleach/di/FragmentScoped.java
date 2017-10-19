@@ -17,25 +17,17 @@
  */
 package com.nicholasdoglio.eyebleach.di;
 
-import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
-import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailModule;
-import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListActivity;
-import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListModule;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
+import javax.inject.Scope;
 
 /**
  * @author Nicholas Doglio
  */
-@Module
-abstract class ActivityBindingModule {
-
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = PhotoListModule.class)
-    abstract PhotoListActivity bindPhotoGridActivity();
-
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = PhotoDetailModule.class)
-    abstract PhotoDetailActivity bindPhotoDetailActivity();
+@Documented
+@Scope
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FragmentScoped {
 }

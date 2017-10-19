@@ -38,7 +38,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-import io.reactivex.Flowable;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
@@ -87,10 +87,9 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
 
         //I don't like this but it seems like the only thing that consistently opens up to the right photo
-        Flowable.timer(200, TimeUnit.MILLISECONDS)
+        Completable.timer(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(position));
-        //TiledDataSource from Paging library might make this better
+                .subscribe(() -> photoDetailRecyclerView.scrollToPosition(position));
     }
 
     public void loadMore() {

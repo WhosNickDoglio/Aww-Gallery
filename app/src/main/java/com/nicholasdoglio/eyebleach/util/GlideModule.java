@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,15 +14,14 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+ */
+package com.nicholasdoglio.eyebleach.util;
 
-    <ImageView
-        android:id="@+id/image_stream"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+import com.bumptech.glide.module.AppGlideModule;
 
-
-</android.support.constraint.ConstraintLayout>
+/**
+ * @author Nicholas Doglio
+ */
+@com.bumptech.glide.annotation.GlideModule
+public final class GlideModule extends AppGlideModule {
+}

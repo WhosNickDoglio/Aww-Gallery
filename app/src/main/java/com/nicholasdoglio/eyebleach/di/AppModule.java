@@ -36,7 +36,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
  * @author Nicholas Doglio
  */
 @Module
-public class AppModule {
+class AppModule {
     @Provides
     @Singleton
     Context provideContext(Application application) {

@@ -18,7 +18,6 @@
 package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.PagedList;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.source.RedditPostRepository;
@@ -36,8 +35,9 @@ import io.reactivex.schedulers.Schedulers;
  * @author Nicholas Doglio
  */
 public class PhotoListPresenter implements PhotoListContract.Presenter {
-    private static final int IMAGES_LOADED_PHOTOGRIDVIEW = 60;
-    private final LiveData<PagedList<ChildData>> photoList;
+    private static final int FIRST_LOAD = 100;
+    private static final int LOAD_MORE = 60;
+    private final LiveData<List<ChildData>> photoList;
     private final RedditPostRepository repository;
     private PhotoListContract.View photoGridView;
     private CompositeDisposable photoGridDisposable;
@@ -46,17 +46,12 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     PhotoListPresenter(RedditPostRepository redditPostRepository) {
         repository = redditPostRepository;
         photoGridDisposable = new CompositeDisposable();
-        photoList = repository.getPagedList().create(0,
-                new PagedList.Config.Builder()
-                        .setPageSize(24)
-                        .setPrefetchDistance(12)
-                        .setEnablePlaceholders(true)
-                        .build());
+        photoList = repository.getPostsLive();
     }
 
     @Override
     public void load() {
-        photoGridDisposable.add(repository.getPostsFirstLoad(100)
+        photoGridDisposable.add(repository.getPostsFirstLoad(FIRST_LOAD)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
@@ -73,7 +68,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     }
 
     void loadMore() {
-        photoGridDisposable.add(repository.getMorePosts(IMAGES_LOADED_PHOTOGRIDVIEW)
+        photoGridDisposable.add(repository.getMorePosts(LOAD_MORE)
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
                     @Override
@@ -103,7 +98,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
         photoGridView = null;
     }
 
-    LiveData<PagedList<ChildData>> getPhotoList() {
+    LiveData<List<ChildData>> getPhotoList() {
         return photoList;
     }
 }

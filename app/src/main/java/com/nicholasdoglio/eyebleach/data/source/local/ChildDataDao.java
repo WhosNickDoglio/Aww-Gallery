@@ -30,6 +30,7 @@ import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * @author Nicholas Doglio
@@ -41,14 +42,10 @@ public interface ChildDataDao {
     Flowable<List<ChildData>> getPosts();
 
     @Query("SELECT COUNT(*) FROM ChildData")
-    int getCount();
+    Single<Integer> getCount();
 
     @Query("SELECT * FROM ChildData")
     LiveData<List<ChildData>> getPostsLive();
-
-    @Query("SELECT thumbnail FROM ChildData")
-    LiveData<List<String>> getThumbnails(); //Maybe do it like this instead?
-
 
     @Query("SELECT * from ChildData")
     LivePagedListProvider<Integer, ChildData> getPagedList();

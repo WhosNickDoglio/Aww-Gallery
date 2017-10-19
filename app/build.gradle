@@ -26,6 +26,17 @@ android {
     }
 }
 
+ext {
+    support = "26.1.0"
+    glide = "4.2.0"
+    retrofit = "2.3.0"
+    butterknife = "8.8.1"
+    dagger = "2.12"
+    store = "3.0.0-beta"
+    archComponents = "1.0.0-beta2"
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -33,22 +44,22 @@ dependencies {
     })
 
     //Android
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation "com.android.support:support-v4:$support"
+    implementation "com.android.support:recyclerview-v7:$support"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.2.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
-    implementation("com.github.bumptech.glide:recyclerview-integration:4.2.0") {
+    implementation "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+    implementation("com.github.bumptech.glide:recyclerview-integration:$glide") {
         transitive = false
     }
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
 
     //Moshi
     implementation 'com.squareup.moshi:moshi:1.5.0'
@@ -58,30 +69,36 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation "com.jakewharton:butterknife:$butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
     //Dagger
-    implementation 'com.google.dagger:dagger:2.12'
-    implementation 'com.google.dagger:dagger-android:2.12'
     implementation 'org.glassfish:javax.annotation:10.0-b28'
-    implementation 'com.google.dagger:dagger-android-support:2.12'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
+    implementation "com.google.dagger:dagger:$dagger"
+    implementation "com.google.dagger:dagger-android:$dagger"
+    implementation "com.google.dagger:dagger-android-support:$dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
+
+    //NYT Store
+    implementation "com.nytimes.android:cache3:$store"
+    implementation "com.nytimes.android:store3:$store"
+    implementation "com.nytimes.android:middleware-moshi3:$store"
 
     //Android Architecture Components
     implementation 'android.arch.paging:runtime:1.0.0-alpha3'
-    implementation "android.arch.lifecycle:common-java8:1.0.0-beta2"
-    implementation "android.arch.lifecycle:extensions:1.0.0-beta2"
-    implementation "android.arch.lifecycle:common-java8:1.0.0-beta2"
-    implementation "android.arch.lifecycle:reactivestreams:1.0.0-beta2"
-    implementation "android.arch.persistence.room:runtime:1.0.0-beta2"
-    implementation "android.arch.persistence.room:rxjava2:1.0.0-beta2"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-beta2"
+    implementation "android.arch.lifecycle:common-java8:$archComponents"
+    implementation "android.arch.lifecycle:extensions:$archComponents"
+    implementation "android.arch.lifecycle:common-java8:$archComponents"
+    implementation "android.arch.lifecycle:reactivestreams:$archComponents"
+    implementation "android.arch.persistence.room:runtime:$archComponents"
+    implementation "android.arch.persistence.room:rxjava2:$archComponents"
+    annotationProcessor "android.arch.persistence.room:compiler:$archComponents"
+
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "android.arch.core:core-testing:1.0.0-beta2"
-    testImplementation "android.arch.persistence.room:testing:1.0.0-beta2"
+    testImplementation "android.arch.core:core-testing:$archComponents"
+    testImplementation "android.arch.persistence.room:testing:$archComponents"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
 }

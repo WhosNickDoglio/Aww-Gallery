@@ -33,12 +33,13 @@ ext {
     butterknife = "8.8.1"
     dagger = "2.12"
     store = "3.0.0-beta"
-    archComponents = "1.0.0-beta2"
+    archComponents = "1.0.0-rc1"
 }
 
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:26.1.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

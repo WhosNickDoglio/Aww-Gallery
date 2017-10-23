@@ -43,8 +43,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
 /**
  * @author Nicholas Doglio
  */
@@ -163,14 +161,14 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         void bindTo(ChildData childData) {
             GlideApp.with(photoGridContext)
                     .load(childData.getThumbnail())
-                    .transition(withCrossFade())
                     .error(R.drawable.cat_error)
                     .into(photoGridThumbnailImageView);
         }
 
         @Override
         public void onClick(View view) {
-            Intents.INSTANCE.startDetailActivity(view, getAdapterPosition());
+            //I have no idea why I have to now add a +1 where before I didn't
+            Intents.INSTANCE.startDetailActivity(view, getAdapterPosition() + 1);
         }
     }
 

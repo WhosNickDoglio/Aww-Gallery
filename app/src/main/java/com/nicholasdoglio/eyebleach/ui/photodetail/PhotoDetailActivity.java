@@ -87,9 +87,12 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
 
         //I don't like this but it seems like the only thing that consistently opens up to the right photo
-        Completable.timer(400, TimeUnit.MILLISECONDS)
+        Completable.timer(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> photoDetailRecyclerView.scrollToPosition(position));
+                .subscribe(() -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(position));
+
+//        photoDetailRecyclerView.getLayoutManager().scrollToPosition(position);
+
     }
 
     public void loadMore() {

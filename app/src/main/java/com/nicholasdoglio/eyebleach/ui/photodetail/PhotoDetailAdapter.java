@@ -39,8 +39,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
 /**
  * @author Nicholas Doglio
  */
@@ -124,7 +122,6 @@ public class PhotoDetailAdapter extends PagedListAdapter<ChildData, PhotoDetailA
         void bindTo(ChildData childData) {
             GlideApp.with(photoDetailContext)
                     .load(childData.getUrl())
-                    .transition(withCrossFade())
                     .into(photoDetailImageView);
         }
     }

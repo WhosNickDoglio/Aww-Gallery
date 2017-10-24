@@ -46,12 +46,11 @@ class AppModule {
     @Provides
     @Singleton
     RedditAPI providesRedditService() {
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl("https://www.reddit.com/")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        return retrofit.create(RedditAPI.class);
+                .build().create(RedditAPI.class);
     }
 
     @Provides

@@ -34,7 +34,7 @@ import dagger.android.AndroidInjectionModule;
 @Component(modules = {
         AndroidInjectionModule.class,
         AppModule.class,
-        ActivityBindingModule.class,})
+        ActivityBindingModule.class})
 public interface AppComponent {
 
     void inject(AwwGalleryApp application);

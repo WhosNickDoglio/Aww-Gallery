@@ -20,6 +20,6 @@ package com.nicholasdoglio.eyebleach.data.model.about
 /**
  * @author Nicholas Doglio
  */
-class AboutInfo(val imageID: Int, val contentName: String, val contentLink: String)
+class AboutInfo(var imageID: Int, var contentName: String, var contentLink: String)
 
 

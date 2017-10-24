@@ -32,7 +32,7 @@ import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
  */
 public class Intents {
 
-    public static void openWebPage(Context context, String url) {
+    public void openWebPage(Context context, String url) {
         Uri webpage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
         if (intent.resolveActivity(context.getPackageManager()) != null) {
@@ -40,7 +40,7 @@ public class Intents {
         }
     }
 
-    public static void shareUrl(Context context, String url) {
+    public void shareUrl(Context context, String url) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         shareIntent.putExtra(Intent.EXTRA_TEXT, url);
@@ -48,7 +48,7 @@ public class Intents {
         context.startActivity(Intent.createChooser(shareIntent, "Share your cute animals via: "));
     }
 
-    public static void composeEmail(Context context) {
+    public void composeEmail(Context context) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto: NicholasDoglio@Gmail.com"));
         intent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback");
@@ -57,18 +57,18 @@ public class Intents {
         }
     }
 
-    public static void startDetailActivity(View view, int position) {
+    public void startDetailActivity(View view, int position) {
         Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
         photoDetailIntent.putExtra("POSITION", position);
         view.getContext().startActivity(photoDetailIntent);
     }
 
-    public static void startAboutActivity(Context context) {
+    public void startAboutActivity(Context context) {
         Intent aboutIntent = new Intent(context, AboutActivity.class);
         context.startActivity(aboutIntent);
     }
 
-    public static String provideVersion(Context context) {
+    public String provideVersion(Context context) {
         String version = "";
 
         try {

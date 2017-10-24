@@ -27,7 +27,6 @@ import dagger.Module;
  */
 @Module
 public abstract class PhotoDetailModule {
-
     @ActivityScoped
     @Binds
     abstract PhotoDetailViewModel photoDetailViewModel(PhotoDetailViewModel viewModel);

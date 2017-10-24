@@ -26,4 +26,4 @@ package com.nicholasdoglio.eyebleach.data.model.about
  * @param contentName: String that will be the displayed text for each About item
  * @param contentLink: URL that will be launched upon click of each about item
  */
-class AboutInfo(val imageID: Int, val contentName: String, val contentLink: String)
+class AboutInfo(var imageID: Int, var contentName: String, var contentLink: String)

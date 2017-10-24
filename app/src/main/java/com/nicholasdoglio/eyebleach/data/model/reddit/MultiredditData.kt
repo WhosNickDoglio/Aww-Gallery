@@ -21,6 +21,9 @@ import com.squareup.moshi.Json
 
 /**
  * @author Nicholas Doglio
+ *
+ * Listing
+ *
  */
 class MultiredditData {
     @Json(name = "modhash")

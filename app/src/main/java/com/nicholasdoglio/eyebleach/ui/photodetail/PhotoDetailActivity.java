@@ -22,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.nicholasdoglio.eyebleach.R;
 
+import dagger.android.AndroidInjection;
+
 /**
  * @author Nicholas Doglio
  */
@@ -29,6 +31,7 @@ public class PhotoDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
     }

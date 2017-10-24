@@ -24,4 +24,5 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class RedditPostRepository {
+    //I think I'm going to replace this with a store
 }

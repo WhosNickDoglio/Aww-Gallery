@@ -32,8 +32,6 @@ import dagger.android.HasActivityInjector;
  * @author Nicholas Doglio
  */
 public class AwwGalleryApp extends Application implements HasActivityInjector {
-    // TODO: Clean out res
-
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 

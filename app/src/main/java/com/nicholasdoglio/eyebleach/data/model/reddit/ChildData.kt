@@ -20,7 +20,6 @@ package com.nicholasdoglio.eyebleach.data.model.reddit
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.squareup.moshi.Json
-import org.jetbrains.annotations.NotNull
 
 /**
  * @author Nicholas Doglio
@@ -35,10 +34,12 @@ class ChildData {
     var permalink: String? = null
     @Json(name = "url")
     var url: String? = null
-    @PrimaryKey
-    @NotNull
     @Json(name = "id")
     var id: String? = null
+    @PrimaryKey(autoGenerate = true)
+    var key: Int? = null
+
+
 
     fun fullUrl() = "https://reddit.com$permalink"
 }

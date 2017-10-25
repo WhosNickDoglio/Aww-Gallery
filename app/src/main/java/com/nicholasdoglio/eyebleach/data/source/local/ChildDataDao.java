@@ -19,7 +19,6 @@ package com.nicholasdoglio.eyebleach.data.source.local;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.LivePagedListProvider;
-import android.arch.paging.TiledDataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -50,9 +49,8 @@ public interface ChildDataDao {
     @Query("SELECT * from ChildData")
     LivePagedListProvider<Integer, ChildData> getPagedList();
 
-    @Query("SELECT * FROM ChildData WHERE :id")
-    TiledDataSource<ChildData> getTiledData(String id);
-
+    @Query("SELECT * FROM ChildData ORDER BY `key` DESC LIMIT 1;")
+    Single<ChildData> getLastItem(); //Maybe use this?
 
     @Query("DELETE FROM ChildData")
     void deleteAll();

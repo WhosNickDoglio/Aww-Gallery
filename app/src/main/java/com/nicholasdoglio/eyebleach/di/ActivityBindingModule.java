@@ -29,7 +29,7 @@ import dagger.android.ContributesAndroidInjector;
  * @author Nicholas Doglio
  */
 @Module
-public abstract class ActivityBindingModule {
+abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = PhotoListModule.class)

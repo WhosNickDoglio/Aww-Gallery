@@ -36,7 +36,7 @@ ext {
     glide = "4.2.0"
     retrofit = "2.3.0"
     moshi = "1.5.0"
-    rxJava = "2.1.5"
+    rxJava = "2.1.6"
     rxAndroid = "2.0.1"
     butterknife = "8.8.1"
     glassfish = "10.0-b28"
@@ -47,7 +47,6 @@ ext {
     junit = "4.12"
     robo = "3.4.2"
     mockito = "2.11.0"
-
 }
 
 dependencies {
@@ -110,6 +109,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$archComponents"
     annotationProcessor "android.arch.persistence.room:compiler:$archComponents"
 
+    //Testing
     testImplementation "junit:junit:$junit"
     testImplementation "org.robolectric:robolectric:$robo"
     testCompile "org.mockito:mockito-core:$mockito"

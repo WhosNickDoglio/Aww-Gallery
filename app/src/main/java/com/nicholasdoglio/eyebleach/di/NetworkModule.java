@@ -15,33 +15,28 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.data.model.reddit
+package com.nicholasdoglio.eyebleach.di;
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import com.squareup.moshi.Json
+import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
+
+import javax.inject.Singleton;
+
+import dagger.Provides;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 
 /**
  * @author Nicholas Doglio
  */
-@Entity
-class ChildData {
-    @Json(name = "selftext")
-    var selftext: String? = null
-    @Json(name = "thumbnail")
-    var thumbnail: String? = null
-    @Json(name = "permalink")
-    var permalink: String? = null
-    @Json(name = "url")
-    var url: String? = null
-    @Json(name = "id")
-    var id: String? = null
-    @Json(name = "subreddit")
-    var subreddit: String? = null
-    @Json(name = "over_18")
-    var over18: Boolean? = null
-    @PrimaryKey(autoGenerate = true)
-    var key: Int? = null
-
-    fun fullUrl() = "https://reddit.com$permalink"
+public class NetworkModule {
+    @Provides
+    @Singleton
+    RedditAPI providesRedditService() {
+        return new Retrofit.Builder()
+                .baseUrl("https://www.reddit.com/")
+                .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(RedditAPI.class);
+    }
 }

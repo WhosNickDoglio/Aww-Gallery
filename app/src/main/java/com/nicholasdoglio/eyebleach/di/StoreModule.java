@@ -17,22 +17,28 @@
  */
 package com.nicholasdoglio.eyebleach.di;
 
-import android.app.Application;
-import android.content.Context;
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
+import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
+import com.nytimes.android.external.store3.base.impl.Store;
+import com.nytimes.android.external.store3.base.impl.StoreBuilder;
+import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory;
 
 import javax.inject.Singleton;
 
-import dagger.Module;
 import dagger.Provides;
+import okio.BufferedSource;
 
 /**
  * @author Nicholas Doglio
  */
-@Module
-public class AppModule {
+public class StoreModule {
     @Provides
     @Singleton
-    Context provideContext(Application application) {
-        return application;
+    Store<ChildData, Integer> provideStore(int limit, String after, RedditAPI redditAPI) {
+        return StoreBuilder.<Integer, BufferedSource, ChildData>parsedWithKey()
+//                .fetcher()
+//                .persister()
+                .parser(MoshiParserFactory.createSourceParser(ChildData.class))
+                .open();
     }
 }

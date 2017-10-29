@@ -15,33 +15,27 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.data.model.reddit
+package com.nicholasdoglio.eyebleach.di;
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import com.squareup.moshi.Json
+import android.app.Application;
+import android.arch.persistence.room.Room;
+
+import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
+
+import javax.inject.Singleton;
+
+import dagger.Provides;
 
 /**
  * @author Nicholas Doglio
  */
-@Entity
-class ChildData {
-    @Json(name = "selftext")
-    var selftext: String? = null
-    @Json(name = "thumbnail")
-    var thumbnail: String? = null
-    @Json(name = "permalink")
-    var permalink: String? = null
-    @Json(name = "url")
-    var url: String? = null
-    @Json(name = "id")
-    var id: String? = null
-    @Json(name = "subreddit")
-    var subreddit: String? = null
-    @Json(name = "over_18")
-    var over18: Boolean? = null
-    @PrimaryKey(autoGenerate = true)
-    var key: Int? = null
+public class DatabaseModule {
 
-    fun fullUrl() = "https://reddit.com$permalink"
+    @Provides
+    @Singleton
+    RedditPostDatabase provideRoom(Application application) {
+        return Room.databaseBuilder(application, RedditPostDatabase.class, "reddit_posts_db")
+                .build();
+
+    }
 }

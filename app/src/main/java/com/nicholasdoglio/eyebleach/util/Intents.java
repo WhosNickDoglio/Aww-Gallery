@@ -34,9 +34,9 @@ public class Intents {
 
     public void openWebPage(Context context, String url) {
         Uri webpage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (webIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(webIntent);
         }
     }
 
@@ -49,11 +49,11 @@ public class Intents {
     }
 
     public void composeEmail(Context context) {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto: NicholasDoglio@Gmail.com"));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback");
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto: NicholasDoglio@Gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback");
+        if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(emailIntent);
         }
     }
 

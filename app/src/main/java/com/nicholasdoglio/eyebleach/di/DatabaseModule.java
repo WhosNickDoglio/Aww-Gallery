@@ -18,35 +18,24 @@
 package com.nicholasdoglio.eyebleach.di;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 
-import com.nicholasdoglio.eyebleach.AwwGalleryApp;
+import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
 
 import javax.inject.Singleton;
 
-import dagger.BindsInstance;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * @author Nicholas Doglio
  */
-@Singleton
-@Component(modules = {
-        AndroidInjectionModule.class,
-        AppModule.class,
-        NetworkModule.class,
-        DatabaseModule.class,
-        ActivityBindingModule.class})
-public interface AppComponent {
-
-    void inject(AwwGalleryApp application);
-
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        Builder application(Application application);
-
-        AppComponent build();
+@Module
+public class DatabaseModule {
+    @Provides
+    @Singleton
+    RedditPostDatabase provideRoom(Application application) {
+        return Room.databaseBuilder(application, RedditPostDatabase.class, "reddit_posts_db")
+                .build();
     }
 }

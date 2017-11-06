@@ -49,9 +49,6 @@ public interface ChildDataDao {
     @Query("SELECT * from ChildData")
     LivePagedListProvider<Integer, ChildData> getPagedList();
 
-    @Query("SELECT * FROM ChildData ORDER BY `key` DESC LIMIT 1;")
-    Single<ChildData> getLastItem(); //Maybe use this?
-
     @Query("DELETE FROM ChildData")
     void deleteAll();
 

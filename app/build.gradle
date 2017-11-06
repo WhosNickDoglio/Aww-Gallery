@@ -73,7 +73,6 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
-    implementation "com.squareup.retrofit2:retrofit-mock:$retrofit"
 
     //Moshi
     implementation "com.squareup.moshi:moshi:$moshi"
@@ -110,9 +109,13 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$archComponents"
 
     //Testing
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    testImplementation "com.google.dagger:dagger:$dagger"
+    testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit"
     testImplementation "junit:junit:$junit"
     testImplementation "org.robolectric:robolectric:$robo"
-    testCompile "org.mockito:mockito-core:$mockito"
+    testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "android.arch.core:core-testing:$archComponents"
     testImplementation "android.arch.persistence.room:testing:$archComponents"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"

@@ -31,6 +31,10 @@ interface RedditAPI {
     /**
      * Primary GET method that pulls directly from the Aww Gallery multireddit
      * https://reddit.com/user/NicholasDoglio/m/awwgallery
+     *
+     * @param limit:
+     * @param after:
+     *
      */
     @GET("user/NicholasDoglio/m/awwgallery/.json")
     fun getGalleryFromMulti(@Query("limit") limit: Int, @Query("after") after: String): Single<Multireddit>

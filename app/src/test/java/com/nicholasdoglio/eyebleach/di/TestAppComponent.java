@@ -15,15 +15,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.data.model.about
+package com.nicholasdoglio.eyebleach.di;
+
+import javax.inject.Singleton;
+
+import dagger.Component;
+import dagger.android.AndroidInjectionModule;
 
 /**
  * @author Nicholas Doglio
- *
- * Base object for information that will be displayed in the About screen
- *
- * @param imageID: drawable asset for icons in About screen
- * @param contentName: String that will be the displayed text for each About item
- * @param contentLink: URL that will be launched upon click of each about item
  */
-class AboutInfo(private var imageID: Int, private var contentName: String, private var contentLink: String)
+@Singleton
+@Component(modules = {
+        AndroidInjectionModule.class,
+        TestNetworkModule.class})
+public interface TestAppComponent extends AppComponent {
+
+}

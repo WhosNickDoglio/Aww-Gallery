@@ -21,6 +21,7 @@ import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -29,10 +30,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 /**
  * @author Nicholas Doglio
  */
+@Module
 public class NetworkModule {
     @Provides
     @Singleton
-    RedditAPI providesRedditService() {
+    public RedditAPI providesRedditService() {
         return new Retrofit.Builder()
                 .baseUrl("https://www.reddit.com/")
                 .addConverterFactory(MoshiConverterFactory.create())

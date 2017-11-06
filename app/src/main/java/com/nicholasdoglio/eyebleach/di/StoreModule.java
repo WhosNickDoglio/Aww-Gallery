@@ -25,12 +25,14 @@ import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 import okio.BufferedSource;
 
 /**
  * @author Nicholas Doglio
  */
+@Module
 public class StoreModule {
     @Provides
     @Singleton

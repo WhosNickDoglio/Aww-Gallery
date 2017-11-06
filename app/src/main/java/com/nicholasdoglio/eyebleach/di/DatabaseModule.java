@@ -24,11 +24,13 @@ import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 
 /**
  * @author Nicholas Doglio
  */
+@Module
 public class DatabaseModule {
 
     @Provides

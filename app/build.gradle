@@ -28,12 +28,12 @@ android {
 
 ext {
     support = "27.0.0"
-    glide = "4.2.0"
+    glide = "4.3.1"
     retrofit = "2.3.0"
     butterknife = "8.8.1"
-    dagger = "2.12"
+    dagger = "2.13"
     store = "3.0.0-beta"
-    archComponents = "1.0.0-rc1"
+    archComponents = "1.0.0"
 }
 
 dependencies {
@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.squareup.moshi:moshi:1.5.0'
 
     //Rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //ButterKnife

@@ -18,7 +18,6 @@
 package com.nicholasdoglio.eyebleach.data.remote;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit;
-import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
 import com.nicholasdoglio.eyebleach.di.DaggerTestAppComponent;
 
 import org.junit.After;
@@ -27,7 +26,11 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import io.reactivex.subscribers.TestSubscriber;
+import okhttp3.mockwebserver.MockWebServer;
+
+import static org.mockito.Mockito.when;
 
 /**
  * @author Nicholas Doglio
@@ -35,37 +38,47 @@ import io.reactivex.subscribers.TestSubscriber;
 public class MockRedditAPITest {
 
     @Inject
-    RedditAPI redditAPI;
-
-    @Inject
     MockRedditAPI mockRedditAPI;
 
     private int limit = 100;
     private String after = "";
+    private MockWebServer mockWebServer;
     private TestSubscriber<Multireddit> testSubscriber;
 
     @Before
     public void setUp() throws Exception {
+        testSubscriber = new TestSubscriber<>();
+        mockWebServer = new MockWebServer();
+
         DaggerTestAppComponent
                 .builder()
                 .build();
-        testSubscriber = new TestSubscriber<>();
-    }
 
+        mockWebServer.start();
+    }
 
     @Test
     public void SuccessfulNetworkCall() throws Exception {
-        redditAPI.getGalleryFromMulti(limit, after);
-
+        when(mockRedditAPI.getGalleryFromMulti(limit, after))
+                .thenReturn(Single.just(multireddit()));
     }
 
     @Test
     public void FailedNetworkCall() throws Exception {
-        redditAPI.getGalleryFromMulti(limit, after);
+        mockRedditAPI.getGalleryFromMulti(limit, after);
     }
 
     @After
     public void tearDown() throws Exception {
         testSubscriber.dispose();
+        mockWebServer.shutdown();
+    }
+
+    private Multireddit multireddit() {
+        Multireddit multireddit = new Multireddit();
+
+        //fill this with dummy data
+
+        return multireddit;
     }
 }

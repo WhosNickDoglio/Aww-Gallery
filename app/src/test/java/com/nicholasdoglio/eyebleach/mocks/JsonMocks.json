@@ -1,0 +1,180 @@
+{
+  "kind": "Listing",
+  "data": {
+    "modhash": "obustjnrew65a129ece32e09a059cce1b1256ae0252f825d55",
+    "whitelist_status": null,
+    "children": [
+      {
+        "kind": "t3",
+        "data": {
+          "domain": "i.imgur.com",
+          "approved_at_utc": null,
+          "banned_by": null,
+          "media_embed": {},
+          "thumbnail_width": 140,
+          "subreddit": "AnimalsBeingBros",
+          "selftext_html": null,
+          "selftext": "",
+          "likes": null,
+          "suggested_sort": null,
+          "user_reports": [],
+          "secure_media": null,
+          "is_reddit_media_domain": false,
+          "link_flair_text": null,
+          "id": "7b7dsq",
+          "banned_at_utc": null,
+          "view_count": null,
+          "archived": false,
+          "clicked": false,
+          "report_reasons": null,
+          "title": "Dog brings in the packages from the delivery man",
+          "num_crossposts": 0,
+          "saved": false,
+          "mod_reports": [],
+          "can_mod_post": false,
+          "is_crosspostable": true,
+          "pinned": false,
+          "score": 7518,
+          "approved_by": null,
+          "over_18": false,
+          "hidden": false,
+          "preview": {
+            "images": [
+              {
+                "source": {
+                  "url": "https://i.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fm=jpg&amp;s=82df4ba72cf4e97e53049a5f530ea169",
+                  "width": 728,
+                  "height": 728
+                },
+                "resolutions": [
+                  {
+                    "url": "https://i.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=108&amp;fm=jpg&amp;s=398ac2a7dfbd947e3c1cdd09d64ddcb9",
+                    "width": 108,
+                    "height": 108
+                  },
+                  {
+                    "url": "https://i.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=216&amp;fm=jpg&amp;s=cbeba93c8d4afad26768a7153e551683",
+                    "width": 216,
+                    "height": 216
+                  },
+                  {
+                    "url": "https://i.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=320&amp;fm=jpg&amp;s=c77f2c77887bfccfbb4b298fc78bdbe9",
+                    "width": 320,
+                    "height": 320
+                  },
+                  {
+                    "url": "https://i.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=640&amp;fm=jpg&amp;s=cbc7f2e2f259d7c594ed2d28bbe92159",
+                    "width": 640,
+                    "height": 640
+                  }
+                ],
+                "variants": {
+                  "gif": {
+                    "source": {
+                      "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?s=082b151f175efb912db415a9acaaca23",
+                      "width": 728,
+                      "height": 728
+                    },
+                    "resolutions": [
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=108&amp;s=814af8c09fee73b6f55ae10edf311c6d",
+                        "width": 108,
+                        "height": 108
+                      },
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=216&amp;s=3b5527cbc7a5e7623ba6438ca07fc125",
+                        "width": 216,
+                        "height": 216
+                      },
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=320&amp;s=5cbd38d7da47b7734f4b063582edbf4e",
+                        "width": 320,
+                        "height": 320
+                      },
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=640&amp;s=a09788e92e80c2e62a6fd5ffc354a9e5",
+                        "width": 640,
+                        "height": 640
+                      }
+                    ]
+                  },
+                  "mp4": {
+                    "source": {
+                      "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fm=mp4&amp;mp4-fragmented=false&amp;s=8f1d38c716c29aa966f935f74df76e51",
+                      "width": 728,
+                      "height": 728
+                    },
+                    "resolutions": [
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=108&amp;fm=mp4&amp;mp4-fragmented=false&amp;s=cc677a2a008b75c443e33d92cd5d4ee0",
+                        "width": 108,
+                        "height": 108
+                      },
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=216&amp;fm=mp4&amp;mp4-fragmented=false&amp;s=af8275a5e0f00d8f2cc10170d2083aa0",
+                        "width": 216,
+                        "height": 216
+                      },
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=320&amp;fm=mp4&amp;mp4-fragmented=false&amp;s=e03e83d793d64d8a8aa6daa134303052",
+                        "width": 320,
+                        "height": 320
+                      },
+                      {
+                        "url": "https://g.redditmedia.com/-Z4GGwW7UEe42rSgFU2s5hQ3RiRP8BOXGuMvDnAN7Hc.gif?fit=crop&amp;crop=faces%2Centropy&amp;arh=2&amp;w=640&amp;fm=mp4&amp;mp4-fragmented=false&amp;s=eb12cde4c9356f94cd7cc06ef4ff4b9a",
+                        "width": 640,
+                        "height": 640
+                      }
+                    ]
+                  }
+                },
+                "id": "7CMdNNeP5yPWGNnXYR0tvCHIjqxT0iMDRXlmgWaIIkI"
+              }
+            ],
+            "enabled": true
+          },
+          "thumbnail": "https://a.thumbs.redditmedia.com/ud-vbkFcefULeVvBJtWte4zKavb_G_Bi4JszbY9TjG8.jpg",
+          "subreddit_id": "t5_2wmvy",
+          "edited": false,
+          "link_flair_css_class": null,
+          "author_flair_css_class": null,
+          "contest_mode": false,
+          "gilded": 0,
+          "downs": 0,
+          "brand_safe": true,
+          "secure_media_embed": {},
+          "removal_reason": null,
+          "post_hint": "link",
+          "author_flair_text": null,
+          "stickied": false,
+          "can_gild": true,
+          "thumbnail_height": 140,
+          "parent_whitelist_status": "all_ads",
+          "name": "t3_7b7dsq",
+          "spoiler": false,
+          "permalink": "/r/AnimalsBeingBros/comments/7b7dsq/dog_brings_in_the_packages_from_the_delivery_man/",
+          "subreddit_type": "public",
+          "locked": false,
+          "hide_score": false,
+          "created": 1510024484,
+          "url": "https://i.imgur.com/edTbQo0.gifv",
+          "whitelist_status": "all_ads",
+          "quarantine": false,
+          "author": "HopeSandoval",
+          "created_utc": 1509995684,
+          "subreddit_name_prefixed": "r/AnimalsBeingBros",
+          "ups": 7518,
+          "media": null,
+          "num_comments": 82,
+          "is_self": false,
+          "visited": false,
+          "num_reports": null,
+          "is_video": false,
+          "distinguished": null
+        }
+      }
+    ],
+    "after": "t3_7b7dsq",
+    "before": null
+  }
+}

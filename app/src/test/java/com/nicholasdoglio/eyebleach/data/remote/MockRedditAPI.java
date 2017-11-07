@@ -22,15 +22,21 @@ import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 
 /**
  * @author Nicholas Doglio
  */
 public class MockRedditAPI implements RedditAPI {
+
+    @Inject
+    RedditAPI redditAPI;
+
     @NotNull
     @Override
     public Single<Multireddit> getGalleryFromMulti(int limit, @NotNull String after) {
-        return null;
+        return redditAPI.getGalleryFromMulti(limit, after);
     }
 }

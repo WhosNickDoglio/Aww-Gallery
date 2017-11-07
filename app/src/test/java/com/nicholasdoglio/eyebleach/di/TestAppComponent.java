@@ -30,5 +30,4 @@ import dagger.android.AndroidInjectionModule;
         AndroidInjectionModule.class,
         TestNetworkModule.class})
 public interface TestAppComponent extends AppComponent {
-
 }

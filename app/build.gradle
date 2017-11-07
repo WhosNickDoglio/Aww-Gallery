@@ -40,13 +40,14 @@ ext {
     rxAndroid = "2.0.1"
     butterknife = "8.8.1"
     glassfish = "10.0-b28"
-    dagger = "2.12"
+    dagger = "2.13"
     store = "3.0.0-beta"
     paging = "1.0.0-alpha3"
-    archComponents = "1.0.0-rc1"
+    archComponents = "1.0.0"
     junit = "4.12"
     robo = "3.4.2"
     mockito = "2.11.0"
+    okhttp = "3.9.0"
 }
 
 dependencies {
@@ -113,6 +114,7 @@ dependencies {
     testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
     testImplementation "com.google.dagger:dagger:$dagger"
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp"
     testImplementation "junit:junit:$junit"
     testImplementation "org.robolectric:robolectric:$robo"
     testImplementation "org.mockito:mockito-core:$mockito"

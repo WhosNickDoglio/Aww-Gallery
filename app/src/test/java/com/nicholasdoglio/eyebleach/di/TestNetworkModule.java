@@ -18,11 +18,15 @@
 package com.nicholasdoglio.eyebleach.di;
 
 import com.nicholasdoglio.eyebleach.data.remote.MockRedditAPI;
+import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 
 /**
  * @author Nicholas Doglio
@@ -35,5 +39,15 @@ public class TestNetworkModule {
     @Singleton
     MockRedditAPI provideMockAPI() {
         return new MockRedditAPI();
+    }
+
+    @Provides
+    @Singleton
+    public RedditAPI providesRedditService(String baseURL) {
+        return new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(RedditAPI.class);
     }
 }

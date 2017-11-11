@@ -17,6 +17,8 @@
  */
 package com.nicholasdoglio.eyebleach.di;
 
+import com.nicholasdoglio.eyebleach.data.remote.MockRedditAPITest;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -30,4 +32,6 @@ import dagger.android.AndroidInjectionModule;
         AndroidInjectionModule.class,
         TestNetworkModule.class})
 public interface TestAppComponent extends AppComponent {
+
+    void inject(MockRedditAPITest mockRedditAPITest);
 }

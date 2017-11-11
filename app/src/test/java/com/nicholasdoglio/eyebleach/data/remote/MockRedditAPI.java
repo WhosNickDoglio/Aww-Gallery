@@ -34,6 +34,7 @@ public class MockRedditAPI implements RedditAPI {
     @Inject
     RedditAPI redditAPI;
 
+
     @NotNull
     @Override
     public Single<Multireddit> getGalleryFromMulti(int limit, @NotNull String after) {

@@ -29,4 +29,4 @@ import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 public abstract class RedditPostDatabase extends RoomDatabase {
     public abstract ChildDataDao childDataDao();
 }
-//TODO Work on migration method
+//TODO Work on migration method and set up schema exporting

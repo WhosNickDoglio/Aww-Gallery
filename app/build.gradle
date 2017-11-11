@@ -31,9 +31,9 @@ android {
 
 ext {
     espresso = "2.2.2"
-    support = "27.0.0"
+    support = "27.0.1"
     constraint = "1.1.0-beta3"
-    glide = "4.2.0"
+    glide = "4.3.1"
     retrofit = "2.3.0"
     moshi = "1.5.0"
     rxJava = "2.1.6"

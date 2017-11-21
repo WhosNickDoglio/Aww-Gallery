@@ -19,87 +19,57 @@ package com.nicholasdoglio.eyebleach.data.remote;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit;
 import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-
+import io.reactivex.Single;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import io.reactivex.observers.TestObserver;
-import io.reactivex.subscribers.TestSubscriber;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Nicholas Doglio
  */
 public class MockRedditAPITest {
 
-    private int limit = 100;
-    private RedditAPI redditAPI;
-    private String after = "";
-    private MockWebServer mockWebServer;
-    private TestSubscriber<Multireddit> testSubscriber;
-    private Moshi moshi;
-    private TestObserver testObserver;
+  private static final int LIMIT = 100;
+  private static final String AFTER = "";
+  private RedditAPI redditAPI;
+  private MockWebServer mockWebServer;
+  private MockHelper mockHelper;
 
-    @Before
-    public void setUp() throws Exception {
-        testSubscriber = new TestSubscriber<>();
-        mockWebServer = new MockWebServer();
+  @Mock private RedditAPI mockRedditAPI;
 
-        redditAPI = new Retrofit.Builder()
-                .baseUrl(mockWebServer.url("/"))
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build().create(RedditAPI.class);
+  @Before public void setUp() throws Exception {
+    MockitoAnnotations.initMocks(this);
+    mockHelper = new MockHelper();
+    mockWebServer = new MockWebServer();
 
-        moshi = new Moshi.Builder()
-                .build();
+    redditAPI = new Retrofit.Builder().baseUrl(mockWebServer.url("/"))
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(RedditAPI.class);
+  }
 
-        mockWebServer.start();
-    }
+  @Test public void SuccessfulNetworkCall() throws Exception {
+    mockWebServer.enqueue(new MockResponse().setBody(MockHelper.MockJSON));// load from json file fix this later
+    when(mockRedditAPI.getGalleryFromMulti(LIMIT, AFTER)).thenReturn(Single.just(mockHelper.getMulti()));
 
-    @Test
-    public void SuccessfulNetworkCall() throws Exception {
-        testObserver = new TestObserver();
-        mockWebServer.enqueue(new MockResponse().setBody(""));// load from json file
+    Multireddit testMulti = redditAPI.getGalleryFromMulti(LIMIT, AFTER).blockingGet();
+    Multireddit multireddit = mockHelper.getMulti();
 
-        JsonAdapter<Multireddit> jsonAdapter = moshi.adapter(Multireddit.class);
-        Multireddit multireddit = jsonAdapter.fromJson("");
+    assertEquals(testMulti.getKind(), multireddit.getKind());
+  }
 
-
-        redditAPI.getGalleryFromMulti(limit, after)
-                .subscribe(testObserver);
-
-        testObserver.assertNoErrors();
-        testObserver.awaitTerminalEvent();
-        testObserver.assertComplete();
-        testObserver.assertValue("");
-    }
-
-    @Test
-    public void FailedNetworkCall() throws Exception { //Error Code 401
-        testObserver = new TestObserver();
-        mockWebServer.enqueue(new MockResponse().setBody(""));
-
-        redditAPI.getGalleryFromMulti(limit, after);
-
-
-        testObserver.assertNoErrors();
-        testObserver.awaitTerminalEvent();
-        testObserver.assertComplete();
-        testObserver.assertValue("");
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        testSubscriber.dispose();
-        testObserver.dispose();
-        mockWebServer.shutdown();
-    }
+  @After public void tearDown() throws Exception {
+    mockWebServer.shutdown();
+  }
 }

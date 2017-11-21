@@ -19,9 +19,7 @@ package com.nicholasdoglio.eyebleach.ui.photolist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.nicholasdoglio.eyebleach.R;
-
 import dagger.android.AndroidInjection;
 
 /**
@@ -29,10 +27,9 @@ import dagger.android.AndroidInjection;
  */
 public class PhotoListActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
-    }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    AndroidInjection.inject(this);
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_list);
+  }
 }

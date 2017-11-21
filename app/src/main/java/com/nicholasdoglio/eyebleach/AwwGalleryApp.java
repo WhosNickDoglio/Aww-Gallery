@@ -19,34 +19,24 @@ package com.nicholasdoglio.eyebleach;
 
 import android.app.Activity;
 import android.app.Application;
-
 import com.nicholasdoglio.eyebleach.di.DaggerAppComponent;
-
-import javax.inject.Inject;
-
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import javax.inject.Inject;
 
 /**
  * @author Nicholas Doglio
  */
 public class AwwGalleryApp extends Application implements HasActivityInjector {
-    @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+  @Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        DaggerAppComponent
-                .builder()
-                .application(this)
-                .build()
-                .inject(this);
-    }
+  @Override public void onCreate() {
+    super.onCreate();
+    DaggerAppComponent.builder().application(this).build().inject(this);
+  }
 
-    @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return activityDispatchingAndroidInjector;
-    }
+  @Override public AndroidInjector<Activity> activityInjector() {
+    return activityDispatchingAndroidInjector;
+  }
 }

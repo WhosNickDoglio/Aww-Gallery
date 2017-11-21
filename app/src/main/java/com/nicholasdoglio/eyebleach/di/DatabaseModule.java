@@ -19,25 +19,17 @@ package com.nicholasdoglio.eyebleach.di;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
-
 import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 
 /**
  * @author Nicholas Doglio
  */
-@Module
-public class DatabaseModule {
+@Module public class DatabaseModule {
 
-    @Provides
-    @Singleton
-    RedditPostDatabase provideRoom(Application application) {
-        return Room.databaseBuilder(application, RedditPostDatabase.class, "reddit_posts_db")
-                .build();
-
-    }
+  @Provides @Singleton RedditPostDatabase room(Application application) {
+    return Room.databaseBuilder(application, RedditPostDatabase.class, "reddit_posts_db").build();
+  }
 }

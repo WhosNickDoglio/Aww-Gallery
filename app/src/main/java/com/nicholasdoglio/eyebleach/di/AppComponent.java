@@ -18,33 +18,24 @@
 package com.nicholasdoglio.eyebleach.di;
 
 import com.nicholasdoglio.eyebleach.AwwGalleryApp;
-
-import javax.inject.Singleton;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
+import javax.inject.Singleton;
 
 /**
  * @author Nicholas Doglio
  */
-@Singleton
-@Component(modules = {
-        AndroidInjectionModule.class,
-        AppModule.class,
-        NetworkModule.class,
-        DatabaseModule.class,
-        ActivityBindingModule.class})
-public interface AppComponent {
+@Singleton @Component(modules = {
+    AndroidInjectionModule.class, AppModule.class, NetworkModule.class, DatabaseModule.class, ActivityBindingModule.class
+}) public interface AppComponent {
 
-    void inject(AwwGalleryApp application);
+  void inject(AwwGalleryApp application);
 
-    @Component.Builder
-    interface Builder {
+  @Component.Builder interface Builder {
 
-        @BindsInstance
-        Builder application(AwwGalleryApp application);
+    @BindsInstance Builder application(AwwGalleryApp application);
 
-        AppComponent build();
-    }
+    AppComponent build();
+  }
 }

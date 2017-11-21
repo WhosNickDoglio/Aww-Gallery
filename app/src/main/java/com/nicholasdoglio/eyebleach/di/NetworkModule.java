@@ -18,11 +18,9 @@
 package com.nicholasdoglio.eyebleach.di;
 
 import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -30,15 +28,15 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 /**
  * @author Nicholas Doglio
  */
-@Module
-public class NetworkModule {
-    @Provides
-    @Singleton
-    public RedditAPI providesRedditService() {
-        return new Retrofit.Builder()
-                .baseUrl("https://www.reddit.com/")
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build().create(RedditAPI.class);
-    }
+@Module public class NetworkModule {
+
+  public static final String BASE_URL = "https://www.reddit.com/";
+
+  @Provides @Singleton public RedditAPI redditService() {
+    return new Retrofit.Builder().baseUrl(BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(RedditAPI.class);
+  }
 }

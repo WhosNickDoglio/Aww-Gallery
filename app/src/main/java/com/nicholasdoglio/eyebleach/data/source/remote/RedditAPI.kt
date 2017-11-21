@@ -32,8 +32,8 @@ interface RedditAPI {
      * Primary GET method that pulls directly from the Aww Gallery multireddit
      * https://reddit.com/user/NicholasDoglio/m/awwgallery
      *
-     * @param limit:
-     * @param after:
+     * @param limit: the number of posts are part of the initial pull
+     * @param after: last post "kind_id" for pagination use
      *
      */
     @GET("user/NicholasDoglio/m/awwgallery/.json")

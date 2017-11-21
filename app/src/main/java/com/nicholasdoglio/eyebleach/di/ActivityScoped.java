@@ -20,15 +20,11 @@ package com.nicholasdoglio.eyebleach.di;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
 import javax.inject.Scope;
 
 /**
  * @author Nicholas Doglio
  */
 
-@Documented
-@Scope
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ActivityScoped {
+@Documented @Scope @Retention(RetentionPolicy.RUNTIME) public @interface ActivityScoped {
 }

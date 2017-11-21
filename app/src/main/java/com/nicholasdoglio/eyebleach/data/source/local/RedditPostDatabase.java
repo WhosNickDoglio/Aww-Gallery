@@ -19,14 +19,12 @@ package com.nicholasdoglio.eyebleach.data.source.local;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
-
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 
 /**
  * @author Nicholas Doglio
  */
-@Database(entities = {ChildData.class}, version = 1, exportSchema = false)
-public abstract class RedditPostDatabase extends RoomDatabase {
-    public abstract ChildDataDao childDataDao();
+@Database(entities = { ChildData.class }, version = 1) public abstract class RedditPostDatabase extends RoomDatabase {
+  public abstract ChildDataDao childDataDao();
 }
 //TODO Work on migration method and set up schema exporting

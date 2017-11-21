@@ -21,21 +21,15 @@ import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
 import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailModule;
 import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListActivity;
 import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListModule;
-
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 /**
  * @author Nicholas Doglio
  */
-@Module
-abstract class ActivityBindingModule {
+@Module abstract class ActivityBindingModule {
 
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = PhotoListModule.class)
-    abstract PhotoListActivity bindPhotoGridActivity();
+  @ActivityScoped @ContributesAndroidInjector(modules = PhotoListModule.class) abstract PhotoListActivity bindPhotoGridActivity();
 
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = PhotoDetailModule.class)
-    abstract PhotoDetailActivity bindPhotoDetailActivity();
+  @ActivityScoped @ContributesAndroidInjector(modules = PhotoDetailModule.class) abstract PhotoDetailActivity bindPhotoDetailActivity();
 }

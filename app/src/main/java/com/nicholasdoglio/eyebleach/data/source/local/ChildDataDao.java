@@ -22,7 +22,6 @@ import android.arch.persistence.room.Dao;
 /**
  * @author Nicholas Doglio
  */
-@Dao
-public interface ChildDataDao {
+@Dao public interface ChildDataDao {
 
 }

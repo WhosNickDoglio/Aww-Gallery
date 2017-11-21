@@ -22,25 +22,19 @@ import com.nicholasdoglio.eyebleach.data.source.remote.RedditAPI;
 import com.nytimes.android.external.store3.base.impl.Store;
 import com.nytimes.android.external.store3.base.impl.StoreBuilder;
 import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 import okio.BufferedSource;
 
 /**
  * @author Nicholas Doglio
  */
-@Module
-public class StoreModule {
-    @Provides
-    @Singleton
-    Store<ChildData, Integer> provideStore(int limit, String after, RedditAPI redditAPI) {
-        return StoreBuilder.<Integer, BufferedSource, ChildData>parsedWithKey()
-//                .fetcher()
-//                .persister()
-                .parser(MoshiParserFactory.createSourceParser(ChildData.class))
-                .open();
-    }
+@Module public class StoreModule {
+  @Provides @Singleton Store<ChildData, Integer> store(int limit, String after, RedditAPI redditAPI) {
+    return StoreBuilder.<Integer, BufferedSource, ChildData>parsedWithKey()
+        //                .fetcher()
+        //                .persister()
+        .parser(MoshiParserFactory.createSourceParser(ChildData.class)).open();
+  }
 }

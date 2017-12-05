@@ -4,6 +4,8 @@
 
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 
+[![Build Status](https://travis-ci.org/WhosNickDoglio/Aww-Gallery.svg?branch=master)](https://travis-ci.org/WhosNickDoglio/Aww-Gallery)
+
 
 <a href="https://play.google.com/store/apps/details?id=com.nicholasdoglio.eyebleach">
     <img alt="Get it on Google Play"
@@ -13,7 +15,7 @@
 
 
 
-
+MAKE THIS LOOK BETTER
 <img src="https://i.imgur.com/84Oc8Kg.png" width="250" height="450"> <img src="https://i.imgur.com/p4GgtVy.png" width="250" height="450">
 
 
@@ -28,31 +30,34 @@ An Android application that aggregate cute animal photos from reddit implemented
 
 # To-Do
 
-LINK TO PROJECTS
+All planned work is detailed in the [projects](https://github.com/WhosNickDoglio/Aww-Gallery/projects) page.  
 
 # Changelog
 
-LINK TO RELEASES
+All the releases and change logs are kept under [releases](https://github.com/WhosNickDoglio/Aww-Gallery/releases).
 
 # Libraries
 - [Android Support](https://developer.android.com/topic/libraries/support-library/index.html) 
 - [Glide](https://bumptech.github.io/glide/)
-- [Retrofit 2](https://square.github.io/retrofit/)
+- [Retrofit](https://square.github.io/retrofit/)
 - [Moshi](https://github.com/square/moshi)
 - [RxJava2](https://github.com/ReactiveX/RxJava)
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 - [Butterknife](https://jakewharton.github.io/butterknife/)
-- [Dagger2](https://google.github.io/dagger/)
+- [Dagger](https://google.github.io/dagger/)
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html)
   - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
-  - [Paging](https://developer.android.com/topic/libraries/architecture/paging.html)
   
+  
+# Testing
+  
+  OUTLINE TESTING LIBS
 
 # Feedback
 
 Bugs found? Suggestions? Requests?
 
-Feel free to contact me:
+Feel free to contact me or open up a issue:
 
 [Twitter](https://twitter.com/WhosNickDoglio)
 

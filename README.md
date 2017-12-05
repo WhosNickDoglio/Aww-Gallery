@@ -1,5 +1,7 @@
 # Aww Gallery
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE.md)
+
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 
 
@@ -26,11 +28,11 @@ An Android application that aggregate cute animal photos from reddit implemented
 
 # To-Do
 
-All planned work is detailed [here](https://docs.google.com/spreadsheets/d/1obxJnpqz13x_06i73_Eo9gyBx5_Q-4d78GDwvzWqvQg/edit?usp=sharing) 
+LINK TO PROJECTS
 
 # Changelog
 
-Full channgelog is available [here](https://github.com/WhosNickDoglio/Aww-Gallery/releases)
+LINK TO RELEASES
 
 # Libraries
 - [Android Support](https://developer.android.com/topic/libraries/support-library/index.html) 

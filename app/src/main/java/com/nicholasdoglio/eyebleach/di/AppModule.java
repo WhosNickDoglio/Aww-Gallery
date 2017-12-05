@@ -19,15 +19,20 @@ package com.nicholasdoglio.eyebleach.di;
 
 import android.app.Application;
 import android.content.Context;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
 
 /**
  * @author Nicholas Doglio
  */
-@Module public class AppModule {
-  @Provides @Singleton Context context(Application application) {
-    return application;
-  }
+@Module
+public class AppModule {
+    @Provides
+    @Singleton
+    Context context(Application application) {
+        return application;
+    }
 }

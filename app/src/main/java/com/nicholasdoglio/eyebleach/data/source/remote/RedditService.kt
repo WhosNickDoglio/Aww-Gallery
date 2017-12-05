@@ -26,7 +26,7 @@ import retrofit2.http.Query
  * @author Nicholas Doglio
  * Retrofit interface for Reddit.com
  */
-interface RedditAPI {
+interface RedditService {
 
     /**
      * Primary GET method that pulls directly from the Aww Gallery multireddit

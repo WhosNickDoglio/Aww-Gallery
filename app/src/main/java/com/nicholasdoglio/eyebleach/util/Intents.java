@@ -23,6 +23,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.View;
+
 import com.nicholasdoglio.eyebleach.ui.about.AboutActivity;
 import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
 
@@ -31,51 +32,51 @@ import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
  */
 public class Intents {
 
-  public void openWebPage(Context context, String url) {
-    Uri webpage = Uri.parse(url);
-    Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-    if (webIntent.resolveActivity(context.getPackageManager()) != null) {
-      context.startActivity(webIntent);
+    public void openWebPage(Context context, String url) {
+        Uri webpage = Uri.parse(url);
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (webIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(webIntent);
+        }
     }
-  }
 
-  public void shareUrl(Context context, String url) {
-    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-    shareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-    shareIntent.setType("text/plain");
-    context.startActivity(Intent.createChooser(shareIntent, "Share your cute animals via: "));
-  }
-
-  public void composeEmail(Context context) {
-    Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-    emailIntent.setData(Uri.parse("mailto: NicholasDoglio@Gmail.com"));
-    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback");
-    if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
-      context.startActivity(emailIntent);
+    public void shareUrl(Context context, String url) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+        shareIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(shareIntent, "Share your cute animals via: "));
     }
-  }
 
-  public void startDetailActivity(View view, int position) {
-    Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
-    photoDetailIntent.putExtra("POSITION", position);
-    view.getContext().startActivity(photoDetailIntent);
-  }
-
-  public void startAboutActivity(Context context) {
-    Intent aboutIntent = new Intent(context, AboutActivity.class);
-    context.startActivity(aboutIntent);
-  }
-
-  public String provideVersion(Context context) {
-    String version = "";
-
-    try {
-      PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-      version = packageInfo.versionName;
-    } catch (PackageManager.NameNotFoundException e) {
-      e.printStackTrace();
+    public void composeEmail(Context context) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto: NicholasDoglio@Gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback");
+        if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(emailIntent);
+        }
     }
-    return "Version: " + version;
-  }
+
+    public void startDetailActivity(View view, int position) {
+        Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
+        photoDetailIntent.putExtra("POSITION", position);
+        view.getContext().startActivity(photoDetailIntent);
+    }
+
+    public void startAboutActivity(Context context) {
+        Intent aboutIntent = new Intent(context, AboutActivity.class);
+        context.startActivity(aboutIntent);
+    }
+
+    public String provideVersion(Context context) {
+        String version = "";
+
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            version = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "Version: " + version;
+    }
 }

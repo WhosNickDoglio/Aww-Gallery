@@ -18,12 +18,16 @@
 package com.nicholasdoglio.eyebleach.ui.photodetail;
 
 import com.nicholasdoglio.eyebleach.di.ActivityScoped;
+
 import dagger.Binds;
 import dagger.Module;
 
 /**
  * @author Nicholas Doglio
  */
-@Module public abstract class PhotoDetailModule {
-  @ActivityScoped @Binds abstract PhotoDetailViewModel photoDetailViewModel(PhotoDetailViewModel viewModel);
+@Module
+public abstract class PhotoDetailModule {
+    @ActivityScoped
+    @Binds
+    abstract PhotoDetailViewModel photoDetailViewModel(PhotoDetailViewModel viewModel);
 }

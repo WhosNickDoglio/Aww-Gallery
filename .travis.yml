@@ -1,4 +1,15 @@
 language: android
+
+jdk:
+  - oraclejdk8
+
+install:
+  - echo yes | sdkmanager "tools" &>/dev/null
+  - echo yes | sdkmanager "platform-tools" &>/dev/null
+  - echo yes | sdkmanager "build-tools;27.0.2" &>/dev/null
+  - echo yes | sdkmanager "platforms;android-27" &>/dev/null
+
+
 android:
   components:
     - tools
@@ -6,11 +17,6 @@ android:
     - platform-tools
     - build-tools-27.0.2
     - android-27
-
-  licenses:
-      - 'android-sdk-preview-license-.+'
-      - 'android-sdk-license-.+'
-      - 'google-gdk-license-.+'
 
 script:
    - ./gradlew build connectedCheck

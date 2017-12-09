@@ -20,18 +20,13 @@ package com.nicholasdoglio.eyebleach.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase;
 import com.nicholasdoglio.eyebleach.data.source.remote.RedditService;
-import com.nytimes.android.external.store3.base.impl.Store;
-import com.nytimes.android.external.store3.base.impl.StoreBuilder;
-import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -58,14 +53,5 @@ public class DataModule {
     @Singleton
     RedditPostDatabase room(Application application) {
         return Room.databaseBuilder(application, RedditPostDatabase.class, "reddit_posts_db").build();
-    }
-
-    @Provides
-    @Singleton
-    Store<ChildData, Integer> store(int limit, String after, RedditService redditService) {
-        return StoreBuilder.<Integer, BufferedSource, ChildData>parsedWithKey()
-                //                .fetcher()
-                //                .persister()
-                .parser(MoshiParserFactory.createSourceParser(ChildData.class)).open();
     }
 }

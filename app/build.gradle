@@ -32,16 +32,15 @@ ext {
     espresso = "2.2.2"
     support = "27.0.2"
     constraint = "1.1.0-beta3"
-    glide = "4.3.1"
+    glide = "4.4.0"
     retrofit = "2.3.0"
     moshi = "1.5.0"
-    rxJava = "2.1.6"
+    rxJava = "2.1.7"
     rxAndroid = "2.0.1"
     butterknife = "8.8.1"
     glassfish = "10.0-b28"
     dagger = "2.13"
-    store = "3.0.0-beta"
-    paging = "1.0.0-alpha3"
+    paging = "1.0.0-alpha4"
     archComponents = "1.0.0"
     junit = "4.12"
     mockito = "2.11.0"
@@ -91,11 +90,6 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
-
-    //NYT Store
-    implementation "com.nytimes.android:cache3:$store"
-    implementation "com.nytimes.android:store3:$store"
-    implementation "com.nytimes.android:middleware-moshi3:$store"
 
     //Android Architecture Components
     implementation "android.arch.paging:runtime:$paging"

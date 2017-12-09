@@ -7,5 +7,10 @@ android:
     - build-tools-27.0.2
     - android-27
 
+  licenses:
+      - 'android-sdk-preview-license-.+'
+      - 'android-sdk-license-.+'
+      - 'google-gdk-license-.+'
+
 script:
    - ./gradlew build connectedCheck

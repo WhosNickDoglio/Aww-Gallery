@@ -17,8 +17,17 @@
  */
 package com.nicholasdoglio.eyebleach.viewmodel;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
+
 /**
  * @author Nicholas Doglio
  */
-public class GalleryViewModelFactory {
+public class GalleryViewModelFactory implements ViewModelProvider.Factory {
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        return null;
+    }
 }

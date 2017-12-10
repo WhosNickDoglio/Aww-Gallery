@@ -6,6 +6,8 @@
 
 [![Build Status](https://travis-ci.org/WhosNickDoglio/Aww-Gallery.svg?branch=master)](https://travis-ci.org/WhosNickDoglio/Aww-Gallery)
 
+[![Coverage Status](https://coveralls.io/repos/github/WhosNickDoglio/Aww-Gallery/badge.svg?branch=master)](https://coveralls.io/github/WhosNickDoglio/Aww-Gallery?branch=master)
+
 
 <a href="https://play.google.com/store/apps/details?id=com.nicholasdoglio.eyebleach">
     <img alt="Get it on Google Play"

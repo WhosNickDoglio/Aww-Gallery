@@ -15,11 +15,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.data.model.about
+package com.nicholasdoglio.eyebleach.util;
+
+import com.bumptech.glide.module.AppGlideModule;
 
 /**
  * @author Nicholas Doglio
  */
-class AboutInfo(var imageID: Int, var contentName: String, var contentLink: String)
-
-
+@com.bumptech.glide.annotation.GlideModule
+public final class GlideModule extends AppGlideModule {
+}

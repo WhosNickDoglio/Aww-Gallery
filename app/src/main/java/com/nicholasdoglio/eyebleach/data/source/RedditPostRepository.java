@@ -18,6 +18,7 @@
 package com.nicholasdoglio.eyebleach.data.source;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListProvider;
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit;
@@ -54,6 +55,7 @@ public class RedditPostRepository {
         loadMoreList = new ArrayList<>();
     }
 
+    //Need to figure a better way to handle the loading from network vs local
     public Single<List<ChildData>> getPostsFirstLoad(int limit) {
         posts.clear();
         return redditAPI.getMultiPosts(limit, "")
@@ -79,7 +81,8 @@ public class RedditPostRepository {
                 .map(multireddit -> {
                     filterForImages(multireddit, loadMoreList);
                     return loadMoreList;
-                }).doOnSuccess(childData -> {
+                })
+                .doOnSuccess(childData -> {
                     postDatabase.beginTransaction();
                     try {
                         postDatabase.childDataDao().insertChildDataList(childData);
@@ -98,12 +101,20 @@ public class RedditPostRepository {
                 });
     }
 
+    public LivePagedListProvider<Integer, ChildData> getPagedList() {
+        return postDatabase.childDataDao().getPagedList();
+    }
+
     public Flowable<List<ChildData>> getPostsFromDb() {
         return postDatabase.childDataDao().getPosts();
     }
 
     public LiveData<List<ChildData>> getPostsLive() {
         return postDatabase.childDataDao().getPostsLive();
+    }
+
+    public Single<Integer> getCount() {
+        return postDatabase.childDataDao().getCount();
     }
 
     private void filterForImages(Multireddit networkMulti, List<ChildData> childDataList) {

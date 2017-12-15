@@ -18,6 +18,7 @@
 package com.nicholasdoglio.eyebleach.data.source.local;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListProvider;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -28,6 +29,7 @@ import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * @author Nicholas Doglio
@@ -38,11 +40,14 @@ public interface ChildDataDao {
     @Query("SELECT * FROM ChildData")
     Flowable<List<ChildData>> getPosts();
 
+    @Query("SELECT COUNT(*) FROM ChildData")
+    Single<Integer> getCount();
+
     @Query("SELECT * FROM ChildData")
     LiveData<List<ChildData>> getPostsLive();
 
-    @Query("SELECT thumbnail FROM ChildData")
-    LiveData<List<String>> getThumbnails(); //Maybe do it like this instead?
+    @Query("SELECT * from ChildData")
+    LivePagedListProvider<Integer, ChildData> getPagedList();
 
     @Query("DELETE FROM ChildData")
     void deleteAll();

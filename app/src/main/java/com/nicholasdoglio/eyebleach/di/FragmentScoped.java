@@ -15,11 +15,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.data.model.about
+package com.nicholasdoglio.eyebleach.di;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import javax.inject.Scope;
 
 /**
  * @author Nicholas Doglio
  */
-class AboutInfo(var imageID: Int, var contentName: String, var contentLink: String)
-
-
+@Documented
+@Scope
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FragmentScoped {
+}

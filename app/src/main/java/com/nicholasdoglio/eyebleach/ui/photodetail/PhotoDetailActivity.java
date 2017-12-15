@@ -30,7 +30,6 @@ import com.nicholasdoglio.eyebleach.R;
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 import com.nicholasdoglio.eyebleach.util.Intents;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +38,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-import io.reactivex.Flowable;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
@@ -54,14 +53,13 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     private PhotoDetailAdapter photoDetailAdapter;
     private LinearLayoutManager layoutManager;
-    private List<ChildData> photoDetailList;
     private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        AndroidInjection.inject(this);
         ButterKnife.bind(this);
 
         if (getSupportActionBar() != null) {
@@ -69,8 +67,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         }
 
         photoDetailPresenter.load();
-
-        photoDetailList = new ArrayList<>();
+//        load();
 
         position = getIntent().getExtras().getInt("POSITION");
 
@@ -82,18 +79,20 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
         photoDetailRecyclerView.setLayoutManager(layoutManager);
         photoDetailRecyclerView.setHasFixedSize(true);
         photoDetailRecyclerView.getItemAnimator().setChangeDuration(0);
-        photoDetailAdapter = new PhotoDetailAdapter(this, photoDetailList, photoDetailRecyclerView);
+
+        photoDetailAdapter = new PhotoDetailAdapter(this, photoDetailRecyclerView);
+        photoDetailAdapter.setOnLoadMoreListener(this::loadMore);
+        photoDetailPresenter.getPhotoDetailList().observe(this, childData -> photoDetailAdapter.setList(childData));
         photoDetailRecyclerView.setAdapter(photoDetailAdapter);
 
 
-        photoDetailPresenter.getPhotoDetailList().observe(this, childData -> photoDetailAdapter.addMore(childData));
-
-        photoDetailAdapter.setOnLoadMoreListener(this::loadMore);
-
         //I don't like this but it seems like the only thing that consistently opens up to the right photo
-        Flowable.timer(200, TimeUnit.MILLISECONDS)
+        Completable.timer(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(position));
+                .subscribe(() -> photoDetailRecyclerView.getLayoutManager().scrollToPosition(position));
+
+//        photoDetailRecyclerView.getLayoutManager().scrollToPosition(position);
+
     }
 
     public void loadMore() {
@@ -102,7 +101,7 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public void load(List<ChildData> childData) {
-        photoDetailList.addAll(childData);
+        photoDetailPresenter.load();
     }
 
     @Override
@@ -113,17 +112,17 @@ public class PhotoDetailActivity extends AppCompatActivity implements PhotoDetai
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String postUrl = photoDetailList.get(layoutManager.findFirstVisibleItemPosition()).fullUrl();
+        String postUrl = photoDetailAdapter.getCurrentList().get(layoutManager.findFirstVisibleItemPosition()).fullUrl();
 
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
             case R.id.share_item:
-                Intents.shareUrl(this, postUrl);
+                Intents.INSTANCE.shareUrl(this, postUrl);
                 return true;
             case R.id.open_source:
-                Intents.openWebPage(this, postUrl);
+                Intents.INSTANCE.openWebPage(this, postUrl);
                 return true;
         }
         return true;

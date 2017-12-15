@@ -35,7 +35,8 @@ import io.reactivex.schedulers.Schedulers;
  * @author Nicholas Doglio
  */
 public class PhotoListPresenter implements PhotoListContract.Presenter {
-    private static final int IMAGES_LOADED_PHOTOGRIDVIEW = 48;
+    private static final int FIRST_LOAD = 100;
+    private static final int LOAD_MORE = 60;
     private final LiveData<List<ChildData>> photoList;
     private final RedditPostRepository repository;
     private PhotoListContract.View photoGridView;
@@ -50,7 +51,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
 
     @Override
     public void load() {
-        photoGridDisposable.add(repository.getPostsFirstLoad(IMAGES_LOADED_PHOTOGRIDVIEW)
+        photoGridDisposable.add(repository.getPostsFirstLoad(FIRST_LOAD)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
@@ -67,7 +68,7 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     }
 
     void loadMore() {
-        photoGridDisposable.add(repository.getMorePosts(IMAGES_LOADED_PHOTOGRIDVIEW)
+        photoGridDisposable.add(repository.getMorePosts(LOAD_MORE)
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableSingleObserver<List<ChildData>>() {
                     @Override
@@ -80,10 +81,6 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
                         e.printStackTrace();
                     }
                 }));
-    }
-
-    public LiveData<List<ChildData>> getPhotoList() {
-        return photoList;
     }
 
     @Override
@@ -99,5 +96,9 @@ public class PhotoListPresenter implements PhotoListContract.Presenter {
     @Override
     public void dropView() {
         photoGridView = null;
+    }
+
+    LiveData<List<ChildData>> getPhotoList() {
+        return photoList;
     }
 }

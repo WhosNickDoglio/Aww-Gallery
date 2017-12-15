@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.nicholasdoglio.eyebleach"
         minSdkVersion 19
@@ -27,13 +26,21 @@ android {
 }
 
 ext {
-    support = "27.0.0"
-    glide = "4.3.1"
+    espresso = "2.2.2"
+    support = "27.0.2"
+    constraint = "1.1.0-beta3"
+    glide = "4.4.0"
     retrofit = "2.3.0"
+    moshi = "1.5.0"
+    rxJava = "2.1.7"
+    rxAndroid = "2.0.1"
     butterknife = "8.8.1"
     dagger = "2.13"
-    store = "3.0.0-beta"
+    paging = "1.0.0-alpha4-1"
     archComponents = "1.0.0"
+    junit = "4.12"
+    mockito = "2.11.0"
+    okhttp = "3.9.0"
 }
 
 dependencies {
@@ -47,7 +54,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:support-v4:$support"
     implementation "com.android.support:recyclerview-v7:$support"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
+    implementation "com.android.support.constraint:constraint-layout:$constraint"
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide"
@@ -62,31 +69,25 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
 
     //Moshi
-    implementation 'com.squareup.moshi:moshi:1.5.0'
+    implementation "com.squareup.moshi:moshi:$moshi"
 
     //Rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation "io.reactivex.rxjava2:rxjava:$rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
 
     //ButterKnife
     implementation "com.jakewharton:butterknife:$butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
     //Dagger
-    implementation 'org.glassfish:javax.annotation:10.0-b28'
     implementation "com.google.dagger:dagger:$dagger"
     implementation "com.google.dagger:dagger-android:$dagger"
     implementation "com.google.dagger:dagger-android-support:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
 
-    //NYT Store
-    implementation "com.nytimes.android:cache3:$store"
-    implementation "com.nytimes.android:store3:$store"
-    implementation "com.nytimes.android:middleware-moshi3:$store"
-
     //Android Architecture Components
-    implementation 'android.arch.paging:runtime:1.0.0-alpha3'
+    implementation "android.arch.paging:runtime:$paging"
     implementation "android.arch.lifecycle:common-java8:$archComponents"
     implementation "android.arch.lifecycle:extensions:$archComponents"
     implementation "android.arch.lifecycle:common-java8:$archComponents"

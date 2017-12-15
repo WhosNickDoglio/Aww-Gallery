@@ -32,6 +32,12 @@ android {
         versionName "0.0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -64,9 +70,8 @@ ext {
     rxJava = "2.1.7"
     rxAndroid = "2.0.1"
     butterknife = "8.8.1"
-    glassfish = "10.0-b28"
     dagger = "2.13"
-    paging = "1.0.0-alpha4"
+    paging = "1.0.0-alpha4-1"
     archComponents = "1.0.0"
     junit = "4.12"
     mockito = "2.11.0"
@@ -110,7 +115,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
     //Dagger
-    implementation "org.glassfish:javax.annotation:$glassfish"
     implementation "com.google.dagger:dagger:$dagger"
     implementation "com.google.dagger:dagger-android:$dagger"
     implementation "com.google.dagger:dagger-android-support:$dagger"

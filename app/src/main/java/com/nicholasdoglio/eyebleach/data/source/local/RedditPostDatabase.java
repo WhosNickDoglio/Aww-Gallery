@@ -25,7 +25,7 @@ import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
 /**
  * @author Nicholas Doglio
  */
-@Database(entities = {ChildData.class}, version = 1)
+@Database(entities = {ChildData.class}, version = 1, exportSchema = true)
 public abstract class RedditPostDatabase extends RoomDatabase {
     public abstract ChildDataDao childDataDao();
 }

@@ -1,29 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: "com.github.kt3k.coveralls"
-apply plugin: 'jacoco'
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: fileFilter)
-    def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree], [kotlinDebugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
-    ])
-}
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.nicholasdoglio.eyebleach"
         minSdkVersion 19
@@ -49,8 +30,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     testOptions {
         unitTests {
@@ -63,7 +44,7 @@ android {
 ext {
     espresso = "2.2.2"
     support = "27.0.2"
-    constraint = "1.1.0-beta3"
+    constraint = "1.1.0-beta4"
     glide = "4.4.0"
     retrofit = "2.3.0"
     moshi = "1.5.0"
@@ -142,12 +123,4 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$archComponents"
     testImplementation "android.arch.persistence.room:testing:$archComponents"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
-}
-
-repositories {
-    mavenCentral()
 }

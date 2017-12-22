@@ -37,12 +37,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 public class DataModule {
 
-    private static final String BASE_URL = "https://www.reddit.com/";
-
     @Provides
     @Singleton
-    public RedditService redditService() {
-        return new Retrofit.Builder().baseUrl(BASE_URL)
+    public static RedditService redditService() {
+        return new Retrofit.Builder().baseUrl("https://www.reddit.com/")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

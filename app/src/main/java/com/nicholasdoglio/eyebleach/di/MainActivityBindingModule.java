@@ -15,24 +15,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photodetail;
+package com.nicholasdoglio.eyebleach.di;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import com.nicholasdoglio.eyebleach.R;
-
-import dagger.android.AndroidInjection;
+import dagger.Module;
 
 /**
  * @author Nicholas Doglio
  */
-public class PhotoDetailActivity extends AppCompatActivity {
+@Module
+abstract class MainActivityBindingModule {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallery);
-    }
 }

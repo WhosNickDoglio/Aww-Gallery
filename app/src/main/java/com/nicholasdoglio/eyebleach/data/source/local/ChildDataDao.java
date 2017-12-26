@@ -18,11 +18,20 @@
 package com.nicholasdoglio.eyebleach.data.source.local;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData;
+
+import java.util.List;
 
 /**
  * @author Nicholas Doglio
  */
 @Dao
 public interface ChildDataDao {
+
+    @Insert
+    void insertPosts(List<ChildData> redditPosts);
+
 
 }

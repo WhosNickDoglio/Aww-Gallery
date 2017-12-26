@@ -24,9 +24,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.View;
 
-import com.nicholasdoglio.eyebleach.ui.about.AboutActivity;
-import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailActivity;
-
 /**
  * @author Nicholas Doglio
  */
@@ -58,14 +55,11 @@ public class Intents {
     }
 
     public void startDetailActivity(View view, int position) {
-        Intent photoDetailIntent = new Intent(view.getContext(), PhotoDetailActivity.class);
-        photoDetailIntent.putExtra("POSITION", position);
-        view.getContext().startActivity(photoDetailIntent);
+
     }
 
     public void startAboutActivity(Context context) {
-        Intent aboutIntent = new Intent(context, AboutActivity.class);
-        context.startActivity(aboutIntent);
+
     }
 
     public String provideVersion(Context context) {

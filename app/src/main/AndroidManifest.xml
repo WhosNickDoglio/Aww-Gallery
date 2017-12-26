@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.photolist.PhotoListActivity"
+            android:name=".MainActivity"
             android:theme="@style/LaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,13 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.about.AboutActivity"
-            android:parentActivityName=".ui.photolist.PhotoListActivity" />
-        <activity
-            android:name=".ui.photodetail.PhotoDetailActivity"
-            android:parentActivityName=".ui.photolist.PhotoListActivity"
-            android:theme="@style/PhotoDetailScreen" />
     </application>
 
 </manifest>

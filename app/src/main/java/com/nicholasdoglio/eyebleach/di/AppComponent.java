@@ -30,7 +30,7 @@ import dagger.android.AndroidInjectionModule;
  */
 @Singleton
 @Component(modules = {
-        AndroidInjectionModule.class, AppModule.class, DataModule.class, ActivityBindingModule.class
+        AndroidInjectionModule.class, AppModule.class, MainActivityBindingModule.class
 })
 public interface AppComponent {
 

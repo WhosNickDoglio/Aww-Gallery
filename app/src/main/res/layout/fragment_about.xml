@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-    Aww Gallery
+<!--Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
     This program is free software: you can redistribute it and/or modify
@@ -13,13 +12,12 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:photoDetailContext=".ui.photodetail.PhotoDetailActivity">
+    tools:context="com.nicholasdoglio.eyebleach.ui.about.AboutFragment">
 
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>

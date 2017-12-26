@@ -15,24 +15,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photolist;
+package com.nicholasdoglio.eyebleach;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.nicholasdoglio.eyebleach.R;
-
-import dagger.android.AndroidInjection;
-
 /**
  * @author Nicholas Doglio
  */
-public class PhotoListActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_main);
     }
 }

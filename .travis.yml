@@ -1,25 +1,29 @@
 language: android
-
 jdk:
-  - oraclejdk8
+ - oraclejdk8
 
 install:
   - echo yes | sdkmanager "tools" &>/dev/null
   - echo yes | sdkmanager "platform-tools" &>/dev/null
-  - echo yes | sdkmanager "build-tools;27.0.2" &>/dev/null
+  - echo yes | sdkmanager "build-tools;27.0.3" &>/dev/null
   - echo yes | sdkmanager "platforms;android-27" &>/dev/null
 
+env:
+  global:
+    - ANDROID_API_LEVEL=26
+    - EMULATOR_API_LEVEL=22
+    - ANDROID_BUILD_TOOLS_VERSION=26.0.0
 
 android:
   components:
     - tools
-    - tools
     - platform-tools
-    - build-tools-27.0.2
-    - android-27
+    - android-$EMULATOR_API_LEVEL
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
 
 script:
-   - ./gradlew build connectedCheck
+  - ./gradlew build jacocoTestReport
 
 after_success:
-   - ./gradlew jacocoTestReport coveralls
+  - bash <(curl -s https://codecov.io/bash)

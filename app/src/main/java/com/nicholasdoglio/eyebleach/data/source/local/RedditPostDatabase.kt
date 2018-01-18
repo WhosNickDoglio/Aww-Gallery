@@ -1,4 +1,4 @@
-<!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,8 +14,19 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<resources>
-    <string name="app_name">Aww Gallery</string>
+ */
+package com.nicholasdoglio.eyebleach.data.source.local
 
-</resources>
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.RoomDatabase
+
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData
+
+/**
+ * @author Nicholas Doglio
+ */
+@Database(entities = arrayOf(ChildData::class), version = 1, exportSchema = true)
+abstract class RedditPostDatabase : RoomDatabase() {
+    abstract fun childDataDao(): ChildDataDao
+}
+//TODO Work on migration method and set up schema exporting

@@ -1,4 +1,4 @@
-<!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,8 +14,22 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<resources>
-    <string name="app_name">Aww Gallery</string>
+ */
+package com.nicholasdoglio.eyebleach.data.model.reddit
 
-</resources>
+import com.squareup.moshi.Json
+
+/**
+ * @author Nicholas Doglio
+ *
+ * Listing
+ *
+ */
+class RedditListingData {
+    @Json(name = "modhash")
+    var modhash: String? = null
+    @Json(name = "children")
+    var children: List<Child>? = null
+    @Json(name = "after")
+    var after: String? = null
+}

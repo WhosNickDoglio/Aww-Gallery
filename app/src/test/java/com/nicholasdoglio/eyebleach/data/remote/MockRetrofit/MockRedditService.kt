@@ -15,30 +15,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.data.source.remote
+package com.nicholasdoglio.eyebleach.data.remote.MockRetrofit
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.RedditListing
+import com.nicholasdoglio.eyebleach.data.remote.MockHelper
+import com.nicholasdoglio.eyebleach.data.source.remote.RedditService
+
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.mock.BehaviorDelegate
 
 /**
  * @author Nicholas Doglio
- * Retrofit interface for Reddit.com
  */
-interface RedditService {
+class MockRedditService(
+    private val behaviorDelegate: BehaviorDelegate<RedditService>,
+    private val mockHelper: MockHelper
+) : RedditService {
 
-    /**
-     * Primary GET method that pulls directly from the Aww Gallery multireddit
-     * https://reddit.com/user/NicholasDoglio/m/awwgallery
-     *
-     * @param limit: the number of posts are part of the initial pull
-     * @param after: last post "kind_id" for pagination use
-     *
-     */
-    @GET("user/NicholasDoglio/m/awwgallery/.json")
-    fun getGalleryFromMulti(@Query("limit") limit: Int, @Query("after") after: String): Single<RedditListing>
+    override fun getGalleryFromMulti(limit: Int, after: String): Single<RedditListing> {
+        return behaviorDelegate.returningResponse(mockHelper.multi)
+            .getGalleryFromMulti(limit, after)
+    }
 }
-/*
-this is probably going to change a lot when I end up moving to the Paging Library
- */

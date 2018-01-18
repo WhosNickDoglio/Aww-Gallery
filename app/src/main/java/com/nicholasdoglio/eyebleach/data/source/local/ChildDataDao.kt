@@ -1,4 +1,4 @@
-<!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,8 +14,22 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<resources>
-    <string name="app_name">Aww Gallery</string>
+ */
+package com.nicholasdoglio.eyebleach.data.source.local
 
-</resources>
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+
+import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData
+
+/**
+ * @author Nicholas Doglio
+ */
+@Dao
+interface ChildDataDao {
+
+    @Insert
+    fun insertPosts(redditPosts: List<ChildData>)
+
+
+}

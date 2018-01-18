@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailFragment">
+    tools:context="com.nicholasdoglio.eyebleach.ui.about.Libraries.LibsFragment">
 
 
 </android.support.constraint.ConstraintLayout>

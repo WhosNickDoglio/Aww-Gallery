@@ -17,7 +17,7 @@
  */
 package com.nicholasdoglio.eyebleach.data.remote.MockWebServer;
 
-import com.nicholasdoglio.eyebleach.data.model.reddit.Multireddit;
+import com.nicholasdoglio.eyebleach.data.model.reddit.RedditListing;
 import com.nicholasdoglio.eyebleach.data.remote.MockHelper;
 import com.nicholasdoglio.eyebleach.data.source.remote.RedditService;
 
@@ -43,7 +43,7 @@ public class RedditSeviceTestMockWebServer {
     private String after = "";
     private MockWebServer mockWebServer;
     private RedditService redditService;
-    private Multireddit multireddit;
+    private RedditListing redditListing;
     private MockHelper mockHelper;
 
     @Before
@@ -58,17 +58,17 @@ public class RedditSeviceTestMockWebServer {
                 .build()
                 .create(RedditService.class);
 
-        multireddit = mockHelper.getMulti();
+        redditListing = mockHelper.getMulti();
     }
 
     @Test
     public void networkCallSuccessful() throws Exception {
-        mockWebServer.enqueue(new MockResponse().setBody(MockHelper.MOCK_JSON));
+        mockWebServer.enqueue(new MockResponse().setBody(MockHelper.Companion.getMOCK_JSON()));
 
-        Multireddit testMultireddit = redditService.getGalleryFromMulti(limit, after).blockingGet();
+        RedditListing testRedditListing = redditService.getGalleryFromMulti(limit, after).blockingGet();
 
-        assertEquals(multireddit.getKind(), testMultireddit.getKind());
-        assertEquals(multireddit.getData().getAfter(), testMultireddit.getData().getAfter());
+        assertEquals(redditListing.getKind(), testRedditListing.getKind());
+        assertEquals(redditListing.getData().getAfter(), testRedditListing.getData().getAfter());
     }
 
     @After

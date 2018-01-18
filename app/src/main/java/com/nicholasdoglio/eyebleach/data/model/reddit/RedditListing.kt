@@ -1,4 +1,4 @@
-<!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,8 +14,22 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<resources>
-    <string name="app_name">Aww Gallery</string>
+ */
+package com.nicholasdoglio.eyebleach.data.model.reddit
 
-</resources>
+import com.squareup.moshi.Json
+
+/**
+ * @author Nicholas Doglio
+ *
+ * thing: Reddit JSON base class which is the top level pull from the Reddit API
+ *
+ * @param kind: identifies the type of object is being retrieved, this is a thing
+ * @param data: the object that is identified, this is a listing
+ */
+class RedditListing {
+    @Json(name = "kind")
+    var kind: String? = null
+    @Json(name = "data")
+    var data: RedditListingData? = null
+}

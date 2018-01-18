@@ -1,4 +1,4 @@
-<!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,8 +14,20 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<resources>
-    <string name="app_name">Aww Gallery</string>
+ */
+package com.nicholasdoglio.eyebleach.di
 
-</resources>
+import com.nicholasdoglio.eyebleach.ui.MainActivity
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+
+/**
+ * @author Nicholas Doglio
+ */
+@Module
+abstract class MainActivityBindingModule {
+
+    @ContributesAndroidInjector(modules = [(FragmentBindingModule::class)])
+    abstract fun contributeMainActivity(): MainActivity
+}
+

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -50,12 +51,13 @@ ext {
     moshi = "1.5.0"
     rxJava = "2.1.8"
     rxAndroid = "2.0.1"
-    butterknife = "8.8.1"
+    rxbinding = "2.0.0"
+    rxKotlin = "2.2.0"
     dagger = "2.14.1"
     paging = "1.0.0-alpha4-1"
     archComponents = "1.0.0"
     junit = "4.12"
-    mockito = "2.11.0"
+    mockito = "2.13.0"
     robo = "3.6.1"
     okhttp = "3.9.0"
 }
@@ -73,7 +75,7 @@ dependencies {
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
     implementation("com.github.bumptech.glide:recyclerview-integration:$glide") {
         transitive = false
     }
@@ -89,17 +91,15 @@ dependencies {
     //Rx
     implementation "io.reactivex.rxjava2:rxjava:$rxJava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
-
-    //ButterKnife
-    implementation "com.jakewharton:butterknife:$butterknife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin"
 
     //Dagger
     implementation "com.google.dagger:dagger:$dagger"
     implementation "com.google.dagger:dagger-android:$dagger"
     implementation "com.google.dagger:dagger-android-support:$dagger"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
 
     //Android Architecture Components
     implementation "android.arch.paging:runtime:$paging"
@@ -108,12 +108,9 @@ dependencies {
     implementation "android.arch.lifecycle:reactivestreams:$archComponents"
     implementation "android.arch.persistence.room:runtime:$archComponents"
     implementation "android.arch.persistence.room:rxjava2:$archComponents"
-    annotationProcessor "android.arch.persistence.room:compiler:$archComponents"
+    kapt "android.arch.persistence.room:compiler:$archComponents"
 
     //Testing
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-    testImplementation "com.google.dagger:dagger:$dagger"
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp"
     testImplementation "junit:junit:$junit"

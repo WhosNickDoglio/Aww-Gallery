@@ -1,4 +1,4 @@
-<!--
+/*
     Aww Gallery
     Copyright (C) 2017  Nicholas Doglio
 
@@ -14,8 +14,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-<resources>
-    <string name="app_name">Aww Gallery</string>
+ */
+package com.nicholasdoglio.eyebleach.ui.photolist
 
-</resources>
+import android.arch.lifecycle.ViewModel
+
+/**
+ * @author Nicholas Doglio
+ */
+class PhotoListViewModel : ViewModel()

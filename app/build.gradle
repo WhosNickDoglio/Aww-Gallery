@@ -49,13 +49,14 @@ ext {
     glide = "4.5.0"
     retrofit = "2.3.0"
     moshi = "1.5.0"
-    rxJava = "2.1.8"
+    rxJava = "2.1.9"
     rxAndroid = "2.0.1"
     rxbinding = "2.0.0"
     rxKotlin = "2.2.0"
     dagger = "2.14.1"
-    paging = "1.0.0-alpha4-1"
-    archComponents = "1.0.0"
+    paging = "1.0.0-alpha5"
+    archComponents = "1.1.0"
+    room = "1.1.0-alpha1"
     junit = "4.12"
     mockito = "2.13.0"
     robo = "3.6.1"
@@ -106,9 +107,9 @@ dependencies {
     implementation "android.arch.lifecycle:common-java8:$archComponents"
     implementation "android.arch.lifecycle:extensions:$archComponents"
     implementation "android.arch.lifecycle:reactivestreams:$archComponents"
-    implementation "android.arch.persistence.room:runtime:$archComponents"
-    implementation "android.arch.persistence.room:rxjava2:$archComponents"
-    kapt "android.arch.persistence.room:compiler:$archComponents"
+    implementation "android.arch.persistence.room:runtime:$room"
+    implementation "android.arch.persistence.room:rxjava2:$room"
+    kapt "android.arch.persistence.room:compiler:$room"
 
     //Testing
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit"
@@ -117,7 +118,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "org.robolectric:robolectric:$robo"
     testImplementation "android.arch.core:core-testing:$archComponents"
-    testImplementation "android.arch.persistence.room:testing:$archComponents"
+    testImplementation "android.arch.persistence.room:testing:$room"
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

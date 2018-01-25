@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import com.nicholasdoglio.eyebleach.BuildConfig
 
 /**
  * @author Nicholas Doglio
@@ -52,16 +53,7 @@ class Intents {
         }
     }
 
-    fun provideVersion(context: Context): String {
-        var version = ""
-
-        try {
-            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            version = packageInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-
-        return "Version: " + version
+    fun provideVersion(context: Context): String { //This is unnecessary, move later
+        return "Version: ${BuildConfig.VERSION_NAME}"
     }
 }

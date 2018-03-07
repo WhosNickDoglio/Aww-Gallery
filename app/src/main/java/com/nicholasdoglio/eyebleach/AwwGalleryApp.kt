@@ -16,28 +16,60 @@
     */
 package com.nicholasdoglio.eyebleach
 
-import android.app.Activity
-import android.app.Application
+import android.os.StrictMode
 import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
+import dagger.android.DaggerApplication
 import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * @author Nicholas Doglio
  */
-class AwwGalleryApp : Application(), HasActivityInjector {
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+class AwwGalleryApp : DaggerApplication(), HasActivityInjector {
+    //TODO set up sample data XML
 
-    override fun activityInjector(): AndroidInjector<Activity> = activityDispatchingAndroidInjector
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.builder().application(this).build()
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder()
-            .application(this)
-            .build()
-            .inject(this)
+        initDebugTools()
+        initLeakCanary()
+    }
+
+    private fun initDebugTools() {
+        if (BuildConfig.DEBUG) { //init all debug tools
+            initStrictMode()
+            Timber.plant(Timber.DebugTree())
+        } else {
+//            Timber.plant(ReleaseTree()) TODO set up Release tree
+        }
+    }
+
+    private fun initStrictMode() {
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .build()
+        )
+
+        StrictMode.setVmPolicy(
+            StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build()
+        )
+    }
+
+    private fun initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) return
+        LeakCanary.install(this)
     }
 }

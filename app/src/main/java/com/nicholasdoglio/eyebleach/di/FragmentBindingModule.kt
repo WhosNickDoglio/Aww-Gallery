@@ -1,7 +1,7 @@
 package com.nicholasdoglio.eyebleach.di
 
 import com.nicholasdoglio.eyebleach.ui.about.AboutFragment
-import com.nicholasdoglio.eyebleach.ui.about.Libraries.LibsFragment
+import com.nicholasdoglio.eyebleach.ui.about.libs.LibsFragment
 import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailFragment
 import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListFragment
 import dagger.Module

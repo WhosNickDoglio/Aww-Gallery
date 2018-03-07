@@ -2,19 +2,16 @@ package com.nicholasdoglio.eyebleach.ui.photolist
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.nicholasdoglio.eyebleach.R
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 
-class PhotoListFragment : Fragment() {
+class PhotoListFragment : DaggerFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidSupportInjection.inject(this)
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onCreateView(

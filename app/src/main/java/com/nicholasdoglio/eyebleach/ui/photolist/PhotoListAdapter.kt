@@ -15,20 +15,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nicholasdoglio.eyebleach.ui.photodetail
+package com.nicholasdoglio.eyebleach.ui.photolist
 
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.ListPreloader.PreloadModelProvider
+import com.bumptech.glide.RequestBuilder
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData
 
 /**
  * @author Nicholas Doglio
  */
-class PhotoDetailAdapter :
-    ListAdapter<ChildData, RecyclerView.ViewHolder>(photoDetailDiff) {
+class PhotoListAdapter :
+    ListAdapter<ChildData, RecyclerView.ViewHolder>(photoListDiff),
+    PreloadModelProvider<ChildData> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -37,12 +40,21 @@ class PhotoDetailAdapter :
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    inner class PhotoDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun getPreloadItems(position: Int): MutableList<ChildData> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getPreloadRequestBuilder(item: ChildData): RequestBuilder<*>? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
+    inner class PhotoListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
     companion object {
-        private val photoDetailDiff = object : DiffUtil.ItemCallback<ChildData>() {
+        private val photoListDiff = object : DiffUtil.ItemCallback<ChildData>() {
             override fun areItemsTheSame(oldItem: ChildData, newItem: ChildData): Boolean =
                 oldItem.id == newItem.id
 
@@ -50,5 +62,4 @@ class PhotoDetailAdapter :
                 oldItem == newItem
         }
     }
-
 }

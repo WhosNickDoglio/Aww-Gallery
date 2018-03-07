@@ -3,6 +3,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE.md)
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 [![Build Status](https://travis-ci.org/WhosNickDoglio/Aww-Gallery.svg?branch=master)](https://travis-ci.org/WhosNickDoglio/Aww-Gallery)
+[![codecov](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery)
 
 
 <a href="https://play.google.com/store/apps/details?id=com.nicholasdoglio.eyebleach">

@@ -17,8 +17,10 @@
  */
 package com.nicholasdoglio.eyebleach.data.source.local
 
+import android.arch.paging.DataSource
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
+import android.arch.persistence.room.Query
 
 import com.nicholasdoglio.eyebleach.data.model.reddit.ChildData
 
@@ -31,5 +33,6 @@ interface ChildDataDao {
     @Insert
     fun insertPosts(redditPosts: List<ChildData>)
 
-
+    @Query("SELECT * FROM ChildData")
+    fun getAllPosts(): DataSource.Factory<Int, ChildData>
 }

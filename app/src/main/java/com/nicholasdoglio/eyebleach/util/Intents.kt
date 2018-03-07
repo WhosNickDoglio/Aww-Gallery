@@ -19,9 +19,10 @@ package com.nicholasdoglio.eyebleach.util
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import com.nicholasdoglio.eyebleach.BuildConfig
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.email
+
 
 /**
  * @author Nicholas Doglio
@@ -29,14 +30,17 @@ import com.nicholasdoglio.eyebleach.BuildConfig
 class Intents {
 
     fun openWebPage(context: Context, url: String) {
-        val webpage = Uri.parse(url)
-        val webIntent = Intent(Intent.ACTION_VIEW, webpage)
-        if (webIntent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(webIntent)
-        }
+        context.browse(url)
     }
 
     fun shareUrl(context: Context, url: String) {
+//TODO look into ShareCompat
+//        val shareIntent = ShareCompat.IntentBuilder.from(activity)
+//            .setType("text/plain")
+//            .setText(url)
+//            .setChooserTitle("Share your cute animals via: ")
+//            .intent
+
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         shareIntent.putExtra(Intent.EXTRA_TEXT, url)
@@ -45,12 +49,7 @@ class Intents {
     }
 
     fun composeEmail(context: Context) {
-        val emailIntent = Intent(Intent.ACTION_SENDTO)
-        emailIntent.data = Uri.parse("mailto: NicholasDoglio@Gmail.com")
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aww Gallery Feedback")
-        if (emailIntent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(emailIntent)
-        }
+        context.email("NicholasDoglio@Gmail.com", "Aww Gallery Feedback")
     }
 
     fun provideVersion(context: Context): String { //This is unnecessary, move later

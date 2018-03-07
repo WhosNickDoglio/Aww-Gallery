@@ -1,42 +1,47 @@
 package com.nicholasdoglio.eyebleach.data.local
 
+import android.arch.persistence.room.Room
+import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 
 /**
  * @author Nicholas Doglio
  */
+@RunWith(RobolectricTestRunner::class)
 class ChildDataDaoTest {
 
-    @Before
-    @Throws(Exception::class)
-    fun setUp() {
+    private lateinit var redditDatabase: RedditPostDatabase
 
+    @Before
+    fun setUp() {
+        redditDatabase = Room.inMemoryDatabaseBuilder(
+            RuntimeEnvironment.application.applicationContext,
+            RedditPostDatabase::class.java
+        ).allowMainThreadQueries().build()
     }
 
+    @After
+    fun tearDown() {
+        redditDatabase.close()
+    }
 
     @Test
-    @Throws(Exception::class)
     fun insertData() {
 
     }
 
     @Test
-    @Throws(Exception::class)
     fun getData() {
 
     }
 
     @Test
-    @Throws(Exception::class)
     fun deleteData() {
-
-    }
-
-    @After
-    @Throws(Exception::class)
-    fun tearDown() {
 
     }
 }

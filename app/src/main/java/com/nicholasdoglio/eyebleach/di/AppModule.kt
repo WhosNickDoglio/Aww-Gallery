@@ -19,9 +19,9 @@ package com.nicholasdoglio.eyebleach.di
 
 import android.app.Application
 import android.arch.persistence.room.Room
-import android.content.Context
 import com.nicholasdoglio.eyebleach.data.source.local.RedditPostDatabase
 import com.nicholasdoglio.eyebleach.data.source.remote.RedditService
+import com.nicholasdoglio.eyebleach.util.Const
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -32,14 +32,8 @@ import javax.inject.Singleton
 /**
  * @author Nicholas Doglio
  */
-@Module
+@Module(includes = [(ViewModelModule::class)])
 class AppModule {
-
-    @Provides
-    @Singleton
-    fun context(application: Application): Context =
-        application
-
 
     @Provides
     @Singleton
@@ -47,15 +41,11 @@ class AppModule {
         Room.databaseBuilder(application, RedditPostDatabase::class.java, "reddit_posts_db")
             .build()
 
-
     @Provides
     @Singleton
-    fun redditService(): RedditService {
-        return Retrofit.Builder().baseUrl("https://www.reddit.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(RedditService::class.java)
-    }
-
+    fun redditService(): RedditService = Retrofit.Builder().baseUrl(Const.BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(RedditService::class.java)
 }

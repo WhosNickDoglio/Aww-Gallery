@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/photoListFragment">
+
+    <fragment
+        android:id="@+id/photoListFragment"
+        android:name="com.nicholasdoglio.eyebleach.ui.photolist.PhotoListFragment"
+        android:label="fragment_photo_list"
+        tools:layout="@layout/fragment_photo_list">
+        <action
+            android:id="@+id/action_photoListFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
+        <action
+            android:id="@+id/action_photoListFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailFragment"
+        android:label="fragment_photo_detail"
+        tools:layout="@layout/fragment_photo_detail" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.nicholasdoglio.eyebleach.ui.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about">
+        <action
+            android:id="@+id/action_aboutFragment_to_libsFragment"
+            app:destination="@id/libsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/libsFragment"
+        android:name="com.nicholasdoglio.eyebleach.ui.about.libs.LibsFragment"
+        android:label="fragment_libs"
+        tools:layout="@layout/fragment_libs" />
+</navigation>

@@ -1,0 +1,75 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "d8dc9dd362e3c65b600b3ea21175ae46",
+    "entities": [
+      {
+        "tableName": "RedditPost",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`selftext` TEXT, `thumbnail` TEXT, `permalink` TEXT NOT NULL, `url` TEXT, `id` TEXT, `subreddit` TEXT, `over18` INTEGER, `key` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "fields": [
+          {
+            "fieldPath": "selftext",
+            "columnName": "selftext",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "thumbnail",
+            "columnName": "thumbnail",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "permalink",
+            "columnName": "permalink",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subreddit",
+            "columnName": "subreddit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "over18",
+            "columnName": "over18",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "key",
+            "columnName": "key",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "key"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d8dc9dd362e3c65b600b3ea21175ae46\")"
+    ]
+  }
+}

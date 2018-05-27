@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "737032224526",
+    "firebase_url": "https://aww-gallery.firebaseio.com",
+    "project_id": "aww-gallery",
+    "storage_bucket": "aww-gallery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737032224526:android:bb05bb6cb7435b7d",
+        "android_client_info": {
+          "package_name": "com.nicholasdoglio.eyebleach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737032224526-9e56ugu8b049j910o5rkklao69rajtoe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nicholasdoglio.eyebleach",
+            "certificate_hash": "47b9bcd1867dfd4d571ce3ae2ca9869d26c6ac2a"
+          }
+        },
+        {
+          "client_id": "737032224526-4u3ak6te7h9at60gvji7eenuujdsbute.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLcb_LirAXoVk_FliV6A0EuwfwEqb9Txo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737032224526-4u3ak6te7h9at60gvji7eenuujdsbute.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

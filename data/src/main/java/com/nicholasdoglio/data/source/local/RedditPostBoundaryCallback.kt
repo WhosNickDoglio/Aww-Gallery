@@ -17,8 +17,7 @@
  */
 package com.nicholasdoglio.data.source.local
 
-import androidx.paging.PagedList
-import androidx.paging.PagingRequestHelper
+import android.arch.paging.PagedList
 import com.nicholasdoglio.data.model.reddit.Listing
 import com.nicholasdoglio.data.model.reddit.RedditPost
 import com.nicholasdoglio.data.source.remote.RedditService
@@ -34,49 +33,40 @@ class RedditPostBoundaryCallback(
 ) :
     PagedList.BoundaryCallback<RedditPost>() {
 
-    private val pagingRequestHelper = PagingRequestHelper(backgroundExecutor)
     private val LIMIT = 100
 
     override fun onZeroItemsLoaded() {
-        super.onZeroItemsLoaded()
-        pagingRequestHelper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
-            redditService.requestMultireddit(LIMIT).enqueue(redditServiceCallback(it))
-        }
+        redditService.requestMultireddit(LIMIT).enqueue(redditServiceCallback())
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: RedditPost) {
-        super.onItemAtEndLoaded(itemAtEnd)
-        pagingRequestHelper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-            redditService.requestMultiredditAfter(LIMIT, itemAtEnd.name)
-                .enqueue(redditServiceCallback(it))
-        }
+        redditService.requestMultiredditAfter(LIMIT, itemAtEnd.name)
+            .enqueue(redditServiceCallback())
+
     }
 
     private fun insertItemsIntoDb(
-        response: Response<Listing>,
-        it: PagingRequestHelper.Request.Callback
+        response: Response<Listing>
     ) {
         backgroundExecutor.execute {
             handleResponse(response.body())
-            it.recordSuccess()
         }
     }
 
 
-    private fun redditServiceCallback(it: PagingRequestHelper.Request.Callback): Callback<Listing> {
+    private fun redditServiceCallback(): Callback<Listing> {
         return object : Callback<Listing> {
             override fun onFailure(
                 call: Call<Listing>,
                 t: Throwable
             ) {
-                it.recordFailure(t)
             }
 
             override fun onResponse(
                 call: Call<Listing>,
                 response: Response<Listing>
             ) {
-                insertItemsIntoDb(response, it)
+                insertItemsIntoDb(response)
             }
         }
     }

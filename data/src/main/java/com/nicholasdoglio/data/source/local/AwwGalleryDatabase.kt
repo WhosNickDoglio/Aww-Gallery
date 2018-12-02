@@ -17,9 +17,8 @@
  */
 package com.nicholasdoglio.data.source.local
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.RoomDatabase
 import com.nicholasdoglio.data.model.reddit.RedditPost
 import com.nicholasdoglio.data.source.local.dao.RedditPostDao
 

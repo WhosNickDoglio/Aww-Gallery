@@ -1,5 +1,6 @@
 allprojects {
     repositories {
+        google()
         jcenter()
     }
 }
@@ -9,55 +10,56 @@ ext {
     //Android
     minsdk = 21
     targetsdk = 28
-    compilesdk = 'android-P'
+    compilesdk = 28
 
     //Libraries
-    retrofit = '2.4.0'
-    okhttp = '3.10.0'
-    glide = '4.7.1'
-    moshi = '1.6.0'
-    dagger = '2.16'
-    rxJava = '2.1.13'
-    rxKotlin = '2.2.0'
-    rxAndroid = '2.0.2'
-    rxRelay = '2.0.0'
+    support = '28.0.0'
+    retrofit = '2.5.0'
+    okhttp = '3.12.0'
+    glide = '4.8.0'
+    moshi = '1.8.0'
+    dagger = '2.19'
+    rxJava = '2.2.3'
+    rxKotlin = '2.3.0'
+    rxAndroid = '2.1.0'
+    rxRelay = '2.1.0'
     rxBinding = '2.1.1'
-    dispose = '0.8.0'
-    constraint = '1.1.0'
-    epoxy = '2.12.0'
-    exoplayer = '2.8.0'
-
-    //Android X
-    androidX2 = '2.0.0-alpha1'
-    androidX = '1.0.0-alpha1'
-    navigation = '1.0.0-alpha01'
+    dispose = '1.0.0'
+    constraint = '1.1.3'
+    epoxy = '2.19.0'
+    exoplayer = '2.9.0'
+    room = '1.1.1'
+    aac = '1.1.1'
+    paging = '1.0.1'
+    navigation = '1.0.0-alpha07'
 
     //Debugging
-    firebase = '15.0.2'
-    timber = '4.7.0'
-    canary = '1.5.4'
+    firebase = '16.0.0'
+    timber = '4.7.1'
+    canary = '1.6.2'
 
     //Testing
     junit = '4.12'
-    mockk = '1.8'
-    espressoX = '3.1.0-alpha1'
-    espressoTestX = '1.1.0-alpha1'
+    mockk = '1.8.9'
+    rules = '1.0.2'
+    runner = '1.0.2'
+    espressoCore = '3.0.2'
 
 
     dataDependencies = [
             retrofit         : "com.squareup.retrofit2:retrofit:${retrofit}",
             retrofitRxAdapter: "com.squareup.retrofit2:adapter-rxjava2:${retrofit}",
             retrofitMoshi    : "com.squareup.retrofit2:converter-moshi:${retrofit}",
-            room             : "androidx.room:room-runtime:${androidX2}",
-            roomRx           : "androidx.room:room-rxjava2:$androidX2",
-            roomKapt         : "androidx.room:room-compiler:${androidX2}",
-            okhttp              : "com.squareup.okhttp3:okhttp:${okhttp}",
-            okhttpLogger        : "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+            room             : "android.arch.persistence.room:runtime:${room}",
+            roomRx           : "android.arch.persistence.room:rxjava2:${room}",
+            roomKapt         : "android.arch.persistence.room:compiler:${room}",
+            okhttp           : "com.squareup.okhttp3:okhttp:${okhttp}",
+            okhttpLogger     : "com.squareup.okhttp3:logging-interceptor:${okhttp}"
     ]
 
     dataTestDependencies = [
             retrofitMock: "com.squareup.retrofit2:retrofit-mock:${retrofit}",
-            roomTesting : "androidx.room:room-testing:${androidX2}"
+            roomTesting : "android.arch.persistence.room:testing:${room}",
     ]
 
     domainDependencies = [
@@ -69,18 +71,17 @@ ext {
     ]
 
     presentationDependencies = [
-            appcompat           : "androidx.appcompat:appcompat:${androidX}",
-            cardview            : "androidx.cardview:cardview:${androidX}",
-            recyclerview        : "androidx.recyclerview:recyclerview:${androidX}",
-            constraint          : "androidx.constraintlayout:constraintlayout:${constraint}",
-            lifecycleCommons    : "androidx.lifecycle:lifecycle-common-java8:${androidX2}",
-            lifecycleExtensions : "androidx.lifecycle:lifecycle-extensions:${androidX2}",
+            appcompat           : "com.android.support:appcompat-v7:${support}",
+            recyclerview        : "com.android.support:recyclerview-v7:${support}",
+            cardview            : "com.android.support:cardview-v7:${support}",
+            constraint          : "com.android.support.constraint:constraint-layout:${constraint}",
+            lifecycleCommons    : "android.arch.lifecycle:extensions:${aac}",
+            lifecycleExtensions : "android.arch.lifecycle:common-java8:${aac}",
             rxbinding           : "com.jakewharton.rxbinding2:rxbinding-kotlin:${rxBinding}",
             rxAndroid           : "io.reactivex.rxjava2:rxandroid:${rxAndroid}",
-            dispose             : "com.uber.autodispose:autodispose-kotlin:${dispose}",
-            disposeAndroid      : "com.uber.autodispose:autodispose-android-kotlin:${dispose}",
-            disposeComponents   : "com.uber.autodispose:autodispose-android-archcomponents-kotlin:${dispose}",
-            material            : "com.google.android.material:material:${androidX}",
+            dispose             : "com.uber.autodispose:autodispose-ktx:${dispose}",
+            disposeAndroid      : "com.uber.autodispose:autodispose-android-ktx:${dispose}",
+            disposeComponents   : "com.uber.autodispose:autodispose-android-archcomponents-ktx:${dispose}",
             dagger              : "com.google.dagger:dagger:${dagger}",
             daggerAndroid       : "com.google.dagger:dagger-android:${dagger}",
             daggerAndroidSupport: "com.google.dagger:dagger-android-support:${dagger}",
@@ -99,18 +100,16 @@ ext {
     ]
 
     presentationTestDependencies = [
-            rules          : "androidx.test:rules:${espressoTestX}",
-            runner         : "androidx.test:runner:${espressoTestX}",
-            espressoIntents: "androidx.test.espresso:espresso-intents:${espressoX}",
-            espressoCore   : "androidx.test.espresso:espresso-core:${espressoX}",
-            archTesting    : "androidx.arch.core:core-testing:${androidX2}",
+            rules       : "com.android.support.test:rules:${rules}",
+            runner      : "com.android.support.test:runner:${runner}",
+            espressoCore: "com.android.support.test.espresso:espresso-core:${espressoCore}",
+            archTesting : "android.arch.core:core-testing:${aac}",
     ]
 
     commonDependencies = [
             kotlin  : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}",
-            paging  : "androidx.paging:paging-runtime:${androidX2}",
-            rxpaging: "androidx.paging:paging-rxjava2:${androidX2}",
-            ktx     : "androidx.core:core-ktx:${androidX}",
+            paging  : "android.arch.paging:runtime:${paging}",
+            rxpaging: "android.arch.paging:rxjava2:${paging}",
             timber  : "com.jakewharton.timber:timber:${timber}",
             rxjava  : "io.reactivex.rxjava2:rxjava:${rxJava}",
             rxkotlin: "io.reactivex.rxjava2:rxkotlin:${rxKotlin}",
@@ -122,6 +121,6 @@ ext {
     commonTestDependencies = [
             junit      : "junit:junit:${junit}",
             kotlinJunit: "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}",
-            mockk          : "io.mockk:mockk:${mockk}"
+            mockk      : "io.mockk:mockk:${mockk}"
     ]
 }

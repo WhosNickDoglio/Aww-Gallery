@@ -17,12 +17,11 @@
  */
 package com.nicholasdoglio.data.source.local.dao
 
-import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-
+import android.arch.paging.DataSource
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 import com.nicholasdoglio.data.model.reddit.RedditPost
 
 /**

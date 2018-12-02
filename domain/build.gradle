@@ -8,7 +8,7 @@ android {
     defaultConfig {
         minSdkVersion globalConfiguration["minsdk"]
         targetSdkVersion globalConfiguration["targetsdk"]
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -22,7 +22,6 @@ dependencies {
     //Libraries
     implementation commonDependencies.kotlin
     implementation commonDependencies.paging
-    implementation commonDependencies.ktx
     implementation commonDependencies.rxjava
     implementation commonDependencies.rxrelay
     implementation commonDependencies.rxkotlin

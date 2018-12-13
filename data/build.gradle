@@ -3,12 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["compilesdk"]
+    compileSdkVersion 28
     defaultConfig {
-        minSdkVersion globalConfiguration["minsdk"]
-        targetSdkVersion globalConfiguration["targetsdk"]
+        minSdkVersion 21
+        targetSdkVersion 28
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -17,27 +15,21 @@ android {
 }
 
 dependencies {
-    def dataDependencies = rootProject.ext.dataDependencies
-    def dataTestDependencies = rootProject.ext.dataTestDependencies
-
-    def commonDependencies = rootProject.ext.commonDependencies
-    def commonTestDependencies = rootProject.ext.commonTestDependencies
-
-    implementation project(':domain')
-
-    implementation commonDependencies.kotlin
-    implementation commonDependencies.paging
-    implementation dataDependencies.retrofit
-    implementation dataDependencies.retrofitRxAdapter
-    implementation dataDependencies.retrofitMoshi
-    implementation dataDependencies.room
-    implementation dataDependencies.okhttp
-    implementation dataDependencies.okhttpLogger
-    kapt dataDependencies.roomKapt
-
-    testImplementation commonTestDependencies.junit
-    testImplementation commonTestDependencies.kotlinJunit
-    testImplementation commonTestDependencies.mockk
-    testImplementation dataTestDependencies.retrofitMock
-    testImplementation dataTestDependencies.roomTesting
+//    implementation project(':domain')
+//
+//    implementation commonDependencies.kotlin
+//    implementation commonDependencies.paging
+//    implementation dataDependencies.retrofit
+//    implementation dataDependencies.retrofitRxAdapter
+//    implementation dataDependencies.retrofitMoshi
+//    implementation dataDependencies.room
+//    implementation dataDependencies.okhttp
+//    implementation dataDependencies.okhttpLogger
+//    kapt dataDependencies.roomKapt
+//
+//    testImplementation commonTestDependencies.junit
+//    testImplementation commonTestDependencies.kotlinJunit
+//    testImplementation commonTestDependencies.mockk
+//    testImplementation dataTestDependencies.retrofitMock
+//    testImplementation dataTestDependencies.roomTesting
 }

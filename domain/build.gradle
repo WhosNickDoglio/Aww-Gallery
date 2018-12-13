@@ -2,12 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["compilesdk"]
+    compileSdkVersion 28
     defaultConfig {
-        minSdkVersion globalConfiguration["minsdk"]
-        targetSdkVersion globalConfiguration["targetsdk"]
+        minSdkVersion 21
+        targetSdkVersion 28
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -17,16 +15,14 @@ android {
 }
 
 dependencies {
-    def commonDependencies = rootProject.ext.commonDependencies
-    def commonTestDependencies = rootProject.ext.commonTestDependencies
-    //Libraries
-    implementation commonDependencies.kotlin
-    implementation commonDependencies.paging
-    implementation commonDependencies.rxjava
-    implementation commonDependencies.rxrelay
-    implementation commonDependencies.rxkotlin
-    //Testing
-    testImplementation commonTestDependencies.junit
-    testImplementation commonTestDependencies.kotlinJunit
-    testImplementation commonTestDependencies.mockk
+//    //Libraries
+//    implementation commonDependencies.kotlin
+//    implementation commonDependencies.paging
+//    implementation commonDependencies.rxjava
+//    implementation commonDependencies.rxrelay
+//    implementation commonDependencies.rxkotlin
+//    //Testing
+//    testImplementation commonTestDependencies.junit
+//    testImplementation commonTestDependencies.kotlinJunit
+//    testImplementation commonTestDependencies.mockk
 }

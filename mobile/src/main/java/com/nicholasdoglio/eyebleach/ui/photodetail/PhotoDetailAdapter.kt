@@ -17,26 +17,33 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photodetail
 
-import android.arch.paging.PagedListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.nicholasdoglio.data.model.reddit.RedditPost
 
 /**
  * @author Nicholas Doglio
  */
-class PhotoDetailAdapter : PagedListAdapter<RedditPost, RecyclerView.ViewHolder>(photoDetailDiff) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+class PhotoDetailAdapter :
+  PagedListAdapter<RedditPost, androidx.recyclerview.widget.RecyclerView.ViewHolder>(photoDetailDiff) {
+  override fun onCreateViewHolder(
+    parent: ViewGroup,
+    viewType: Int
+  ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+  override fun onBindViewHolder(
+    holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+    position: Int
+  ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    inner class PhotoDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+  inner class PhotoDetailViewHolder(itemView: View) :
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 
     companion object {
         private val photoDetailDiff = object : DiffUtil.ItemCallback<RedditPost>() {

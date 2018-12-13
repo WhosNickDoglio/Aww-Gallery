@@ -17,11 +17,10 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photolist
 
-import android.arch.paging.PagedListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.ListPreloader.PreloadModelProvider
 import com.bumptech.glide.RequestBuilder
 import com.nicholasdoglio.data.model.reddit.RedditPost
@@ -29,13 +28,20 @@ import com.nicholasdoglio.data.model.reddit.RedditPost
 /**
  * @author Nicholas Doglio
  */
-class PhotoListAdapter : PagedListAdapter<RedditPost, RecyclerView.ViewHolder>(photoListDiff),
+class PhotoListAdapter :
+  PagedListAdapter<RedditPost, androidx.recyclerview.widget.RecyclerView.ViewHolder>(photoListDiff),
     PreloadModelProvider<RedditPost> {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+  override fun onCreateViewHolder(
+    parent: ViewGroup,
+    viewType: Int
+  ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+  override fun onBindViewHolder(
+    holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+    position: Int
+  ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -51,8 +57,8 @@ class PhotoListAdapter : PagedListAdapter<RedditPost, RecyclerView.ViewHolder>(p
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
-    inner class PhotoListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+  inner class PhotoListViewHolder(itemView: View) :
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 
     companion object {
         private val photoListDiff = object : DiffUtil.ItemCallback<RedditPost>() {

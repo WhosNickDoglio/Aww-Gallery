@@ -1,13 +1,12 @@
 package com.nicholasdoglio.eyebleach.util
 
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 
 /**
  * @author Nicholas Doglio
@@ -26,7 +25,7 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
  * Used in NavigationController
  */
 fun AppCompatActivity.showFragment(
-    fragment: Fragment,
+  fragment: androidx.fragment.app.Fragment,
     tag: String,
     name: String,
     transition: Int,
@@ -42,7 +41,7 @@ fun AppCompatActivity.showFragment(
 }
 
 /** Sets up toolbars in all the fragments */
-fun Fragment.setupToolbar(
+fun androidx.fragment.app.Fragment.setupToolbar(
     activity: AppCompatActivity,
     toolbar: Toolbar,
     title: String = "",

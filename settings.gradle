@@ -1,1 +1,1 @@
-include ':mobile', ':data', ':domain', ':persistence', ':remote'
+include ':mobile', ':data', ':domain', ':persistence', ':remote', ':buildSrc'

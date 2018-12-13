@@ -17,7 +17,7 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photodetail
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 /**
  * @author Nicholas Doglio

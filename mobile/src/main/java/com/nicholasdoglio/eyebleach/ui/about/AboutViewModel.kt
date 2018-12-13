@@ -1,5 +1,5 @@
 package com.nicholasdoglio.eyebleach.ui.about
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 class AboutViewModel : ViewModel()

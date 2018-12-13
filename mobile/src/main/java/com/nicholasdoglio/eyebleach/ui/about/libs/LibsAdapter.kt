@@ -1,10 +1,9 @@
 package com.nicholasdoglio.eyebleach.ui.about.libs
 
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.nicholasdoglio.data.model.about.LibsItem
 
 class LibsAdapter : ListAdapter<LibsItem, LibsAdapter.LibsViewHolder>(DIFF) {
@@ -16,7 +15,8 @@ class LibsAdapter : ListAdapter<LibsItem, LibsAdapter.LibsViewHolder>(DIFF) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    inner class LibsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+  inner class LibsViewHolder(itemView: View) :
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 
     companion object {
         private val DIFF = object : DiffUtil.ItemCallback<LibsItem>() {

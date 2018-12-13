@@ -17,15 +17,18 @@
  */
 package com.nicholasdoglio.eyebleach.ui.about
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 
 /**
  * @author Nicholas Doglio
  */
-class AboutAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+class AboutAdapter :
+  androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+  override fun onCreateViewHolder(
+    parent: ViewGroup,
+    viewType: Int
+  ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -33,11 +36,14 @@ class AboutAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+  override fun onBindViewHolder(
+    holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+    position: Int
+  ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
-    inner class AboutAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+  inner class AboutAdapterViewHolder(itemView: View) :
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 
 }

@@ -17,56 +17,48 @@
  */
 package com.nicholasdoglio.eyebleach.ui.photolist
 
-import android.view.View
-import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
-import com.bumptech.glide.ListPreloader.PreloadModelProvider
-import com.bumptech.glide.RequestBuilder
-import com.nicholasdoglio.data.model.reddit.RedditPost
-
 /**
  * @author Nicholas Doglio
  */
-class PhotoListAdapter :
-  PagedListAdapter<RedditPost, androidx.recyclerview.widget.RecyclerView.ViewHolder>(photoListDiff),
-    PreloadModelProvider<RedditPost> {
-  override fun onCreateViewHolder(
-    parent: ViewGroup,
-    viewType: Int
-  ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-  override fun onBindViewHolder(
-    holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-    position: Int
-  ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getPreloadItems(position: Int): MutableList<RedditPost> {
-        if (currentList!!.toMutableList().isEmpty()) {
-            return emptyList<RedditPost>().toMutableList()
-        } else {
-            return currentList!!.toMutableList()
-        }
-    }
-
-    override fun getPreloadRequestBuilder(item: RedditPost): RequestBuilder<*>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-  inner class PhotoListViewHolder(itemView: View) :
-    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
-
-    companion object {
-        private val photoListDiff = object : DiffUtil.ItemCallback<RedditPost>() {
-            override fun areItemsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
-                oldItem == newItem
-        }
-    }
-}
+//class PhotoListAdapter :
+//  PagedListAdapter<RedditPost, androidx.recyclerview.widget.RecyclerView.ViewHolder>(photoListDiff),
+//  PreloadModelProvider<RedditPost> {
+//  override fun onCreateViewHolder(
+//    parent: ViewGroup,
+//    viewType: Int
+//  ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+//    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//  }
+//
+//  override fun onBindViewHolder(
+//    holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+//    position: Int
+//  ) {
+//    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//  }
+//
+//  override fun getPreloadItems(position: Int): MutableList<RedditPost> {
+//    if (currentList!!.toMutableList().isEmpty()) {
+//      return emptyList<RedditPost>().toMutableList()
+//    } else {
+//      return currentList!!.toMutableList()
+//    }
+//  }
+//
+//  override fun getPreloadRequestBuilder(item: RedditPost): RequestBuilder<*>? {
+//    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//  }
+//
+//  inner class PhotoListViewHolder(itemView: View) :
+//    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
+//
+//  companion object {
+//    private val photoListDiff = object : DiffUtil.ItemCallback<RedditPost>() {
+//      override fun areItemsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
+//        oldItem.id == newItem.id
+//
+//      override fun areContentsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
+//        oldItem == newItem
+//    }
+//  }
+//}

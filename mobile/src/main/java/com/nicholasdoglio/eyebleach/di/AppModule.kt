@@ -24,7 +24,6 @@ import dagger.Module
  */
 @Module(includes = [(ViewModelModule::class)])
 object AppModule {
-    private val redditBaseUrl = "https://www.reddit.com/"
 
 //    @Provides
 //    @Singleton

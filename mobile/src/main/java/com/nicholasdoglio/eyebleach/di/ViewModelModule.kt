@@ -11,16 +11,16 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelModule {
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(PhotoListViewModel::class)
-    abstract fun bindPhotoListViewModel(noteViewModel: PhotoListViewModel): ViewModel
+  @Binds
+  @IntoMap
+  @ViewModelKey(PhotoListViewModel::class)
+  abstract fun bindPhotoListViewModel(noteViewModel: PhotoListViewModel): ViewModel
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(PhotoDetailViewModel::class)
-    abstract fun bindPhotoDetailViewModel(noreListViewModel: PhotoDetailViewModel): ViewModel
+  @Binds
+  @IntoMap
+  @ViewModelKey(PhotoDetailViewModel::class)
+  abstract fun bindPhotoDetailViewModel(noreListViewModel: PhotoDetailViewModel): ViewModel
 
-    @Binds
-    abstract fun bindViewModelFactory(factory: GalleryViewModelFactory): ViewModelProvider.Factory
+  @Binds
+  abstract fun bindViewModelFactory(factory: GalleryViewModelFactory): ViewModelProvider.Factory
 }

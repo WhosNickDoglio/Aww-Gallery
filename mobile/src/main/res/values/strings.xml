@@ -16,11 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     -->
 <resources>
-    <string name="app_name">Aww Gallery</string>
-    <string name="empty_view_content_description">Error image for failure to load photos</string>
-    <string name="error_text">There was an error!</string>
-    <string name="unable_to_find_animals">Unable to find cute animals.</string>
+  <string name="app_name">Aww Gallery</string>
+  <string name="empty_view_content_description">Error image for failure to load photos</string>
+  <string name="error_text">There was an error!</string>
+  <string name="unable_to_find_animals">Unable to find cute animals.</string>
 
-    <string name="leak_canary_display_activity_label">Aww Leaks</string>
+  <string name="leak_canary_display_activity_label">Aww Leaks</string>
 
 </resources>

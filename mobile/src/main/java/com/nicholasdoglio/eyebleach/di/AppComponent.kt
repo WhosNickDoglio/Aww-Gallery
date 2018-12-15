@@ -30,18 +30,18 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(
-    modules = [
-        (AndroidSupportInjectionModule::class),
-        (AppModule::class),
-        (MainActivityBindingModule::class)]
+  modules = [
+    (AndroidSupportInjectionModule::class),
+    (AppModule::class),
+    (MainActivityBindingModule::class)]
 )
 interface AppComponent : AndroidInjector<AwwGalleryApp> {
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
+  @Component.Builder
+  interface Builder {
+    @BindsInstance
+    fun application(application: Application): Builder
 
-        fun build(): AppComponent
-    }
+    fun build(): AppComponent
+  }
 }

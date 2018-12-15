@@ -27,7 +27,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class MainActivityBindingModule {
 
-    @ContributesAndroidInjector(modules = [(FragmentBindingModule::class)])
-    abstract fun contributeMainActivity(): MainActivity
+  @ContributesAndroidInjector(modules = [(FragmentBindingModule::class)])
+  abstract fun contributeMainActivity(): MainActivity
 }
 

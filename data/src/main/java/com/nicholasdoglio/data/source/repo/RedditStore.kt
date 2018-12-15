@@ -17,20 +17,18 @@
  */
 package com.nicholasdoglio.data.source.repo
 
-import com.nicholasdoglio.data.model.reddit.Listing
-
 class RedditStore {
 
-    private fun refresh() {
+  private fun refresh() {
 
-    }
+  }
 
-    private fun insertPostsIntoDatabase() {
+  private fun insertPostsIntoDatabase() {
 
-    }
+  }
 
-    private fun multiredditListing(): Listing {
-
-        return TODO()
-    }
+//  private fun multiredditListing(): Listing {
+//
+//    return TODO()
+//  }
 }

@@ -1,7 +1,6 @@
 package com.nicholasdoglio.data.model.redditTest
 
-import com.squareup.moshi.Json
-
+/*
 
 data class ListingResponse(
     @Json(name = "kind") val kind: String, //Listing
@@ -142,4 +141,4 @@ data class MediaEmbed(
 
 data class SecureMedia(
     @Json(name = "reddit_video") val redditVideo: RedditVideo
-)
+)*/

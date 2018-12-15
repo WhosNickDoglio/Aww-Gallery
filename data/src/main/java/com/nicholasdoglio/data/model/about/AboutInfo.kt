@@ -27,7 +27,7 @@ package com.nicholasdoglio.data.model.about
  * @param contentLink: URL that will be launched upon click of each about item
  */
 data class AboutInfo(
-    val imageID: Int,
-    val contentName: String,
-    val contentLink: String
+  val imageID: Int,
+  val contentName: String,
+  val contentLink: String
 )

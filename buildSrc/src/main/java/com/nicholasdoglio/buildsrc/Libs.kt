@@ -7,12 +7,6 @@ package com.nicholasdoglio.buildsrc
  *   `$ ./gradlew syncLibs`
  * to update this file */
 object Libs {
-  const val navigation_fragment_ktx: String =
-    "android.arch.navigation:navigation-fragment-ktx:" + Versions.android_arch_navigation
-
-  const val navigation_ui_ktx: String =
-    "android.arch.navigation:navigation-ui-ktx:" + Versions.android_arch_navigation
-
   /**
    * [rxjava2 website](https://developer.android.com/topic/libraries/architecture/index.html) */
   const val rxjava2: String = "android.arch.paging:rxjava2:" + Versions.rxjava2
@@ -20,10 +14,6 @@ object Libs {
   /**
    * [appcompat website](http://developer.android.com/tools/extras/support-library.html) */
   const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
-
-  /**
-   * [core-testing website](https://developer.android.com/topic/libraries/architecture/index.html) */
-  const val core_testing: String = "androidx.arch.core:core-testing:" + Versions.core_testing
 
   /**
    * [constraintlayout website](http://tools.android.com) */
@@ -69,13 +59,9 @@ object Libs {
   const val room_rxjava2: String = "androidx.room:room-rxjava2:" + Versions.androidx_room
 
   /**
-   * [room-testing website](https://developer.android.com/topic/libraries/architecture/index.html) */
-  const val room_testing: String = "androidx.room:room-testing:" + Versions.androidx_room
-
-  /**
    * [espresso-core website](https://developer.android.com/testing) */
-  const val androidx_test_espresso_espresso_core: String =
-    "androidx.test.espresso:espresso-core:" + Versions.androidx_test_espresso_espresso_core
+  const val espresso_core: String =
+    "androidx.test.espresso:espresso-core:" + Versions.espresso_core
 
   /**
    * [rules website](https://developer.android.com/testing) */
@@ -95,18 +81,8 @@ object Libs {
   const val epoxy: String = "com.airbnb.android:epoxy:" + Versions.com_airbnb_android
 
   /**
-   * [espresso-core website](https://developer.android.com/testing) */
-  const val com_android_support_test_espresso_espresso_core: String =
-    "com.android.support.test.espresso:espresso-core:" + Versions.com_android_support_test_espresso_espresso_core
-
-  /**
-   * [runner website](https://developer.android.com/testing) */
-  const val com_android_support_test_runner: String =
-    "com.android.support.test:runner:" + Versions.com_android_support_test_runner
-
-  /**
-   * [appcompat-v7 website](http://developer.android.com/tools/extras/support-library.html) */
-  const val appcompat_v7: String = "com.android.support:appcompat-v7:" + Versions.appcompat_v7
+   * [aapt2 website](https://developer.android.com/studio) */
+  const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
 
   /**
    * [gradle website](https://developer.android.com/studio) */
@@ -165,11 +141,6 @@ object Libs {
    * [google-services website](http://tools.android.com/) */
   const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
 
-  /**
-   * [rxbinding-kotlin website](https://github.com/JakeWharton/RxBinding/) */
-  const val rxbinding_kotlin: String =
-    "com.jakewharton.rxbinding2:rxbinding-kotlin:" + Versions.rxbinding_kotlin
-
   const val rxrelay: String = "com.jakewharton.rxrelay2:rxrelay:" + Versions.rxrelay
 
   /**
@@ -216,6 +187,11 @@ object Libs {
     "com.squareup.retrofit2:adapter-rxjava2:" + Versions.com_squareup_retrofit2
 
   /**
+   * [converter-moshi website](https://github.com/square/retrofit/) */
+  const val converter_moshi: String =
+    "com.squareup.retrofit2:converter-moshi:" + Versions.com_squareup_retrofit2
+
+  /**
    * [retrofit-mock website](https://github.com/square/retrofit/) */
   const val retrofit_mock: String =
     "com.squareup.retrofit2:retrofit-mock:" + Versions.com_squareup_retrofit2
@@ -239,6 +215,20 @@ object Libs {
    * [autodispose-ktx website](https://github.com/uber/AutoDispose/) */
   const val autodispose_ktx: String =
     "com.uber.autodispose:autodispose-ktx:" + Versions.com_uber_autodispose
+
+  const val com_vanniktech_android_junit_jacoco_gradle_plugin: String =
+    "com.vanniktech.android.junit.jacoco:com.vanniktech.android.junit.jacoco.gradle.plugin:" + Versions.com_vanniktech_android_junit_jacoco_gradle_plugin
+
+  /**
+   * [gradle-android-junit-jacoco-plugin website](http://github.com/vanniktech/gradle-android-junit-jacoco-plugin/) */
+  const val gradle_android_junit_jacoco_plugin: String =
+    "com.vanniktech:gradle-android-junit-jacoco-plugin:" + Versions.gradle_android_junit_jacoco_plugin
+
+  const val detekt_cli: String =
+    "io.gitlab.arturbosch.detekt:detekt-cli:" + Versions.io_gitlab_arturbosch_detekt
+
+  const val io_gitlab_arturbosch_detekt_gradle_plugin: String =
+    "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin:" + Versions.io_gitlab_arturbosch_detekt
 
   /**
    * [mockk website](http://mockk.io) */
@@ -268,15 +258,11 @@ object Libs {
 
   /**
    * [org.jacoco.agent website](http://jacoco.org) */
-  const val org_jacoco_agent: String = "org.jacoco:org.jacoco.agent:" + Versions.org_jacoco_agent
+  const val org_jacoco_agent: String = "org.jacoco:org.jacoco.agent:" + Versions.org_jacoco
 
   /**
    * [org.jacoco.ant website](http://jacoco.org) */
-  const val org_jacoco_ant: String = "org.jacoco:org.jacoco.ant:" + Versions.org_jacoco_ant
-
-  /**
-   * [org.jacoco.core website](http://jacoco.org) */
-  const val org_jacoco_core: String = "org.jacoco:org.jacoco.core:" + Versions.org_jacoco_core
+  const val org_jacoco_ant: String = "org.jacoco:org.jacoco.ant:" + Versions.org_jacoco
 
   /**
    * [kotlin-android-extensions website](https://kotlinlang.org/) */
@@ -317,4 +303,5 @@ object Libs {
    * [kotlin-test-junit website](https://kotlinlang.org/) */
   const val kotlin_test_junit: String =
     "org.jetbrains.kotlin:kotlin-test-junit:" + Versions.kotlin_test_junit
+
 }

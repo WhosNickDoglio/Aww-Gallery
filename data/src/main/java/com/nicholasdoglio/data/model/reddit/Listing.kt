@@ -25,4 +25,4 @@ package com.nicholasdoglio.data.model.reddit
  * @param kind: identifies the type of object is being retrieved, this is a thing
  * @param data: the object that is identified, this is a listing
  */
-data class Listing(val data: ListingData)
+//data class Listing(val data: ListingData)

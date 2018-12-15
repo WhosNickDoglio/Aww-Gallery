@@ -29,19 +29,19 @@ class AboutAdapter :
     parent: ViewGroup,
     viewType: Int
   ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+  override fun getItemCount(): Int {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
   override fun onBindViewHolder(
     holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
     position: Int
   ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
   inner class AboutAdapterViewHolder(itemView: View) :
     androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)

@@ -1,6 +1,5 @@
 package com.nicholasdoglio.eyebleach.ui.photodetail
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,8 @@ import com.nicholasdoglio.eyebleach.util.inflate
 
 class PhotoDetailFragment : androidx.fragment.app.Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = container?.inflate(R.layout.fragment_photo_detail)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? = container?.inflate(R.layout.fragment_photo_detail)
 }

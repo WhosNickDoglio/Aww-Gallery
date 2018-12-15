@@ -23,7 +23,7 @@ package com.nicholasdoglio.data.model.reddit
  * Listing
  *
  */
-data class ListingData(
-    val redditChildrenResponses: List<RedditChildrenResponse>,
-    val after: String
-)
+//data class ListingData(
+//  val redditChildrenResponses: List<RedditChildrenResponse>,
+//  val after: String
+//)

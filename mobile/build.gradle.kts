@@ -1,5 +1,4 @@
-import com.nicholasdoglio.buildsrc.App
-import com.nicholasdoglio.buildsrc.Libs
+
 
 plugins {
   id("com.android.application")
@@ -43,7 +42,7 @@ dependencies {
   implementation(project(":data"))
 
   //Libraries
-  implementation(Libs.org_jetbrains_kotlin_kotlin_stdlib_jdk8)
+  implementation(Libs.kotlin_stdlib_jdk8)
   implementation(Libs.paging_runtime)
   implementation(Libs.rxjava2)
   implementation(Libs.rxjava)

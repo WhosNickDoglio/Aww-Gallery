@@ -1,5 +1,3 @@
-package com.nicholasdoglio.buildsrc
-
 object App {
   const val compileSdk: Int = 28
   const val minSdk: Int = 21

@@ -1,4 +1,3 @@
-import com.nicholasdoglio.buildsrc.Libs
 
 val ktlint by configurations.creating
 

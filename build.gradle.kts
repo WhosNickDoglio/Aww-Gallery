@@ -7,7 +7,7 @@ buildscript {
     maven { url = uri("https://plugins.gradle.org/m2/") }
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:3.4.0-alpha08")
+    classpath("com.android.tools.build:gradle:3.4.0-alpha09")
     classpath(kotlin("gradle-plugin", version = "1.3.11"))
     classpath("com.vanniktech:gradle-android-junit-jacoco-plugin:0.13.0")
     classpath("com.google.gms:google-services:4.2.0")
@@ -17,9 +17,9 @@ buildscript {
 }
 
 plugins {
-  id("io.gitlab.arturbosch.detekt").version("1.0.0-RC12")
-  id("jmfayard.github.io.gradle-kotlin-dsl-libs").version("0.2.6")
-  id("com.vanniktech.android.junit.jacoco").version("0.13.0")
+  id("io.gitlab.arturbosch.detekt") version("1.0.0-RC12")
+  id("de.fayard.buildSrcVersions") version("0.3.2")
+  id("com.vanniktech.android.junit.jacoco") version("0.13.0")
 }
 
 allprojects {

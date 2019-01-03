@@ -7,7 +7,7 @@ buildscript {
     maven { url = uri("https://plugins.gradle.org/m2/") }
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:3.4.0-alpha09")
+    classpath("com.android.tools.build:gradle:3.4.0-alpha10")
     classpath(kotlin("gradle-plugin", version = "1.3.11"))
     classpath("com.vanniktech:gradle-android-junit-jacoco-plugin:0.13.0")
     classpath("com.google.gms:google-services:4.2.0")

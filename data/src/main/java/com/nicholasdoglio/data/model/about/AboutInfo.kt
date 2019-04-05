@@ -38,3 +38,4 @@ data class AboutInfo(
     val contentName: String,
     val contentLink: String
 )
+// TODO can probably delete imageId

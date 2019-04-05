@@ -24,9 +24,10 @@
 
 package com.nicholasdoglio.data.model.base
 
-enum class PostType { PHOTO,
-    VIDEO,
-    ALBUM,
-    YOUTUBE,
-    UNKNOWN
+sealed class PostType {
+    object Photo : PostType()
+    object Video : PostType()
+    object Album : PostType()
+    object YouTube : PostType()
+    object Unknown : PostType()
 }

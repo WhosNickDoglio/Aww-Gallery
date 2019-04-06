@@ -24,7 +24,6 @@
 
 package com.nicholasdoglio.reddit
 
-
 // TODO might need something different for Reddit API (with all the fine grain mapping)
 interface Mapper<API_MODEL> {
 

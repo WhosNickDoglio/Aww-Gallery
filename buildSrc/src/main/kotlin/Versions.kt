@@ -31,7 +31,7 @@
 object Versions {
     const val appcompat: String = "1.0.2" 
 
-    const val constraintlayout: String = "1.1.3" 
+    const val constraintlayout: String = "1.1.3"
 
     const val core_ktx: String = "1.0.1"
 
@@ -41,11 +41,11 @@ object Versions {
 
     const val androidx_lifecycle: String = "2.0.0"
 
-    const val androidx_navigation: String = "2.0.0"
+    const val androidx_navigation: String = "2.0.0" 
 
     const val paging_runtime: String = "2.1.0" 
 
-    const val recyclerview: String = "1.0.0" 
+    const val recyclerview: String = "1.0.0"
 
     const val androidx_room: String = "2.0.0"
 
@@ -63,25 +63,25 @@ object Versions {
 
     const val com_github_bumptech_glide: String = "4.9.0"
 
-    const val exoplayer: String = "2.9.6"
+    const val exoplayer: String = "2.9.6" 
 
-    const val com_google_dagger: String = "2.22.1" 
+    const val com_google_dagger: String = "2.22.1"
 
     const val firebase_crash: String = "16.2.1"
 
     const val google_services: String = "4.2.0"
 
-    const val retrofit2_kotlin_coroutines_adapter: String = "0.9.2"
+    const val retrofit2_kotlin_coroutines_adapter: String = "0.9.2" 
 
-    const val timber: String = "4.7.1" 
+    const val timber: String = "4.7.1"
 
     const val com_squareup_leakcanary: String = "1.6.3"
 
-    const val com_squareup_moshi: String = "1.8.0"
+    const val com_squareup_moshi: String = "1.8.0" 
 
     const val com_squareup_okhttp3: String = "3.14.0" 
 
-    const val com_squareup_retrofit2: String = "2.5.0" 
+    const val com_squareup_retrofit2: String = "2.5.0"
 
     const val com_vanniktech_android_junit_jacoco_gradle_plugin: String = "0.13.0"
 
@@ -99,7 +99,7 @@ object Versions {
 
     const val flick: String = "1.4.0"
 
-    const val assertj_core: String = "3.12.2"
+    const val assertj_core: String = "3.12.2" 
 
     const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String = "1.2.5" // available: "1.2.6"
 
@@ -109,7 +109,7 @@ object Versions {
 
     const val org_jetbrains_kotlinx: String = "1.1.1"
 
-    const val kotlinter_gradle: String = "1.23.0"
+    const val kotlinter_gradle: String = "1.23.0" 
 
     const val junit_jupiter: String = "5.4.1" 
 
@@ -123,7 +123,7 @@ object Versions {
 
         const val currentVersion: String = "5.3.1"
 
-        const val nightlyVersion: String = "5.5-20190405000045+0000"
+        const val nightlyVersion: String = "5.5-20190406000105+0000"
 
         const val releaseCandidate: String = ""
     }

@@ -46,6 +46,7 @@
  * SOFTWARE.
  */
 
+
 plugins {
     id("com.android.library")
     id("org.jmailen.kotlinter")

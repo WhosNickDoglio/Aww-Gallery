@@ -1,8 +1,8 @@
 # Aww Gallery
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
-[![Build Status](https://travis-ci.org/WhosNickDoglio/Aww-Gallery.svg?branch=master)](https://travis-ci.org/WhosNickDoglio/Aww-Gallery)
+[![Build Status](https://app.bitrise.io/app/dc23a188743be28e/status.svg?token=mTbE6cyzfc7p-7EQbx91vA&branch=master)](https://app.bitrise.io/app/dc23a188743be28e)
 [![codecov](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery)
 
 
@@ -66,7 +66,7 @@ Feel free to contact me or open up a issue:
 
 	MIT License
 
-	Copyright (c) 2018 Nicholas Doglio
+	Copyright (c) 2019 Nicholas Doglio
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal

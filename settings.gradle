@@ -29,10 +29,9 @@ include(
         ":data",
         ":domain",
         ":persistence",
-        ':api',
+        ':reddit-api',
         ":buildSrc",
         ':base-ui',
-        ':reddit-api',
         ":photo-list",
         ":photo-detail"
 )

@@ -25,7 +25,7 @@
 package com.nicholasdoglio.eyebleach.util
 
 import android.content.Context
-import com.nicholasdoglio.eyebleach.BuildConfig
+import com.nicholasdoglio.core.BuildConfig
 
 /**
  * @author Nicholas Doglio

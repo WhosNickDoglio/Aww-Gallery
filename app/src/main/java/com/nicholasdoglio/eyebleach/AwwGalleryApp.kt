@@ -29,44 +29,20 @@ import com.nicholasdoglio.core.CoreComponent
 import com.nicholasdoglio.core.CoreComponentProvider
 import com.nicholasdoglio.core.DaggerCoreComponent
 import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
-import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import timber.log.Timber
 
 /**
  * @author Nicholas Doglio
  */
 class AwwGalleryApp : DaggerApplication(), CoreComponentProvider {
 
-    private lateinit var coreComponent: CoreComponent
-
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
         DaggerAppComponent
             .factory()
             .create(application = this, coreComponent = provideCoreComponent())
 
-    override fun provideCoreComponent(): CoreComponent {
-        if (!this::coreComponent.isInitialized) {
-            coreComponent = DaggerCoreComponent.create()
-        }
-        return coreComponent
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        initDebugTools()
-        initLeakCanary()
-    }
-
-    private fun initDebugTools() {
-        if (BuildConfig.DEBUG) { // init all debug tools
-            initStrictMode()
-            Timber.plant(Timber.DebugTree())
-        } else {
-//            Timber.plant(ReleaseTree()) TODO set up Release tree
-        }
-    }
+    override fun provideCoreComponent(): CoreComponent = DaggerCoreComponent.create()
 
     private fun initStrictMode() {
         StrictMode.setThreadPolicy(
@@ -82,10 +58,5 @@ class AwwGalleryApp : DaggerApplication(), CoreComponentProvider {
                 .penaltyDeath()
                 .build()
         )
-    }
-
-    private fun initLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) return
-        LeakCanary.install(this)
     }
 }

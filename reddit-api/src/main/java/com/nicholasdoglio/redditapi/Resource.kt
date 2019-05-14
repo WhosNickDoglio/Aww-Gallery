@@ -22,28 +22,24 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
+package com.nicholasdoglio.redditapi
+
+// TODO some sort of data wrapper to propagate errors easily
+
+data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
+    companion object {
+        fun <T> success(data: T?): Resource<T> {
+            return Resource(Status.SUCCESS, data, null)
+        }
+
+        fun <T> error(msg: String, data: T?): Resource<T> {
+            return Resource(Status.ERROR, data, msg)
+        }
+
+        fun <T> loading(data: T?): Resource<T> {
+            return Resource(Status.LOADING, data, null)
+        }
+    }
 }
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+enum class Status { SUCCESS, LOADING, ERROR }

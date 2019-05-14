@@ -22,28 +22,29 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
-}
+package com.nicholasdoglio.persistence
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import schema.AwwGalleryPost
+import schema.AwwGalleryPostQueries
+import javax.inject.Inject
+
+class PostsSource @Inject constructor(private val queries: AwwGalleryPostQueries) : LocalSource {
+
+    override suspend fun observeAllPosts(): Flow<List<AwwGalleryPost>> {
+        return flowOf(queries.posts().executeAsList())
+    }
+
+    override suspend fun observeFavoritePosts(): Flow<List<AwwGalleryPost>> {
+        return flowOf(queries.posts().executeAsList())
+    }
+
+    override suspend fun observePostsBySubreddit(vararg subreddit: String): Flow<List<AwwGalleryPost>> {
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun postById(id: String): AwwGalleryPost {
+        return queries.findPostById(id).executeAsOne()
+    }
+}

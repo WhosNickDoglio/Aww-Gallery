@@ -22,28 +22,25 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
+package com.nicholasdoglio.redditapi
+
+// TODO organize this better
+
+internal object PostsHints {
+    internal const val RICH_VIDEO = "rich:video"
+    internal const val HOST_VIDEO = "hosted:video"
+    internal const val IMAGE = "image"
+    internal const val LINK = "link"
 }
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+internal object Domains {
+    internal const val REDDIT_VIDEO = "v.redd.it"
+    internal const val REDDIT_IMAGE = "i.redd.it"
+    internal const val GFYCAT = "gfycat.com"
+    internal const val IMGUR = "i.imgur.com" // TODO look for gallery in imgur URL
+    internal const val IMGUR_SHORTENED = "imgur.com"
+    internal const val YOUTUBE = "youtube.com"
+    internal const val YOUTUBE_SHORTENED = "youtu.be"
+}
+
+internal const val SUBREDDIT_TYPE_PUBLIC = "public"

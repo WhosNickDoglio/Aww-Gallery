@@ -1,0 +1,27 @@
+import com.nicholasdoglio.persistence.PostType;
+import com.nicholasdoglio.persistence.Tag;
+
+CREATE TABLE awwGalleryPost (
+    id TEXT NOT NULL PRIMARY KEY,
+    url  TEXT NOT NULL,
+    type TEXT AS PostType NOT NULL,
+    isFavorite INTEGER AS Boolean NOT NULL,
+    tag TEXT as Tag NOT NULL
+);
+
+posts:
+SELECT *
+FROM awwGalleryPost;
+
+
+favorites:
+SELECT *
+FROM awwGalleryPost
+WHERE isFavorite = :true;
+
+findPostById:
+SELECT *
+FROM awwGalleryPost
+WHERE id = ?;
+
+

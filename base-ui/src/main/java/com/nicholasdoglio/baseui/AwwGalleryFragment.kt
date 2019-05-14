@@ -25,17 +25,15 @@
 package com.nicholasdoglio.baseui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
 abstract class AwwGalleryFragment<VIEW_MODEL : AwwGalleryViewModel> : DaggerFragment() {
 
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    // @Inject
+    // lateinit var factory: ViewModelProvider.Factory
 
     // TODO this should work with Kotlin 1.3.40
-//    protected val viewModel: VIEW_MODEL by viewModels { factory }
+//    protected val viewModel: VIEW_MODEL by viewModels { factory } this is in fragment alpha
 }
 
 sealed class Event

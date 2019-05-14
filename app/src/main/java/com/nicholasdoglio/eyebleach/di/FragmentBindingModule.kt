@@ -24,7 +24,6 @@
 
 package com.nicholasdoglio.eyebleach.di
 
-import com.nicholasdoglio.about.AboutFragment
 import com.nicholasdoglio.photodetail.PhotoDetailFragment
 import com.nicholasdoglio.photolist.PhotoListFragment
 import dagger.Module
@@ -38,7 +37,4 @@ abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun contributesPhotoDetailFragment(): PhotoDetailFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributesAboutFragment(): AboutFragment
 }

@@ -22,28 +22,33 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
+
+// TODO Waiting on Kotlin/Native MPP support from Okhttp (and Retrofit?) to move to Kotlin Native
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+
+dependencies {
+    implementation(fileTree(include: ['*.jar'], dir: 'libs'))
+    implementation(Libs.org_jetbrains_kotlin_kotlin_stdlib_jdk8)
+
+    implementation(Libs.kotlinx_coroutines_core)
+    implementation(Libs.retrofit2_kotlin_coroutines_adapter)
+    implementation(Libs.retrofit)
+    implementation(Libs.retrofit_mock)
+    implementation(Libs.converter_moshi)
+    implementation(Libs.okhttp)
+    implementation((Libs.dagger))
+    implementation(Libs.logging_interceptor)
+    implementation("com.squareup.moshi:moshi:1.8.0")
+    kapt(Libs.moshi_kotlin_codegen)
+    kapt(Libs.dagger_compiler)
+
+    testImplementation(Libs.truth)
+    testImplementation(Libs.junit_jupiter)
+    testImplementation(Libs.mockk)
 }
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+sourceCompatibility = "8"
+targetCompatibility = "8"

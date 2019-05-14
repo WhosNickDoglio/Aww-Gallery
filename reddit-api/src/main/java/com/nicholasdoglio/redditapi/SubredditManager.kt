@@ -22,28 +22,20 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
-}
+package com.nicholasdoglio.redditapi
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+import com.nicholasdoglio.redditapi.response.SubredditAboutData
+import javax.inject.Inject
+
+class SubredditManager @Inject constructor(private val redditService: RedditService) : SourceManager {
+
+    override suspend fun addSource(subreddit: String): Resource<SubredditAboutData> {
+        val response = redditService.subredditInfo(subreddit).await()
+
+        if (response.isSuccessful) {
+            return Resource.success(response.body()?.data)
+        }
+
+        return Resource.error("", null)
+    }
+}

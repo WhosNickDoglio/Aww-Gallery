@@ -22,28 +22,30 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
-}
+package com.nicholasdoglio.redditapi.response
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class SubredditAboutResponse(val data: SubredditAboutData)
+
+@JsonClass(generateAdapter = true)
+data class SubredditAboutData(
+    @Json(name = "allow_images")
+    val allowImages: Boolean?, // true
+    @Json(name = "allow_videogifs")
+    val allowVideogifs: Boolean?, // true
+    @Json(name = "allow_videos")
+    val allowVideos: Boolean?, // true
+    @Json(name = "display_name_prefixed")
+    val displayNamePrefixed: String?, // r/aww
+    @Json(name = "over18")
+    val over18: Boolean?, // false
+    @Json(name = "show_media")
+    val showMedia: Boolean?, // true
+    @Json(name = "subreddit_type")
+    val subredditType: String?, // public
+    @Json(name = "url")
+    val url: String? // /r/aww/
+)

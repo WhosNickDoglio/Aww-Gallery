@@ -22,28 +22,12 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
-}
+package com.nicholasdoglio.redditapi
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+import com.nicholasdoglio.redditapi.model.AwwGalleryPost
+
+// TODO might need something different for Reddit API (with all the fine grain mapping)
+interface Mapper<API_MODEL> {
+
+    fun convert(response: API_MODEL): List<AwwGalleryPost>
+}

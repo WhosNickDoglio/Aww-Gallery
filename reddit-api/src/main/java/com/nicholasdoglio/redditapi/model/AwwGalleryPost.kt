@@ -22,28 +22,27 @@
  * SOFTWARE.
  */
 
-object App {
-    const val compileSdk: Int = 28
-    const val minSdk: Int = 21
-    const val targetSdk: Int = 28
-    const val versionCode: Int = 1
-    const val versionName: String = "0.0.0.1"
+package com.nicholasdoglio.redditapi.model
+
+data class AwwGalleryPost(
+    val id: String,
+    val type: PostType,
+    val url: String,
+    val source: Source,
+    var isFavorite: Boolean = false
+)
+
+// TODO some sort of fallback for unknown types or do I just throw it away?
+enum class PostType { PHOTO, VIDEO, ALBUM, YOUTUBE, UNKNOWN }
+
+// TODO is this the better way to do it?
+sealed class Tag {
+    data class Subreddit(val sub: String) : Tag()
+    data class Hashtag(val hashtag: String) : Tag()
 }
 
-// object App {
-//
-//     object Sdk {
-//         const val min = 21
-//         const val target = 28
-//         const val compile = 28
-//     }
-//
-//     object Versions {
-//         private const val versionMajor = 1
-//         private const val versionMinor = 0
-//         private const val buildNum = 0
-//
-//         const val versionCode: Int = ((versionMajor * 1000000) + (versionMinor * 1000) + buildNum)
-//         const val versionName: String = "$versionMajor.$versionMinor.$buildNum"
-//     }
-// }
+// TODO add other sources when support is added
+sealed class Source(open val url: String) {
+    data class Reddit(override val url: String) : Source(url)
+    data class Youtube(override val url: String) : Source(url)
+}

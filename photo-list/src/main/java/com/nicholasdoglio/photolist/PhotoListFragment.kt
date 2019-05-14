@@ -32,7 +32,6 @@ import android.widget.Button
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-
 class PhotoListFragment : DaggerFragment() {
 
     @Inject
@@ -44,7 +43,8 @@ class PhotoListFragment : DaggerFragment() {
     private lateinit var navButon: Button
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_photo_list, container, false)
 

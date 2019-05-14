@@ -34,16 +34,9 @@
         <action
             android:id="@+id/action_photoListFragment_to_photoDetailFragment"
             app:destination="@id/photoDetailFragment" />
-        <action
-            android:id="@+id/action_photoListFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/photoDetailFragment"
         android:name="com.nicholasdoglio.photodetail.PhotoDetailFragment"
         android:label="PhotoDetailFragment" />
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.nicholasdoglio.about.AboutFragment"
-        android:label="AboutFragment" />
 </navigation>

@@ -24,7 +24,6 @@
 
 package com.nicholasdoglio.photodetail
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +40,8 @@ class PhotoDetailFragment : DaggerFragment() {
     private lateinit var textView: TextView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_photo_detail, container, false)
 
@@ -51,6 +51,5 @@ class PhotoDetailFragment : DaggerFragment() {
         textView = view.findViewById(R.id.textView)
 
         textView.text = data
-
     }
 }

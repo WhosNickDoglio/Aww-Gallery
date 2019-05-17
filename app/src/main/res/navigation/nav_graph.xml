@@ -21,11 +21,30 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/about_item"
-        android:title="@string/about_menu_item"
-        app:showAsAction="never" />
-</menu>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/photoListFragment">
+
+    <fragment
+        android:id="@+id/photoListFragment"
+        android:name="com.nicholasdoglio.eyebleach.ui.photolist.PhotoListFragment"
+        android:label="PhotoListFragment">
+        <action
+            android:id="@+id/openDetailFragment"
+            app:destination="@id/photoDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailFragment"
+        android:label="PhotoDetailFragment">
+        <argument
+            android:name="photoId"
+            app:argType="string"/>
+    </fragment>
+</navigation>

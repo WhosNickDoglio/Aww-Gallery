@@ -1,6 +1,9 @@
-# Aww Gallery
+# Aww Gallery 🔨🔨🔨🔨
 
-[![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
+[![Build Status](https://app.bitrise.io/app/dc23a188743be28e/status.svg?token=mTbE6cyzfc7p-7EQbx91vA&branch=master)](https://app.bitrise.io/app/dc23a188743be28e)
+[![codecov](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery)
 
 
 <a href="https://play.google.com/store/apps/details?id=com.nicholasdoglio.eyebleach">
@@ -10,12 +13,14 @@
 </a>
 
 
+<img src="https://i.imgur.com/M9AcRKs.png" width="250" height="450"> <img src="https://i.imgur.com/23GYLth.png" width="250" height="450">
 
 
-<img src="https://i.imgur.com/84Oc8Kg.png" width="250" height="450"> <img src="https://i.imgur.com/p4GgtVy.png" width="250" height="450">
+An Android application that aggregate cute animal photos from reddit implemented.
 
+# Major rewrite
 
-An Android application that aggregate cute animal photos from reddit implemented with the MVP architecture pattern. 
+Active development on a major rewrite is in progress on the dev branch.
 
 # Sources
 
@@ -30,45 +35,29 @@ All planned work is detailed [here](https://docs.google.com/spreadsheets/d/1obxJ
 
 # Changelog
 
-Full channgelog is available [here](https://github.com/WhosNickDoglio/Aww-Gallery/releases)
+Full changelog is available [here](https://github.com/WhosNickDoglio/Aww-Gallery/releases)
 
-# Libraries
-- [Android Support](https://developer.android.com/topic/libraries/support-library/index.html) 
-- [Glide](https://bumptech.github.io/glide/)
-- [Retrofit 2](https://square.github.io/retrofit/)
-- [Moshi](https://github.com/square/moshi)
-- [RxJava2](https://github.com/ReactiveX/RxJava)
-- [RxAndroid](https://github.com/ReactiveX/RxAndroid)
-- [Butterknife](https://jakewharton.github.io/butterknife/)
-- [Dagger2](https://google.github.io/dagger/)
-- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html)
-  - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
- 
-
-# Feedback
-
-Bugs found? Suggestions? Requests?
-
-Feel free to contact me:
-
-[Twitter](https://twitter.com/WhosNickDoglio)
-
-[Email](mailto:NicholasDoglio@Gmail.com)
 
 # License 
   
-      Aww Gallery
-      
-      Copyright (C) 2017  Nicholas Doglio
-      
-  
-      This program is free software: you can redistribute it and/or modify
-      it under the terms of the GNU General Public License as published by
-      the Free Software Foundation, either version 3 of the License, or
-      (at your option) any later version.
-      
-  
-      This program is distributed in the hope that it will be useful,
-      but WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      GNU General Public License for more details.
+      MIT License
+
+      Copyright (c) 2019 Nicholas Doglio
+
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:
+
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.
+
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.

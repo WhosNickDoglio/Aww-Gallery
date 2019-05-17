@@ -1,17 +1,48 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 Nicholas Doglio
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'com.jaredsburrows.license'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.nicholasdoglio.eyebleach"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 3
-        versionName "0.0.2.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        multiDexEnabled true
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 4
+        versionName "0.0.3"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,86 +54,79 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
-ext {
-    espresso = "2.2.2"
-    support = "27.0.2"
-    constraint = "1.1.0-beta3"
-    glide = "4.4.0"
-    retrofit = "2.3.0"
-    moshi = "1.5.0"
-    rxJava = "2.1.7"
-    rxAndroid = "2.0.1"
-    butterknife = "8.8.1"
-    dagger = "2.13"
-    paging = "1.0.0-alpha4-1"
-    archComponents = "1.0.0"
-    junit = "4.12"
-    mockito = "2.11.0"
-    okhttp = "3.9.0"
-}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:support-v4:$support"
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    implementation libs.kotlin
 
-    //Android
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:support-v4:$support"
-    implementation "com.android.support:recyclerview-v7:$support"
-    implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation libs.appcompat
+    implementation libs.recyclerview
+    implementation libs.constraint
 
-    //Glide
-    implementation "com.github.bumptech.glide:glide:$glide"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
-    implementation("com.github.bumptech.glide:recyclerview-integration:$glide") {
+    implementation libs.material
+
+    implementation libs.core_ktx
+    implementation libs.fragment
+    implementation libs.navigation_ui_ktx
+    implementation libs.navigation_fragment_ktx
+
+    implementation libs.paging_runtime
+    implementation libs.paging_rxjava
+
+    implementation libs.lifecycle_extensions
+    implementation libs.lifecycle_commons
+
+    implementation libs.room_runtime
+    implementation libs.room_rxjava
+    kapt libs.room_compiler
+
+    implementation libs.work_runtime
+    implementation libs.work_rxjava
+
+    kapt libs.glide_compiler
+    implementation libs.glide
+    implementation libs.glide_okhttp
+    implementation(libs.glide_recyclerview) {
         transitive = false
     }
 
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation libs.retrofit
+    implementation libs.retrofit_converter_moshi
+    implementation libs.retrofit_adapter_rxjava
+    implementation libs.okhttp
+    implementation libs.okhttp_logging
 
-    //Moshi
-    implementation "com.squareup.moshi:moshi:$moshi"
+    implementation libs.moshi
+    kapt libs.moshi_codegen
 
-    //Rx
-    implementation "io.reactivex.rxjava2:rxjava:$rxJava"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+    implementation libs.rxjava
+    implementation libs.rxandroid
+    implementation libs.rxkotlin
 
-    //ButterKnife
-    implementation "com.jakewharton:butterknife:$butterknife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
+    implementation libs.rxdogtag
+    implementation libs.rxdogtag_autodispose
 
-    //Dagger
-    implementation "com.google.dagger:dagger:$dagger"
-    implementation "com.google.dagger:dagger-android:$dagger"
-    implementation "com.google.dagger:dagger-android-support:$dagger"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
+    implementation libs.autodispose_lifecycle
+    implementation libs.autodispose_components
 
-    //Android Architecture Components
-    implementation "android.arch.paging:runtime:$paging"
-    implementation "android.arch.lifecycle:common-java8:$archComponents"
-    implementation "android.arch.lifecycle:extensions:$archComponents"
-    implementation "android.arch.lifecycle:common-java8:$archComponents"
-    implementation "android.arch.lifecycle:reactivestreams:$archComponents"
-    implementation "android.arch.persistence.room:runtime:$archComponents"
-    implementation "android.arch.persistence.room:rxjava2:$archComponents"
-    annotationProcessor "android.arch.persistence.room:compiler:$archComponents"
+    debugImplementation libs.leak_canary
+
+    implementation libs.dagger
+    kapt libs.dagger_compiler
 
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "android.arch.core:core-testing:$archComponents"
-    testImplementation "android.arch.persistence.room:testing:$archComponents"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compileOnly libs.assisted_inject
+    kapt libs.assisted_inject_processor
 
-}
-repositories {
-    mavenCentral()
+    implementation libs.timber
+
+    testImplementation libs.junit
+    testImplementation libs.core_testing
+    testImplementation libs.room_testing
 }

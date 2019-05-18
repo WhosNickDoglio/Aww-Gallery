@@ -34,6 +34,7 @@ import com.bumptech.glide.request.target.Target
 class CircularProgressPlaceholderListener(
     private val placeholder: CircularProgressDrawable
 ) : RequestListener<Drawable> {
+
     override fun onLoadFailed(
         e: GlideException?,
         model: Any?,

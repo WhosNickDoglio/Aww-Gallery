@@ -55,10 +55,8 @@ class BoundaryCallback
     private fun requestPostsAndSaveThem(after: String): Completable =
         redditService.multiPosts(after)
             .subscribeOn(schedulersProvider.network)
-
             .observeOn(schedulersProvider.background)
             .map { response -> response.toRedditPosts() }
-
             .observeOn(schedulersProvider.database)
             .flatMapCompletable { posts -> localSource.insertPosts(posts) }
 

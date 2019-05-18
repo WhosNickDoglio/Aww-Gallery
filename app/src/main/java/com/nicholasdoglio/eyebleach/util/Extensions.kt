@@ -61,7 +61,7 @@ fun RecyclerView.calculateNoOfColumns(): Int {
     val dpWidth = displayMetrics.widthPixels / displayMetrics.density
 
     val imageSize =
-        context.resources.getDimension(R.dimen.grid_item_size) / context.resources.displayMetrics.density
+        context.resources.getDimension(R.dimen.grid_item_size) / displayMetrics.density
 
     return (dpWidth / imageSize).toInt()
 }
@@ -74,7 +74,8 @@ fun ListingResponse.toRedditPosts(): List<RedditPost> {
 
     this.data.children
         .filter { it.data.url.contains(".jpg") || it.data.url.contains(".png") }
-        .forEach { posts.add(it.data.toRedditPost()) }
+        .map { it.data.toRedditPost() }
+        .forEach { posts.add(it) }
 
     return posts
 }

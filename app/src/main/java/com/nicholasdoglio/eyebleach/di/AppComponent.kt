@@ -37,16 +37,23 @@ import javax.inject.Singleton
  * @author Nicholas Doglio
  */
 @Singleton
-@Component(modules = [AssistedModule::class, BindingModule::class, NetworkModule::class, DatabaseModule::class])
+@Component(
+    modules = [
+        AssistedModule::class,
+        BindingModule::class,
+        NetworkModule::class,
+        DatabaseModule::class
+    ]
+)
 interface AppComponent {
+
+    val workerFactory: WorkerFactory
 
     fun inject(photoListFragment: PhotoListFragment)
 
     fun inject(photoDetailFragment: PhotoDetailFragment)
 
     fun inject(aboutFragment: AboutFragment)
-
-    val workerFactory: WorkerFactory
 
     @Component.Factory
     interface Factory {

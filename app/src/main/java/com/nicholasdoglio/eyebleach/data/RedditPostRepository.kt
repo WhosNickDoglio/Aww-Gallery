@@ -66,19 +66,14 @@ class RedditPostRepository @Inject constructor(
         localSource
             .deleteAllPosts()
             .subscribeOn(schedulersProvider.database)
-
             .observeOn(schedulersProvider.network)
             .andThen(redditService.multiPosts(""))
-
             .observeOn(schedulersProvider.main)
             .doOnSubscribe { refreshSubject.onNext(true) }
-
             .observeOn(schedulersProvider.background)
             .map { response -> response.toRedditPosts() }
-
             .observeOn(schedulersProvider.database)
             .flatMapCompletable { posts -> localSource.insertPosts(posts) }
-
             .observeOn(schedulersProvider.main)
             .doOnComplete { refreshSubject.onNext(false) }
 

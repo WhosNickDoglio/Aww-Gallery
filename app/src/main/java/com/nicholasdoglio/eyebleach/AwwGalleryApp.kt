@@ -68,13 +68,14 @@ class AwwGalleryApp : Application(), AppComponentProvider {
         WorkManager
             .getInstance()
             .enqueueUniquePeriodicWork(
-                "CLEAR_DATABASE",
+                CLEAR_DATABASE_WORK,
                 ExistingPeriodicWorkPolicy.KEEP,
                 PeriodicWorkRequestBuilder<ClearDataWorker>(INTERVAL_TWELVE_HOURS, TimeUnit.HOURS).build()
             )
     }
 
     companion object {
+        private const val CLEAR_DATABASE_WORK = "CLEAR_DATABASE"
         private const val INTERVAL_TWELVE_HOURS: Long = 12
     }
 }

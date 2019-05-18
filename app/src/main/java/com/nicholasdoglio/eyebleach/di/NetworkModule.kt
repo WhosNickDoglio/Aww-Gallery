@@ -58,7 +58,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun providesRedditService(client: OkHttpClient): RedditService = Retrofit.Builder()
+    fun redditService(client: OkHttpClient): RedditService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

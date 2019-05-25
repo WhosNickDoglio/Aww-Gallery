@@ -10,7 +10,6 @@ class RemoteSource @Inject constructor(
     private val redditService: RedditService,
     private val dispatcherProvider: DispatcherProvider
 ) {
-
     suspend fun requestsPosts(after: String = ""): List<RedditPost> {
         val response = withContext(dispatcherProvider.network) {
             redditService.multiPosts(after).await()

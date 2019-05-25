@@ -24,14 +24,18 @@
 
 package com.nicholasdoglio.eyebleach.ui.photodetail
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nicholasdoglio.eyebleach.data.RedditPostRepository
 import com.nicholasdoglio.eyebleach.data.local.RedditPost
-import io.reactivex.Single
 import javax.inject.Inject
 
-class PhotoDetailViewModel @Inject constructor(private val repository: RedditPostRepository) :
-    ViewModel() {
+class PhotoDetailViewModel @Inject constructor(private val repository: RedditPostRepository) : ViewModel() {
 
-    fun onAttached(id: String): Single<RedditPost> = repository.findPostById(id)
+    // TODO Assisted-Inject will allow me to move onAttached to init
+    private val _post = MutableLiveData<RedditPost>()
+    val post: LiveData<RedditPost> = _post
+
+    fun onAttached(id: String): LiveData<RedditPost> = repository.findPostById(id)
 }

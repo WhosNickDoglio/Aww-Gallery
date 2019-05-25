@@ -25,16 +25,16 @@
 package com.nicholasdoglio.eyebleach.ui.photolist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
@@ -42,42 +42,28 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.data.local.RedditPost
-import com.nicholasdoglio.eyebleach.di.injector
-import com.nicholasdoglio.eyebleach.ui.about.AboutFragment
+import com.nicholasdoglio.eyebleach.di.ViewModelFactory
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryFragment
 import com.nicholasdoglio.eyebleach.ui.util.SpacesItemDecoration
 import com.nicholasdoglio.eyebleach.util.calculateNoOfColumns
-import com.nicholasdoglio.eyebleach.util.createViewModel
-import com.uber.autodispose.android.lifecycle.autoDisposable
 import kotlinx.android.synthetic.main.fragment_photo_list.*
 import kotlinx.android.synthetic.main.item_photo_list.*
+import javax.inject.Inject
 
-class PhotoListFragment : AwwGalleryFragment<PhotoListViewModel>() {
+class PhotoListFragment @Inject constructor(
+    override val factory: ViewModelFactory
+) : AwwGalleryFragment<PhotoListViewModel>(factory, R.layout.fragment_photo_list) {
 
     private lateinit var photoListAdapter: PhotoListAdapter
 
-    override fun injectFragment() {
-        requireActivity().injector.inject(this)
-    }
-
-    override fun createViewModel() {
-        viewModel = createViewModel(factory)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_photo_list, container, false)
+    private val viewModel by viewModels<PhotoListViewModel> { factory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val manager = Glide.with(this)
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar.apply {
-            setHasOptionsMenu(true)
-        }
+        setHasOptionsMenu(true)
 
         requireActivity().window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -87,6 +73,7 @@ class PhotoListFragment : AwwGalleryFragment<PhotoListViewModel>() {
         photoListAdapter =
             PhotoListAdapter(manager.asDrawable().diskCacheStrategy(DiskCacheStrategy.ALL))
 
+        // TODO can I improve Glide integration with the RecyclerView
         val preloader: RecyclerViewPreloader<RedditPost> =
             RecyclerViewPreloader(
                 manager,
@@ -109,33 +96,32 @@ class PhotoListFragment : AwwGalleryFragment<PhotoListViewModel>() {
 
         swipeRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
-                .autoDisposable(viewLifecycleOwner)
-                .subscribe()
         }
 
-        viewModel.refreshStatus
-            .subscribeOn(schedulersProvider.main)
-            .autoDisposable(viewLifecycleOwner)
-            .subscribe { swipeRefreshLayout.isRefreshing = it }
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { swipeRefreshLayout.isRefreshing = it })
 
         viewModel.posts.observe(viewLifecycleOwner, Observer { photoListAdapter.submitList(it) })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.grid_menu, menu)
+        inflater.inflate(R.menu.grid_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.about_item -> {
-            AboutFragment().show(activity?.supportFragmentManager, "ABOUT")
+            findNavController().navigate(R.id.open_about)
+            true
+        }
+        R.id.libs_item -> {
+            findNavController().navigate(R.id.open_libs)
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
-        private const val MAX_PRELOAD = 30
-        private const val SPACE_SIZE = 8
+        private const val MAX_PRELOAD = 50
+        private const val SPACE_SIZE = 16
     }
 }

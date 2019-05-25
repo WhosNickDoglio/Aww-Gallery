@@ -24,30 +24,12 @@
 
 package com.nicholasdoglio.eyebleach.ui.base
 
-import android.content.Context
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.nicholasdoglio.eyebleach.di.ViewModelFactory
-import com.nicholasdoglio.eyebleach.util.SchedulersProvider
-import javax.inject.Inject
 
-abstract class AwwGalleryFragment<VIEW_MODEL : ViewModel> : Fragment() {
-
-    @Inject
-    protected lateinit var factory: ViewModelFactory
-
-    @Inject
-    protected lateinit var schedulersProvider: SchedulersProvider
-
-    protected lateinit var viewModel: VIEW_MODEL
-
-    protected abstract fun injectFragment()
-
-    protected abstract fun createViewModel()
-
-    override fun onAttach(context: Context?) {
-        injectFragment()
-        super.onAttach(context)
-        createViewModel()
-    }
-}
+open class AwwGalleryFragment<VIEW_MODEL : ViewModel>(
+    open val factory: ViewModelFactory,
+    @LayoutRes open val layout: Int
+) : Fragment(layout)

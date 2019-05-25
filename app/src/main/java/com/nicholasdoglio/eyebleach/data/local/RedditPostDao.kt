@@ -24,12 +24,12 @@
 
 package com.nicholasdoglio.eyebleach.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.reactivex.Single
 
 /**
  * @author Nicholas Doglio
@@ -40,12 +40,12 @@ interface RedditPostDao {
     @get:Query("SELECT * from RedditPost")
     val pagedList: DataSource.Factory<Int, RedditPost>
 
+    @Query("SELECT * FROM RedditPost WHERE name =:name")
+    fun findPostById(name: String): LiveData<RedditPost>
+
     @Query("DELETE FROM RedditPost")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRedditPostList(childData: List<RedditPost>)
-
-    @Query("SELECT * FROM RedditPost WHERE name =:name")
-    fun findPostById(name: String): Single<RedditPost>
+    suspend fun insertRedditPostList(childData: List<RedditPost>)
 }

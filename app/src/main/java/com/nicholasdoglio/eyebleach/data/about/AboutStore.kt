@@ -24,18 +24,18 @@
 
 package com.nicholasdoglio.eyebleach.data.about
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.nicholasdoglio.eyebleach.R
-import io.reactivex.Single
 import javax.inject.Inject
 
 class AboutStore @Inject constructor() {
 
     private val items: List<AboutInfo> = listOf(
-        AboutInfo(R.string.libs, OpenAction.OpenLibs),
-        AboutInfo(R.string.source, OpenAction.OpenWeb(R.string.aww_gallery_github)),
-        AboutInfo(R.string.developed_by, OpenAction.OpenWeb(R.string.doglio_website)),
-        AboutInfo(R.string.graphics_by, OpenAction.OpenWeb(R.string.guzz_website))
+        AboutInfo(R.string.source, R.string.aww_gallery_github),
+        AboutInfo(R.string.developed_by, R.string.doglio_website),
+        AboutInfo(R.string.graphics_by, R.string.guzz_website)
     )
 
-    val aboutInfo: Single<List<AboutInfo>> = Single.just(items)
+    val aboutInfo: LiveData<List<AboutInfo>> = MutableLiveData<List<AboutInfo>>().apply { value = items }
 }

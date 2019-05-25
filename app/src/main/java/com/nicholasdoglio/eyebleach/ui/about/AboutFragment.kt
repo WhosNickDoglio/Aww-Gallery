@@ -24,43 +24,24 @@
 
 package com.nicholasdoglio.eyebleach.ui.about
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.di.ViewModelFactory
-import com.nicholasdoglio.eyebleach.di.injector
-import com.nicholasdoglio.eyebleach.util.SchedulersProvider
-import com.nicholasdoglio.eyebleach.util.createViewModel
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
-import com.uber.autodispose.android.lifecycle.autoDisposable
 import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
 
-class AboutFragment : DialogFragment() {
+class AboutFragment @Inject constructor(
+    private val factory: ViewModelFactory
+) : DialogFragment() {
 
-    @Inject
-    protected lateinit var factory: ViewModelFactory
-
-    @Inject
-    protected lateinit var schedulersProvider: SchedulersProvider
-
-    protected lateinit var viewModel: AboutViewModel
-
-    protected lateinit var scopeProvider: AndroidLifecycleScopeProvider
-
-    private lateinit var aboutAdapter: AboutAdapter
-
-    override fun onAttach(context: Context?) {
-        requireActivity().injector.inject(this)
-        super.onAttach(context)
-        viewModel = createViewModel(factory)
-    }
+    private val viewModel: AboutViewModel by viewModels { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,17 +52,15 @@ class AboutFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        scopeProvider = AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
-        aboutAdapter = AboutAdapter(activity = requireActivity() as AppCompatActivity)
-
-        viewModel.aboutInt
-            .observeOn(schedulersProvider.main)
-            .autoDisposable(viewLifecycleOwner)
-            .subscribe { info -> aboutAdapter.submitList(info) }
+        val aboutAdapter = AboutAdapter()
 
         aboutRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = aboutAdapter
         }
+
+        viewModel
+            .aboutInt
+            .observe(viewLifecycleOwner, Observer { info -> aboutAdapter.submitList(info) })
     }
 }

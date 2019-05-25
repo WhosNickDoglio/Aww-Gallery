@@ -24,13 +24,13 @@
 
 package com.nicholasdoglio.eyebleach.ui.about
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.nicholasdoglio.eyebleach.data.about.AboutInfo
 import com.nicholasdoglio.eyebleach.data.about.AboutStore
-import io.reactivex.Single
 import javax.inject.Inject
 
 class AboutViewModel @Inject constructor(private val aboutStore: AboutStore) : ViewModel() {
 
-    val aboutInt: Single<List<AboutInfo>> = aboutStore.aboutInfo
+    val aboutInt: LiveData<List<AboutInfo>> = aboutStore.aboutInfo
 }

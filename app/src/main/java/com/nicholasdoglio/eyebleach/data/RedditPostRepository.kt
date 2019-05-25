@@ -24,20 +24,16 @@
 package com.nicholasdoglio.eyebleach.data
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.nicholasdoglio.eyebleach.data.local.BoundaryCallback
 import com.nicholasdoglio.eyebleach.data.local.LocalSource
+import com.nicholasdoglio.eyebleach.data.local.RedditBoundaryCallback
 import com.nicholasdoglio.eyebleach.data.local.RedditPost
-import com.nicholasdoglio.eyebleach.data.remote.RedditService
-import com.nicholasdoglio.eyebleach.util.SchedulersProvider
-import com.nicholasdoglio.eyebleach.util.toRedditPosts
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
+import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
+import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -47,40 +43,40 @@ import javax.inject.Singleton
 @Singleton
 class RedditPostRepository @Inject constructor(
     private val localSource: LocalSource,
-    private val callback: BoundaryCallback,
-    private val redditService: RedditService,
-    private val schedulersProvider: SchedulersProvider
+    private val callback: RedditBoundaryCallback,
+    private val remoteSource: RemoteSource,
+    private val dispatcherProvider: DispatcherProvider
 ) {
 
-    private val refreshSubject = PublishSubject.create<Boolean>()
+    private val _refreshStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply { value = false }
+    val refreshStatus: LiveData<Boolean> = _refreshStatus
 
     val posts: LiveData<PagedList<RedditPost>> = localSource.pagedList.toLiveData(
         config = Config(PAGE_SIZE),
         boundaryCallback = callback
     )
 
-    val refreshState: Flowable<Boolean> =
-        refreshSubject.hide().toFlowable(BackpressureStrategy.LATEST)
+    fun findPostById(id: String): LiveData<RedditPost> = localSource.findPostById(id)
 
-    fun refresh(): Completable =
-        localSource
-            .deleteAllPosts()
-            .subscribeOn(schedulersProvider.database)
-            .observeOn(schedulersProvider.network)
-            .andThen(redditService.multiPosts(""))
-            .observeOn(schedulersProvider.main)
-            .doOnSubscribe { refreshSubject.onNext(true) }
-            .observeOn(schedulersProvider.background)
-            .map { response -> response.toRedditPosts() }
-            .observeOn(schedulersProvider.database)
-            .flatMapCompletable { posts -> localSource.insertPosts(posts) }
-            .observeOn(schedulersProvider.main)
-            .doOnComplete { refreshSubject.onNext(false) }
+    suspend fun refresh() {
 
-    fun findPostById(id: String): Single<RedditPost> = localSource.findPostById(id)
+        localSource.deleteAllPosts()
 
-    fun clearNetWorkCalls() {
-        callback.clearNetworkCalls()
+        updateRefreshStatus(true)
+
+        val posts = remoteSource.requestsPosts()
+
+        localSource.insertPosts(posts)
+
+        updateRefreshStatus(false)
+    }
+
+    private suspend fun updateRefreshStatus(status: Boolean) = withContext(dispatcherProvider.main) {
+        _refreshStatus.value = status
+    }
+
+    fun clear() {
+        callback.clear()
     }
 
     companion object {

@@ -24,13 +24,8 @@
 
 package com.nicholasdoglio.eyebleach.di
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.nicholasdoglio.eyebleach.ui.about.AboutViewModel
-import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailViewModel
-import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListViewModel
-import com.nicholasdoglio.eyebleach.util.AppSchedulers
-import com.nicholasdoglio.eyebleach.util.SchedulersProvider
+import com.nicholasdoglio.eyebleach.util.AppDispatchers
+import com.nicholasdoglio.eyebleach.util.DispatcherProvider
 import com.nicholasdoglio.eyebleach.worker.ChildWorkerFactory
 import com.nicholasdoglio.eyebleach.worker.ClearDataWorker
 import dagger.Binds
@@ -41,25 +36,7 @@ import dagger.multibindings.IntoMap
 abstract class BindingModule {
 
     @Binds
-    abstract fun bindSchedulers(appSchedulers: AppSchedulers): SchedulersProvider
-
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(PhotoDetailViewModel::class)
-    abstract fun bindPhotoDetailViewModel(photoDetailViewModel: PhotoDetailViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(PhotoListViewModel::class)
-    abstract fun bindPhotoListViewModel(photoListViewModel: PhotoListViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(AboutViewModel::class)
-    abstract fun bindAboutViewModel(aboutViewModel: AboutViewModel): ViewModel
+    abstract fun bindDispatchers(appDispatchers: AppDispatchers): DispatcherProvider
 
     @Binds
     @IntoMap

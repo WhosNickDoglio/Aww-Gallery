@@ -33,8 +33,6 @@ import com.nicholasdoglio.eyebleach.di.AppComponent
 import com.nicholasdoglio.eyebleach.di.AppComponentProvider
 import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
 import com.nicholasdoglio.eyebleach.worker.ClearDataWorker
-import com.uber.rxdogtag.RxDogTag
-import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -57,16 +55,11 @@ class AwwGalleryApp : Application(), AppComponentProvider {
                 .build()
         )
 
-        RxDogTag.builder()
-            .configureWith(AutoDisposeConfigurer::configure)
-            .install()
-
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
-        WorkManager
-            .getInstance()
+        WorkManager.getInstance(this)
             .enqueueUniquePeriodicWork(
                 CLEAR_DATABASE_WORK,
                 ExistingPeriodicWorkPolicy.KEEP,

@@ -24,22 +24,30 @@
 
 package com.nicholasdoglio.eyebleach.ui.photolist
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
 import com.nicholasdoglio.eyebleach.data.RedditPostRepository
-import io.reactivex.Flowable
+import com.nicholasdoglio.eyebleach.data.local.RedditPost
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotoListViewModel @Inject constructor(private val repository: RedditPostRepository) :
     ViewModel() {
 
-    val posts = repository.posts
+    val posts: LiveData<PagedList<RedditPost>> = repository.posts
 
-    val refreshStatus: Flowable<Boolean> = repository.refreshState
+    val refreshStatus: LiveData<Boolean> = repository.refreshStatus
 
-    fun refresh() = repository.refresh()
+    fun refresh() {
+        viewModelScope.launch {
+            repository.refresh()
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
-        repository.clearNetWorkCalls()
+        repository.clear()
     }
 }

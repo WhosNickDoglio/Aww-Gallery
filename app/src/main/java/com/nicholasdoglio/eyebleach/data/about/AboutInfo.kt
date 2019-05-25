@@ -28,9 +28,4 @@ import androidx.annotation.StringRes
 /**
  * @author Nicholas Doglio
  */
-data class AboutInfo(@StringRes val name: Int, val action: OpenAction)
-
-sealed class OpenAction {
-    data class OpenWeb(@StringRes val url: Int) : OpenAction()
-    object OpenLibs : OpenAction()
-}
+data class AboutInfo(@StringRes val name: Int, @StringRes val url: Int)

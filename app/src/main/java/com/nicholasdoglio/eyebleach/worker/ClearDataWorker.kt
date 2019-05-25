@@ -25,28 +25,27 @@
 package com.nicholasdoglio.eyebleach.worker
 
 import android.content.Context
+import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
-import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.nicholasdoglio.eyebleach.data.local.LocalSource
-import com.nicholasdoglio.eyebleach.util.SchedulersProvider
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import io.reactivex.Scheduler
-import io.reactivex.Single
 
 class ClearDataWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val workerParameters: WorkerParameters,
-    private val localSource: LocalSource,
-    private val schedulersProvider: SchedulersProvider
-) : RxWorker(context, workerParameters) {
+    private val localSource: LocalSource
+) : CoroutineWorker(context, workerParameters) {
 
-    override fun createWork(): Single<Result> = localSource.deleteAllPosts()
-        .toSingle { Result.success() }
-        .onErrorReturn { Result.failure() }
-
-    override fun getBackgroundScheduler(): Scheduler = schedulersProvider.database
+    override suspend fun doWork(): Result {
+        try {
+            localSource.deleteAllPosts()
+            return Result.success()
+        } catch (e: Exception) {
+            return Result.failure()
+        }
+    }
 
     @AssistedInject.Factory
     interface Factory : ChildWorkerFactory

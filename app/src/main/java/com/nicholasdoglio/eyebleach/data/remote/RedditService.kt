@@ -24,7 +24,7 @@
 
 package com.nicholasdoglio.eyebleach.data.remote
 
-import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -37,5 +37,5 @@ interface RedditService {
     fun multiPosts(
         @Query("after") after: String,
         @Query("limit") limit: Int = 100
-    ): Single<ListingResponse>
+    ): Deferred<ListingResponse>
 }

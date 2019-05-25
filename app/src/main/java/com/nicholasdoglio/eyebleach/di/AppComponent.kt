@@ -26,9 +26,7 @@ package com.nicholasdoglio.eyebleach.di
 
 import android.app.Activity
 import android.app.Application
-import com.nicholasdoglio.eyebleach.ui.about.AboutFragment
-import com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailFragment
-import com.nicholasdoglio.eyebleach.ui.photolist.PhotoListFragment
+import com.nicholasdoglio.eyebleach.ui.InjectingNavHostFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -40,20 +38,18 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AssistedModule::class,
+        FragmentBindingModule::class,
         BindingModule::class,
         NetworkModule::class,
-        DatabaseModule::class
+        DatabaseModule::class,
+        ViewModelBindingModule::class
     ]
 )
 interface AppComponent {
 
     val workerFactory: WorkerFactory
 
-    fun inject(photoListFragment: PhotoListFragment)
-
-    fun inject(photoDetailFragment: PhotoDetailFragment)
-
-    fun inject(aboutFragment: AboutFragment)
+    fun inject(fragment: InjectingNavHostFragment)
 
     @Component.Factory
     interface Factory {

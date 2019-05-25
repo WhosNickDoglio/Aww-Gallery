@@ -25,42 +25,43 @@
 package com.nicholasdoglio.eyebleach.data.local
 
 import androidx.paging.PagedList
-import com.nicholasdoglio.eyebleach.data.remote.RedditService
-import com.nicholasdoglio.eyebleach.util.SchedulersProvider
-import com.nicholasdoglio.eyebleach.util.toRedditPosts
-import io.reactivex.Completable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
+import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
+import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class BoundaryCallback
+class RedditBoundaryCallback
 @Inject constructor(
-    private val redditService: RedditService,
+    private val remoteSource: RemoteSource,
     private val localSource: LocalSource,
-    private val schedulersProvider: SchedulersProvider
-) : PagedList.BoundaryCallback<RedditPost>() {
+    private val dispatcherProvider: DispatcherProvider
+) : PagedList.BoundaryCallback<RedditPost>(), CoroutineScope {
 
-    private val disposable: CompositeDisposable = CompositeDisposable()
+    private val job = Job()
+
+    override val coroutineContext: CoroutineContext = job + dispatcherProvider.main
 
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
-        disposable += requestPostsAndSaveThem("").subscribe()
+        launch { requestPostsAndSaveThem() }
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: RedditPost) {
         super.onItemAtEndLoaded(itemAtEnd)
-        disposable += requestPostsAndSaveThem(itemAtEnd.name).subscribe()
+        launch { requestPostsAndSaveThem(itemAtEnd.name) }
     }
 
-    private fun requestPostsAndSaveThem(after: String): Completable =
-        redditService.multiPosts(after)
-            .subscribeOn(schedulersProvider.network)
-            .observeOn(schedulersProvider.background)
-            .map { response -> response.toRedditPosts() }
-            .observeOn(schedulersProvider.database)
-            .flatMapCompletable { posts -> localSource.insertPosts(posts) }
+    private suspend fun requestPostsAndSaveThem(after: String = "") {
+        val data = remoteSource.requestsPosts(after)
 
-    fun clearNetworkCalls() {
-        disposable.clear()
+        localSource.insertPosts(data)
+    }
+
+    fun clear() {
+        coroutineContext.cancel()
     }
 }

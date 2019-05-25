@@ -29,6 +29,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.jaredsburrows.license'
 apply plugin: 'io.gitlab.arturbosch.detekt'
+apply from: "../ktlint.gradle"
 
 androidExtensions {
     experimental = true
@@ -60,10 +61,16 @@ android {
     }
 }
 
+kapt {
+    useBuildCache = true
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation libs.kotlin
+
+    implementation libs.coroutines_core
+    implementation libs.coroutines_android
 
     implementation libs.appcompat
     implementation libs.recyclerview
@@ -77,17 +84,15 @@ dependencies {
     implementation libs.navigation_fragment_ktx
 
     implementation libs.paging_runtime
-    implementation libs.paging_rxjava
 
     implementation libs.lifecycle_extensions
     implementation libs.lifecycle_commons
 
     implementation libs.room_runtime
-    implementation libs.room_rxjava
+    implementation libs.room_ktx
     kapt libs.room_compiler
 
     implementation libs.work_runtime
-    implementation libs.work_rxjava
 
     kapt libs.glide_compiler
     implementation libs.glide
@@ -98,28 +103,17 @@ dependencies {
 
     implementation libs.retrofit
     implementation libs.retrofit_converter_moshi
-    implementation libs.retrofit_adapter_rxjava
+    implementation libs.retrofit_coroutines_adapter
     implementation libs.okhttp
     implementation libs.okhttp_logging
 
     implementation libs.moshi
     kapt libs.moshi_codegen
 
-    implementation libs.rxjava
-    implementation libs.rxandroid
-    implementation libs.rxkotlin
-
-    implementation libs.rxdogtag
-    implementation libs.rxdogtag_autodispose
-
-    implementation libs.autodispose_lifecycle
-    implementation libs.autodispose_components
-
     debugImplementation libs.leak_canary
 
     implementation libs.dagger
     kapt libs.dagger_compiler
-
 
     compileOnly libs.assisted_inject
     kapt libs.assisted_inject_processor

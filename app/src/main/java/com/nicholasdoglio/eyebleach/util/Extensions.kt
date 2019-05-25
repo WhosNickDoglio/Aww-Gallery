@@ -27,10 +27,6 @@ package com.nicholasdoglio.eyebleach.util
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.data.local.RedditPost
@@ -65,9 +61,6 @@ fun RecyclerView.calculateNoOfColumns(): Int {
 
     return (dpWidth / imageSize).toInt()
 }
-
-inline fun <reified VIEW_MODEL : ViewModel> Fragment.createViewModel(factory: ViewModelProvider.Factory): VIEW_MODEL =
-    ViewModelProviders.of(this, factory).get(VIEW_MODEL::class.java)
 
 fun ListingResponse.toRedditPosts(): List<RedditPost> {
     val posts = mutableListOf<RedditPost>()

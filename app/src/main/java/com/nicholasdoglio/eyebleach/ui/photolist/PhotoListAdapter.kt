@@ -29,7 +29,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation.findNavController
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -86,8 +86,7 @@ class PhotoListAdapter(private val request: RequestBuilder<Drawable>) : PagedLis
 
         override fun bind(model: RedditPost) {
             galleryImage.setOnClickListener {
-                containerView.findNavController()
-                    .navigate(PhotoListFragmentDirections.openDetailFragment(model.name))
+                findNavController(containerView).navigate(PhotoListFragmentDirections.openDetails(model.name))
             }
 
             val placeholder = CircularProgressDrawable(galleryImage.context).apply {
@@ -106,11 +105,7 @@ class PhotoListAdapter(private val request: RequestBuilder<Drawable>) : PagedLis
                 .load(model.thumbnail)
                 .placeholder(placeholder)
                 .transition(withCrossFade())
-                .listener(
-                    CircularProgressPlaceholderListener(
-                        placeholder
-                    )
-                )
+                .listener(CircularProgressPlaceholderListener(placeholder))
                 .into(galleryImage)
         }
     }

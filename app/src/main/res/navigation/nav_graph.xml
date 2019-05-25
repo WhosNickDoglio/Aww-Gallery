@@ -32,12 +32,15 @@
         android:name="com.nicholasdoglio.eyebleach.ui.photolist.PhotoListFragment"
         android:label="PhotoListFragment">
         <action
-            android:id="@+id/openDetailFragment"
+            android:id="@+id/open_details"
             app:destination="@id/photoDetailFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/open_about" app:destination="@id/aboutFragment"/>
+        <action android:id="@+id/open_libs"
+                app:destination="@id/librariesFragment"/>
     </fragment>
     <fragment
         android:id="@+id/photoDetailFragment"
@@ -47,4 +50,10 @@
             android:name="photoId"
             app:argType="string"/>
     </fragment>
+    <dialog android:id="@+id/aboutFragment"
+            android:name="com.nicholasdoglio.eyebleach.ui.about.AboutFragment"
+            android:label="AboutFragment"/>
+    <dialog android:id="@+id/librariesFragment"
+            android:name="com.nicholasdoglio.eyebleach.ui.about.LibrariesFragment"
+            android:label="LibrariesFragment"/>
 </navigation>

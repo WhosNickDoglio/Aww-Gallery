@@ -23,23 +23,23 @@
  */
 
 buildscript {
-apply from: 'dependencies.gradle'
+    apply from: "dependencies.gradle"
     repositories {
         mavenCentral()
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath "com.android.tools.build:gradle:${versions.agp}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.0.0"
-        classpath 'com.jaredsburrows:gradle-license-plugin:0.8.5'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
+        classpath "com.jaredsburrows:gradle-license-plugin:${versions.gradle_license}"
     }
 }
 
 plugins {
-    id 'com.gradle.build-scan' version '2.3'
-    id("io.gitlab.arturbosch.detekt") version("1.0.0-RC14")
+    id "com.gradle.build-scan" version "2.3"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
 }
 
 buildScan {
@@ -55,6 +55,11 @@ allprojects {
         google()
     }
 
+    // TODO does this work how I want it to?
+    tasks.matching { task -> task.name.startsWith('assemble') }
+            .all { task -> task.finalizedBy quality  }
+
+
     tasks.withType(JavaCompile).configureEach {
         options.compilerArgs += [
                 "-Adagger.formatGeneratedSource=disabled",
@@ -64,9 +69,9 @@ allprojects {
     }
 
     afterEvaluate {
-        extensions.findByName('kapt')?.arguments {
-            arg('dagger.formatGeneratedSource', 'disabled')
-            arg('dagger.gradle.incremental', 'true')
+        extensions.findByName("kapt")?.arguments {
+            arg("dagger.formatGeneratedSource", "disabled")
+            arg("dagger.gradle.incremental", "true")
         }
     }
 }
@@ -74,3 +79,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task quality() {
+    dependsOn 'app:ktlintFormat'
+    dependsOn 'detekt'
+}
+
+

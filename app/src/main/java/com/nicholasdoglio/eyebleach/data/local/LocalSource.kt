@@ -24,20 +24,26 @@
 
 package com.nicholasdoglio.eyebleach.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.internal.operators.completable.CompletableFromAction
+import androidx.room.withTransaction
 import javax.inject.Inject
 
-class LocalSource @Inject constructor(private val dao: RedditPostDao) {
+class LocalSource @Inject constructor(private val redditPostDatabase: RedditPostDatabase) {
+
+    private val dao = redditPostDatabase.redditPostDao()
 
     val pagedList: DataSource.Factory<Int, RedditPost> = dao.pagedList
 
-    fun deleteAllPosts(): Completable = Completable.fromAction { dao.deleteAll() }
+    fun findPostById(id: String): LiveData<RedditPost> = dao.findPostById(id)
 
-    fun insertPosts(data: List<RedditPost>): Completable =
-        CompletableFromAction { dao.insertRedditPostList(data) }
+    suspend fun deleteAllPosts() {
+        redditPostDatabase.withTransaction {
+            dao.deleteAll()
+        }
+    }
 
-    fun findPostById(id: String): Single<RedditPost> = dao.findPostById(id)
+    suspend fun insertPosts(data: List<RedditPost>) = redditPostDatabase.withTransaction {
+        dao.insertRedditPostList(data)
+    }
 }

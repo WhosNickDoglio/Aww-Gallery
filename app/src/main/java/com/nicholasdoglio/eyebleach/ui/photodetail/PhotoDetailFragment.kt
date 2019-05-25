@@ -27,43 +27,29 @@ package com.nicholasdoglio.eyebleach.ui.photodetail
 import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.nicholasdoglio.eyebleach.R
-import com.nicholasdoglio.eyebleach.di.injector
+import com.nicholasdoglio.eyebleach.di.ViewModelFactory
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryFragment
 import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
-import com.nicholasdoglio.eyebleach.util.createViewModel
 import com.nicholasdoglio.eyebleach.util.openWebPage
 import com.nicholasdoglio.eyebleach.util.shareUrl
-import com.uber.autodispose.android.lifecycle.autoDisposable
 import kotlinx.android.synthetic.main.fragment_photo_detail.*
+import javax.inject.Inject
 
-class PhotoDetailFragment : AwwGalleryFragment<PhotoDetailViewModel>() {
+class PhotoDetailFragment @Inject constructor(override val factory: ViewModelFactory) :
+    AwwGalleryFragment<PhotoDetailViewModel>(factory, R.layout.fragment_photo_detail) {
 
     private val myArgs: PhotoDetailFragmentArgs by navArgs()
-
-    override fun createViewModel() {
-        viewModel = createViewModel(factory)
-    }
-
-    override fun injectFragment() {
-        requireActivity().injector.inject(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_photo_detail, container, false)
+    private val viewModel: PhotoDetailViewModel by viewModels { factory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,29 +62,20 @@ class PhotoDetailFragment : AwwGalleryFragment<PhotoDetailViewModel>() {
 
         placeholder.start()
 
-        viewModel.onAttached(myArgs.photoId)
-            .subscribeOn(schedulersProvider.database)
-            .observeOn(schedulersProvider.main)
-            .autoDisposable(viewLifecycleOwner)
-            .subscribe { post ->
+        viewModel.onAttached(myArgs.photoId).observe(viewLifecycleOwner, Observer { post ->
+            openSourceButton.setOnClickListener { requireContext().openWebPage(post.fullUrl) }
 
-                openSourceButton.setOnClickListener { requireContext().openWebPage(post.fullUrl) }
+            shareButton.setOnClickListener { requireContext().shareUrl(post.fullUrl) }
 
-                shareButton.setOnClickListener { requireContext().shareUrl(post.fullUrl) }
-
-                Glide.with(detailPhoto.context)
-                    .load(post.url)
-                    .error(R.drawable.cat_error)
-                    .placeholder(placeholder)
-                    .listener(
-                        CircularProgressPlaceholderListener(
-                            placeholder
-                        )
-                    )
-                    .transition(withCrossFade())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(detailPhoto)
-            }
+            Glide.with(detailPhoto.context)
+                .load(post.url)
+                .error(R.drawable.cat_error)
+                .placeholder(placeholder)
+                .listener(CircularProgressPlaceholderListener(placeholder))
+                .transition(withCrossFade())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(detailPhoto)
+        })
     }
 
     private fun setStatusBarBlack() {

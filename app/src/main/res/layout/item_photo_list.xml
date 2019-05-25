@@ -21,10 +21,11 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="@dimen/grid_item_size"
-                                                   android:layout_height="@dimen/grid_item_size"
-                                                   android:elevation="24dp">
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/grid_item_size"
+    android:layout_height="@dimen/grid_item_size"
+    android:elevation="24dp">
 
     <ImageView
         android:id="@+id/galleryImage"

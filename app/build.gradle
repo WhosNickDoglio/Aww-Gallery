@@ -29,6 +29,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.jaredsburrows.license'
 apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'com.squareup.sqldelight'
 apply from: "../ktlint.gradle"
 
 androidExtensions {
@@ -36,13 +37,13 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.nicholasdoglio.eyebleach"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 4
-        versionName "0.0.10"
+        targetSdkVersion 29
+        versionCode 1
+        versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -59,6 +60,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
+    }
 }
 
 kapt {
@@ -69,10 +74,15 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation libs.kotlin
 
+    implementation libs.sqldelight_android_driver
+    implementation libs.sqldelight_android_paging
+    implementation libs.sqldelight_coroutines
+
     implementation libs.coroutines_core
     implementation libs.coroutines_android
 
     implementation libs.appcompat
+    implementation libs.activity
     implementation libs.recyclerview
     implementation libs.constraint
 
@@ -85,12 +95,10 @@ dependencies {
 
     implementation libs.paging_runtime
 
-    implementation libs.lifecycle_extensions
+    implementation libs.lifecycle_viewmodel
+    implementation libs.lifecycle_runtime
+    implementation libs.lifecycle_livedata
     implementation libs.lifecycle_commons
-
-    implementation libs.room_runtime
-    implementation libs.room_ktx
-    kapt libs.room_compiler
 
     implementation libs.work_runtime
 
@@ -103,7 +111,6 @@ dependencies {
 
     implementation libs.retrofit
     implementation libs.retrofit_converter_moshi
-    implementation libs.retrofit_coroutines_adapter
     implementation libs.okhttp
     implementation libs.okhttp_logging
 
@@ -122,5 +129,4 @@ dependencies {
 
     testImplementation libs.junit
     testImplementation libs.core_testing
-    testImplementation libs.room_testing
 }

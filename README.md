@@ -4,6 +4,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![Build Status](https://app.bitrise.io/app/dc23a188743be28e/status.svg?token=mTbE6cyzfc7p-7EQbx91vA&branch=master)](https://app.bitrise.io/app/dc23a188743be28e)
 [![codecov](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/WhosNickDoglio/Aww-Gallery)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9ca0319c5e67a9e03242/maintainability)](https://codeclimate.com/github/WhosNickDoglio/Aww-Gallery/maintainability)
 
 
 <a href="https://play.google.com/store/apps/details?id=com.nicholasdoglio.eyebleach">

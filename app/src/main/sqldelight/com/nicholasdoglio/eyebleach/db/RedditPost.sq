@@ -1,0 +1,31 @@
+CREATE TABLE redditPost (
+id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+name TEXT NOT NULL,
+url TEXT NOT NULL,
+thumbnail TEXT NOT NULL,
+permalink TEXT NOT NULL
+);
+
+
+postCount:
+SELECT count(*) FROM redditPost;
+
+posts:
+SELECT *
+FROM redditPost
+LIMIT :limit OFFSET :offset;
+
+
+findPostById:
+SELECT *
+FROM redditPost
+WHERE name =:name;
+
+deleteAll:
+DELETE FROM redditPost;
+
+
+insert:
+INSERT INTO redditPost (name, url, thumbnail, permalink)
+VALUES (?, ?, ?, ?);
+

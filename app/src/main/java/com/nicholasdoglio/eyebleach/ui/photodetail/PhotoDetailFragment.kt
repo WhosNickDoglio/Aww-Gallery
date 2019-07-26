@@ -29,31 +29,38 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.nicholasdoglio.eyebleach.R
-import com.nicholasdoglio.eyebleach.di.ViewModelFactory
-import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryFragment
+import com.nicholasdoglio.eyebleach.di.injector
+import com.nicholasdoglio.eyebleach.presentation.photodetail.PhotoDetailFragmentArgs
 import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
-import com.nicholasdoglio.eyebleach.util.openWebPage
-import com.nicholasdoglio.eyebleach.util.shareUrl
+import com.nicholasdoglio.eyebleach.ui.util.openWebPage
+import com.nicholasdoglio.eyebleach.ui.util.shareUrl
 import kotlinx.android.synthetic.main.fragment_photo_detail.*
-import javax.inject.Inject
+import kotlinx.coroutines.launch
 
-class PhotoDetailFragment @Inject constructor(override val factory: ViewModelFactory) :
-    AwwGalleryFragment<PhotoDetailViewModel>(factory, R.layout.fragment_photo_detail) {
+class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
 
     private val myArgs: PhotoDetailFragmentArgs by navArgs()
-    private val viewModel: PhotoDetailViewModel by viewModels { factory }
+    private val viewModel: PhotoDetailViewModel by viewModels {
+        requireActivity().injector.viewModelFactory
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStatusBarBlack()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.postId.send(myArgs.photoId)
+        }
 
         val placeholder = CircularProgressDrawable(requireContext()).apply {
             setStyle(CircularProgressDrawable.LARGE)
@@ -62,12 +69,12 @@ class PhotoDetailFragment @Inject constructor(override val factory: ViewModelFac
 
         placeholder.start()
 
-        viewModel.onAttached(myArgs.photoId).observe(viewLifecycleOwner, Observer { post ->
-            openSourceButton.setOnClickListener { requireContext().openWebPage(post.fullUrl) }
+        viewModel.post.observe(viewLifecycleOwner, Observer { post ->
+            openSourceButton.setOnClickListener { requireContext().openWebPage("https://reddit.com${post.permalink}") }
 
-            shareButton.setOnClickListener { requireContext().shareUrl(post.fullUrl) }
+            shareButton.setOnClickListener { requireContext().shareUrl("https://reddit.com${post.permalink}") }
 
-            Glide.with(detailPhoto.context)
+            Glide.with(requireContext())
                 .load(post.url)
                 .error(R.drawable.cat_error)
                 .placeholder(placeholder)

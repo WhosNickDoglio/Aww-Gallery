@@ -24,22 +24,26 @@
 
 package com.nicholasdoglio.eyebleach.di
 
+import androidx.work.WorkerFactory
+import com.nicholasdoglio.eyebleach.ui.worker.ChildWorkerFactory
+import com.nicholasdoglio.eyebleach.ui.worker.ClearDataWorker
 import com.nicholasdoglio.eyebleach.util.AppDispatchers
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
-import com.nicholasdoglio.eyebleach.worker.ChildWorkerFactory
-import com.nicholasdoglio.eyebleach.worker.ClearDataWorker
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class BindingModule {
+interface BindingModule {
 
     @Binds
-    abstract fun bindDispatchers(appDispatchers: AppDispatchers): DispatcherProvider
+    fun bindDispatchers(appDispatchers: AppDispatchers): DispatcherProvider
+
+    @Binds
+    fun workerFactory(factory: AwwGalleryWorkerFactory): WorkerFactory
 
     @Binds
     @IntoMap
     @WorkerKey(ClearDataWorker::class)
-    abstract fun bindHelloWorldWorker(factory: ClearDataWorker.Factory): ChildWorkerFactory
+    fun bindHelloWorldWorker(factory: ClearDataWorker.Factory): ChildWorkerFactory
 }

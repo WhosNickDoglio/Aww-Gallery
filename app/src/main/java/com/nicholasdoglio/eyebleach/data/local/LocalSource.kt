@@ -24,26 +24,36 @@
 
 package com.nicholasdoglio.eyebleach.data.local
 
-import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
-import androidx.room.withTransaction
+import com.nicholasdoglio.eyebleach.db.RedditPost
+import com.nicholasdoglio.eyebleach.db.RedditPostQueries
+import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import com.squareup.sqldelight.android.paging.QueryDataSourceFactory
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import javax.inject.Inject
+import kotlinx.coroutines.withContext
 
-class LocalSource @Inject constructor(private val redditPostDatabase: RedditPostDatabase) {
+class LocalSource @Inject constructor(
+    private val redditPostQueries: RedditPostQueries,
+    private val dispatcherProvider: DispatcherProvider
+) {
 
-    private val dao = redditPostDatabase.redditPostDao()
+    val dataSource = QueryDataSourceFactory(
+        queryProvider = redditPostQueries::posts,
+        countQuery = redditPostQueries.postCount()
+    )
 
-    val pagedList: DataSource.Factory<Int, RedditPost> = dao.pagedList
+    val count = redditPostQueries.postCount().asFlow().mapToOne(dispatcherProvider.database)
 
-    fun findPostById(id: String): LiveData<RedditPost> = dao.findPostById(id)
-
-    suspend fun deleteAllPosts() {
-        redditPostDatabase.withTransaction {
-            dao.deleteAll()
-        }
+    suspend fun findPostById(id: String): RedditPost = withContext(dispatcherProvider.database) {
+        redditPostQueries.findPostById(id).executeAsOne()
     }
 
-    suspend fun insertPosts(data: List<RedditPost>) = redditPostDatabase.withTransaction {
-        dao.insertRedditPostList(data)
+    suspend fun deleteAllPosts() = withContext(dispatcherProvider.database) {
+        redditPostQueries.deleteAll()
+    }
+
+    suspend fun insertPosts(data: List<RedditPost>) = withContext(dispatcherProvider.database) {
+        data.forEach { redditPostQueries.insert(it.name, it.url, it.thumbnail, it.permalink) }
     }
 }

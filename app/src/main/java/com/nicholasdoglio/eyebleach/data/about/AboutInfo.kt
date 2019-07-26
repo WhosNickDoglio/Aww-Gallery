@@ -25,7 +25,9 @@ package com.nicholasdoglio.eyebleach.data.about
 
 import androidx.annotation.StringRes
 
-/**
- * @author Nicholas Doglio
- */
-data class AboutInfo(@StringRes val name: Int, @StringRes val url: Int)
+data class AboutInfo(@StringRes val name: Int, val action: OpenAction)
+
+sealed class OpenAction {
+    data class OpenUrl(@StringRes val url: Int) : OpenAction()
+    object OpenLibs : OpenAction()
+}

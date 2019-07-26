@@ -24,20 +24,19 @@
 
 package com.nicholasdoglio.eyebleach.di
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.nicholasdoglio.eyebleach.data.remote.RedditService
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
+import okhttp3.Call
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import javax.inject.Singleton
 
-/**
- * @author Nicholas Doglio
- */
 @Module
 object NetworkModule {
     private const val BASE_URL = "https://www.reddit.com/"
@@ -58,11 +57,12 @@ object NetworkModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun redditService(client: OkHttpClient): RedditService = Retrofit.Builder()
+    fun redditService(client: Lazy<OkHttpClient>): RedditService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
-        .client(client)
+        .callFactory(object : Call.Factory {
+            override fun newCall(request: Request): Call = client.get().newCall(request)
+        })
         .build()
         .create()
 }

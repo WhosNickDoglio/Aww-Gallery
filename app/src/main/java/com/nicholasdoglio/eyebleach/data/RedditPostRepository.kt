@@ -24,55 +24,45 @@
 package com.nicholasdoglio.eyebleach.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.nicholasdoglio.eyebleach.data.local.LocalSource
 import com.nicholasdoglio.eyebleach.data.local.RedditBoundaryCallback
-import com.nicholasdoglio.eyebleach.data.local.RedditPost
 import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
-import com.nicholasdoglio.eyebleach.util.DispatcherProvider
-import kotlinx.coroutines.withContext
+import com.nicholasdoglio.eyebleach.db.RedditPost
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.asFlow
 
-/**
- * @author Nicholas Doglio
- */
 @Singleton
 class RedditPostRepository @Inject constructor(
     private val localSource: LocalSource,
     private val callback: RedditBoundaryCallback,
-    private val remoteSource: RemoteSource,
-    private val dispatcherProvider: DispatcherProvider
+    private val remoteSource: RemoteSource
 ) {
+    private val refreshChannel = ConflatedBroadcastChannel<Boolean>()
+    val refresh = refreshChannel.asFlow()
 
-    private val _refreshStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply { value = false }
-    val refreshStatus: LiveData<Boolean> = _refreshStatus
-
-    val posts: LiveData<PagedList<RedditPost>> = localSource.pagedList.toLiveData(
+    val posts: LiveData<PagedList<RedditPost>> = localSource.dataSource.toLiveData(
         config = Config(PAGE_SIZE),
         boundaryCallback = callback
     )
 
-    fun findPostById(id: String): LiveData<RedditPost> = localSource.findPostById(id)
+    suspend fun findPostById(id: String): RedditPost = localSource.findPostById(id)
 
     suspend fun refresh() {
 
         localSource.deleteAllPosts()
 
-        updateRefreshStatus(true)
+        refreshChannel.send(true)
 
         val posts = remoteSource.requestsPosts()
 
         localSource.insertPosts(posts)
 
-        updateRefreshStatus(false)
-    }
-
-    private suspend fun updateRefreshStatus(status: Boolean) = withContext(dispatcherProvider.main) {
-        _refreshStatus.value = status
+        refreshChannel.send(false)
     }
 
     fun clear() {

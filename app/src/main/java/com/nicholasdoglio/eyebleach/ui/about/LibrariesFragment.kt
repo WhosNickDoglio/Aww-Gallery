@@ -33,7 +33,7 @@ import androidx.fragment.app.DialogFragment
 class LibrariesFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val libsWebView = WebView(requireActivity())
+        val libsWebView = WebView(requireContext())
 
         libsWebView.loadUrl("file:///android_asset/open_source_licenses.html")
 

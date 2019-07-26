@@ -27,16 +27,18 @@ package com.nicholasdoglio.eyebleach.ui.about
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.data.about.AboutInfo
+import com.nicholasdoglio.eyebleach.data.about.OpenAction
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
-import com.nicholasdoglio.eyebleach.util.openWebPage
+import com.nicholasdoglio.eyebleach.ui.util.openWebPage
 import kotlinx.android.synthetic.main.item_about.*
 
-class AboutAdapter : ListAdapter<AboutInfo, AboutAdapter.AboutViewHolder>(diff) {
-
+class AboutAdapter(private val navController: NavController) :
+    ListAdapter<AboutInfo, AboutAdapter.AboutViewHolder>(diff) {
     companion object {
         private val diff = object : DiffUtil.ItemCallback<AboutInfo>() {
             override fun areItemsTheSame(oldItem: AboutInfo, newItem: AboutInfo): Boolean =
@@ -47,19 +49,25 @@ class AboutAdapter : ListAdapter<AboutInfo, AboutAdapter.AboutViewHolder>(diff) 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AboutViewHolder = AboutViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_about, parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AboutViewHolder =
+        AboutViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_about, parent, false)
+        )
 
     override fun onBindViewHolder(holder: AboutViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class AboutViewHolder(override val containerView: View) : AwwGalleryHolder<AboutInfo>(containerView) {
+    inner class AboutViewHolder(override val containerView: View) : AwwGalleryHolder<AboutInfo>(containerView) {
 
         override fun bind(model: AboutInfo) {
             content.text = content.resources.getString(model.name)
-            containerView.setOnClickListener { it.context.openWebPage(content.resources.getString(model.url)) }
+            containerView.setOnClickListener {
+                when (model.action) {
+                    is OpenAction.OpenLibs -> navController.navigate(R.id.open_libs)
+                    is OpenAction.OpenUrl -> it.context.openWebPage(it.context.getString(model.action.url))
+                }
+            }
         }
     }
 }

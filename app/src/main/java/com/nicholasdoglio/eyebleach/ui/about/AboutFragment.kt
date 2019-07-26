@@ -31,28 +31,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicholasdoglio.eyebleach.R
-import com.nicholasdoglio.eyebleach.di.ViewModelFactory
+import com.nicholasdoglio.eyebleach.di.injector
 import kotlinx.android.synthetic.main.fragment_about.*
-import javax.inject.Inject
 
-class AboutFragment @Inject constructor(
-    private val factory: ViewModelFactory
-) : DialogFragment() {
+class AboutFragment : DialogFragment() {
 
-    private val viewModel: AboutViewModel by viewModels { factory }
+    private val viewModel: AboutViewModel by viewModels {
+        requireActivity().injector.viewModelFactory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_about, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_about, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val aboutAdapter = AboutAdapter()
+
+        val aboutAdapter = AboutAdapter(findNavController())
 
         aboutRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -60,7 +60,7 @@ class AboutFragment @Inject constructor(
         }
 
         viewModel
-            .aboutInt
+            .aboutInfo
             .observe(viewLifecycleOwner, Observer { info -> aboutAdapter.submitList(info) })
     }
 }

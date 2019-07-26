@@ -26,19 +26,16 @@ package com.nicholasdoglio.eyebleach.di
 
 import android.app.Activity
 import android.app.Application
-import com.nicholasdoglio.eyebleach.ui.InjectingNavHostFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.work.WorkerFactory
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-/**
- * @author Nicholas Doglio
- */
 @Singleton
 @Component(
     modules = [
         AssistedModule::class,
-        FragmentBindingModule::class,
         BindingModule::class,
         NetworkModule::class,
         DatabaseModule::class,
@@ -49,7 +46,7 @@ interface AppComponent {
 
     val workerFactory: WorkerFactory
 
-    fun inject(fragment: InjectingNavHostFragment)
+    val viewModelFactory: ViewModelProvider.Factory
 
     @Component.Factory
     interface Factory {

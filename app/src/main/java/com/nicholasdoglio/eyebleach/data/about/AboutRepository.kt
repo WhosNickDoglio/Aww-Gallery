@@ -22,28 +22,21 @@
  * SOFTWARE.
  */
 
-package com.nicholasdoglio.eyebleach.di
+package com.nicholasdoglio.eyebleach.data.about
 
-import android.content.Context
-import androidx.work.ListenableWorker
-import androidx.work.WorkerFactory
-import androidx.work.WorkerParameters
-import com.nicholasdoglio.eyebleach.worker.ChildWorkerFactory
+import com.nicholasdoglio.eyebleach.R
 import javax.inject.Inject
-import javax.inject.Provider
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-class WorkerFactory @Inject constructor(
-    private val workerFactories: Map<Class<out ListenableWorker>, @JvmSuppressWildcards Provider<ChildWorkerFactory>>
-) : WorkerFactory() {
-    override fun createWorker(
-        appContext: Context,
-        workerClassName: String,
-        workerParameters: WorkerParameters
-    ): ListenableWorker? {
-        val foundEntry =
-            workerFactories.entries.find { Class.forName(workerClassName).isAssignableFrom(it.key) }
-        val factoryProvider = foundEntry?.value
-            ?: throw IllegalArgumentException("unknown worker class name: $workerClassName")
-        return factoryProvider.get().create(appContext, workerParameters)
-    }
+class AboutRepository @Inject constructor() {
+
+    private val items: List<AboutInfo> = listOf(
+        AboutInfo(R.string.source, OpenAction.OpenUrl(R.string.aww_gallery_github)),
+        AboutInfo(R.string.developed_by, OpenAction.OpenUrl(R.string.doglio_website)),
+        AboutInfo(R.string.graphics_by, OpenAction.OpenUrl(R.string.guzz_website)),
+        AboutInfo(R.string.open_source_libraries, OpenAction.OpenLibs)
+    )
+
+    val aboutItems: Flow<List<AboutInfo>> = flowOf(items)
 }

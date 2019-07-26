@@ -26,25 +26,39 @@ package com.nicholasdoglio.eyebleach.ui.photolist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.nicholasdoglio.eyebleach.data.RedditPostRepository
-import com.nicholasdoglio.eyebleach.data.local.RedditPost
-import kotlinx.coroutines.launch
+import com.nicholasdoglio.eyebleach.db.RedditPost
 import javax.inject.Inject
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class PhotoListViewModel @Inject constructor(private val repository: RedditPostRepository) :
     ViewModel() {
 
-    val posts: LiveData<PagedList<RedditPost>> = repository.posts
-
-    val refreshStatus: LiveData<Boolean> = repository.refreshStatus
-
-    fun refresh() {
+    init {
         viewModelScope.launch {
-            repository.refresh()
+            refreshTrigger.asFlow().collect {
+                repository.refresh()
+            }
         }
     }
+
+    val refreshTrigger: ConflatedBroadcastChannel<Unit> = ConflatedBroadcastChannel()
+
+    val posts: LiveData<PagedList<RedditPost>> = repository.posts
+
+    val refreshStatus = liveData {
+        repository.refresh.collect {
+            emit(it)
+        }
+    }
+
+    // val loading: LiveData<Boolean>
 
     override fun onCleared() {
         super.onCleared()

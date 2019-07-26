@@ -23,11 +23,8 @@
  */
 package com.nicholasdoglio.eyebleach.data.remote
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-
-/**
- * @author Nicholas Doglio
- */
 
 @JsonClass(generateAdapter = true)
 data class ListingResponse(val data: Data)
@@ -43,5 +40,6 @@ data class ChildData(
     val name: String,
     val permalink: String,
     val thumbnail: String,
-    val url: String
+    val url: String,
+    @Json(name = "over_18") val over18: Boolean
 )

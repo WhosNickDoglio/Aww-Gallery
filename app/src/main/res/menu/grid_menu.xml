@@ -22,15 +22,10 @@
   ~ SOFTWARE.
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/about_item"
         android:title="@string/about_menu_item"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/libs_item"
-        android:title="@string/open_source_libraries"
         app:showAsAction="never"/>
 </menu>

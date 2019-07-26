@@ -24,18 +24,16 @@
 
 package com.nicholasdoglio.eyebleach.data.remote
 
-import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * @author Nicholas Doglio
- */
 interface RedditService {
 
     @GET("user/NicholasDoglio/m/awwgallery/.json")
-    fun multiPosts(
-        @Query("after") after: String,
+    suspend fun multiPosts(
+        @Query("api_type") type: String = "json",
+        @Query("after") after: String = "",
         @Query("limit") limit: Int = 100
-    ): Deferred<ListingResponse>
+    ): Response<ListingResponse>
 }

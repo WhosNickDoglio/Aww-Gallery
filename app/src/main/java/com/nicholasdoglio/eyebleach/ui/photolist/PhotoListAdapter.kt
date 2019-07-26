@@ -36,16 +36,19 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.signature.ObjectKey
+import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.nicholasdoglio.eyebleach.R
-import com.nicholasdoglio.eyebleach.data.local.RedditPost
+import com.nicholasdoglio.eyebleach.db.RedditPost
+import com.nicholasdoglio.eyebleach.presentation.photolist.PhotoListFragmentDirections
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
 import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
 import kotlinx.android.synthetic.main.item_photo_list.*
 
-/**
- * @author Nicholas Doglio
- */
-class PhotoListAdapter(private val request: RequestBuilder<Drawable>) : PagedListAdapter<RedditPost,
+class PhotoListAdapter(
+    private val sizeProvider: ViewPreloadSizeProvider<RedditPost>,
+    private val request: RequestBuilder<Drawable>
+) : PagedListAdapter<RedditPost,
     PhotoListAdapter.PhotoGridViewHolder>(diff),
     ListPreloader.PreloadModelProvider<RedditPost> {
 
@@ -53,11 +56,17 @@ class PhotoListAdapter(private val request: RequestBuilder<Drawable>) : PagedLis
         private val diff: DiffUtil.ItemCallback<RedditPost> =
             object : DiffUtil.ItemCallback<RedditPost>() {
 
-                override fun areItemsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
+                override fun areItemsTheSame(
+                    oldItem: RedditPost,
+                    newItem: RedditPost
+                ): Boolean =
                     oldItem.name == newItem.name
 
-                override fun areContentsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
-                    oldItem == newItem
+                override fun areContentsTheSame(
+                    oldItem: RedditPost,
+                    newItem: RedditPost
+                ): Boolean =
+                    oldItem.name == newItem.name
             }
     }
 
@@ -74,19 +83,24 @@ class PhotoListAdapter(private val request: RequestBuilder<Drawable>) : PagedLis
             )
         )
 
+    // TODO make sublist bigger?
     override fun getPreloadItems(position: Int): MutableList<RedditPost> =
         currentList?.subList(position, position + 1) ?: mutableListOf()
 
-    override fun getPreloadRequestBuilder(item: RedditPost): RequestBuilder<*>? {
-        return request.load(item.thumbnail).error(R.drawable.cat_error)
-    }
+    override fun getPreloadRequestBuilder(item: RedditPost): RequestBuilder<*>? =
+        request.load(item.thumbnail).error(R.drawable.cat_error)
 
     inner class PhotoGridViewHolder(override val containerView: View) :
         AwwGalleryHolder<RedditPost>(containerView) {
 
         override fun bind(model: RedditPost) {
+            sizeProvider.setView(containerView)
             galleryImage.setOnClickListener {
-                findNavController(containerView).navigate(PhotoListFragmentDirections.openDetails(model.name))
+                findNavController(containerView).navigate(
+                    PhotoListFragmentDirections.openDetails(
+                        model.name
+                    )
+                )
             }
 
             val placeholder = CircularProgressDrawable(galleryImage.context).apply {
@@ -106,7 +120,19 @@ class PhotoListAdapter(private val request: RequestBuilder<Drawable>) : PagedLis
                 .placeholder(placeholder)
                 .transition(withCrossFade())
                 .listener(CircularProgressPlaceholderListener(placeholder))
+                .signature(ObjectKey(model.thumbnail))
                 .into(galleryImage)
         }
+
+        // companion object {
+        //     fun create(parent: ViewGroup): PhotoGridViewHolder =
+        //         PhotoGridViewHolder(
+        //             LayoutInflater.from(parent.context).inflate(
+        //                 R.layout.item_photo_list,
+        //                 parent,
+        //                 false
+        //             )
+        //         )
+        // }
     }
 }

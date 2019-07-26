@@ -25,25 +25,29 @@
 package com.nicholasdoglio.eyebleach.di
 
 import android.app.Application
-import androidx.room.Room
-import com.nicholasdoglio.eyebleach.data.local.RedditPostDatabase
+import com.nicholasdoglio.eyebleach.Database
+import com.nicholasdoglio.eyebleach.db.RedditPostQueries
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-/**
- * @author Nicholas Doglio
- */
 @Module
 object DatabaseModule {
 
-    private const val REDDI_POST = "reddit_posts_db"
+    private const val REDDIT_POST = "reddit_posts_db"
 
     @Provides
     @Singleton
     @JvmStatic
-    fun room(application: Application): RedditPostDatabase =
-        Room.databaseBuilder(application, RedditPostDatabase::class.java, REDDI_POST)
-            .fallbackToDestructiveMigration()
-            .build()
+    fun driver(app: Application): AndroidSqliteDriver = AndroidSqliteDriver(Database.Schema, app, REDDIT_POST)
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun database(driver: AndroidSqliteDriver): Database = Database(driver)
+
+    @Provides
+    @JvmStatic
+    fun postQueries(database: Database): RedditPostQueries = database.redditPostQueries
 }

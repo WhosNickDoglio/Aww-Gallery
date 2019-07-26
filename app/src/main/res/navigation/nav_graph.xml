@@ -39,8 +39,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action android:id="@+id/open_about" app:destination="@id/aboutFragment"/>
-        <action android:id="@+id/open_libs"
-                app:destination="@id/librariesFragment"/>
     </fragment>
     <fragment
         android:id="@+id/photoDetailFragment"
@@ -52,7 +50,9 @@
     </fragment>
     <dialog android:id="@+id/aboutFragment"
             android:name="com.nicholasdoglio.eyebleach.ui.about.AboutFragment"
-            android:label="AboutFragment"/>
+            android:label="AboutFragment">
+        <action android:id="@+id/open_libs" app:destination="@id/librariesFragment"/>
+    </dialog>
     <dialog android:id="@+id/librariesFragment"
             android:name="com.nicholasdoglio.eyebleach.ui.about.LibrariesFragment"
             android:label="LibrariesFragment"/>

@@ -26,13 +26,17 @@ package com.nicholasdoglio.eyebleach.data.local
 
 import androidx.paging.PagedList
 import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
+import com.nicholasdoglio.eyebleach.db.RedditPost
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import com.nicholasdoglio.eyebleach.util.Status
+import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
+import timber.log.Timber
 
 class RedditBoundaryCallback
 @Inject constructor(
@@ -42,8 +46,7 @@ class RedditBoundaryCallback
 ) : PagedList.BoundaryCallback<RedditPost>(), CoroutineScope {
 
     private val job = Job()
-
-    override val coroutineContext: CoroutineContext = job + dispatcherProvider.main
+    override val coroutineContext: CoroutineContext = job + dispatcherProvider.ui
 
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
@@ -56,9 +59,24 @@ class RedditBoundaryCallback
     }
 
     private suspend fun requestPostsAndSaveThem(after: String = "") {
-        val data = remoteSource.requestsPosts(after)
+        remoteSource
+            .posts(after)
+            .collect {
+                when (it.status) {
+                    Status.ERROR -> Timber.e(it.message)
+                    Status.LOADING -> Timber.i("It's loading!")
+                    Status.SUCCESS -> {
+                        val data = it.data
+                        Timber.i("Saving data")
 
-        localSource.insertPosts(data)
+                        if (data != null) {
+                            localSource.insertPosts(data)
+                        } else {
+                            Timber.e("No data :(")
+                        }
+                    }
+                }
+            }
     }
 
     fun clear() {

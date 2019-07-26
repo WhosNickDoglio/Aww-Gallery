@@ -10,22 +10,22 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class ViewModelBindingModule {
+interface ViewModelBindingModule {
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
     @ViewModelKey(PhotoDetailViewModel::class)
-    abstract fun bindPhotoDetailViewModel(photoDetailViewModel: PhotoDetailViewModel): ViewModel
+    fun bindPhotoDetailViewModel(photoDetailViewModel: PhotoDetailViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(PhotoListViewModel::class)
-    abstract fun bindPhotoListViewModel(photoListViewModel: PhotoListViewModel): ViewModel
+    fun bindPhotoListViewModel(photoListViewModel: PhotoListViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(AboutViewModel::class)
-    abstract fun bindAboutViewModel(aboutViewModel: AboutViewModel): ViewModel
+    fun bindAboutViewModel(aboutViewModel: AboutViewModel): ViewModel
 }

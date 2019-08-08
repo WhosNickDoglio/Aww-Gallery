@@ -30,8 +30,8 @@ import com.nicholasdoglio.eyebleach.util.DispatcherProvider
 import com.squareup.sqldelight.android.paging.QueryDataSourceFactory
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
-import javax.inject.Inject
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class LocalSource @Inject constructor(
     private val redditPostQueries: RedditPostQueries,

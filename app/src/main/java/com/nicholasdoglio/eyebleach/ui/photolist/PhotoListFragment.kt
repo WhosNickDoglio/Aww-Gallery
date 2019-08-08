@@ -50,7 +50,6 @@ import com.nicholasdoglio.eyebleach.ui.util.calculateNumOfColumns
 import kotlinx.android.synthetic.main.fragment_photo_list.*
 import kotlinx.android.synthetic.main.item_photo_list.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
 
@@ -75,17 +74,13 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
 
         swipeRefreshLayout.setOnRefreshListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.refreshTrigger.send(Unit)
+                viewModel.refreshTrigger.offer(Unit)
             }
         }
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { swipeRefreshLayout.isRefreshing = it })
 
-        viewModel.posts.observe(viewLifecycleOwner, Observer {
-            photoListAdapter.submitList(it)
-            Timber.d("SIZE: ${it.size}")
-        }
-        )
+        viewModel.posts.observe(viewLifecycleOwner, Observer { photoListAdapter.submitList(it) })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

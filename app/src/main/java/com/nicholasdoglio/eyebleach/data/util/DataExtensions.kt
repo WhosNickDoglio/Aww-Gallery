@@ -29,8 +29,8 @@ import com.nicholasdoglio.eyebleach.data.remote.ListingResponse
 import com.nicholasdoglio.eyebleach.db.RedditPost
 
 fun ListingResponse.toRedditPosts(): List<RedditPost> = this.data.children.asSequence()
-    .filter { it.data.url.contains(".jpg") || it.data.url.contains(".png") }
     .filter { !it.data.over18 }
+    .filter { it.data.url.contains(".jpg") || it.data.url.contains(".png") }
     .map { it.data.toRedditPost() }
     .toList()
 

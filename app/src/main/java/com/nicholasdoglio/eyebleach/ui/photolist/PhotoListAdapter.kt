@@ -40,7 +40,6 @@ import com.bumptech.glide.signature.ObjectKey
 import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.db.RedditPost
-import com.nicholasdoglio.eyebleach.presentation.photolist.PhotoListFragmentDirections
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
 import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
 import kotlinx.android.synthetic.main.item_photo_list.*

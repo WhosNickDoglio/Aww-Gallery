@@ -40,7 +40,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.di.injector
-import com.nicholasdoglio.eyebleach.presentation.photodetail.PhotoDetailFragmentArgs
 import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
 import com.nicholasdoglio.eyebleach.ui.util.openWebPage
 import com.nicholasdoglio.eyebleach.ui.util.shareUrl
@@ -59,7 +58,7 @@ class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
         setStatusBarBlack()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.postId.send(myArgs.photoId)
+            viewModel.postId.offer(myArgs.photoId)
         }
 
         val placeholder = CircularProgressDrawable(requireContext()).apply {

@@ -40,7 +40,7 @@ ext {
             work                       : '2.1.0-alpha02',
             glide                      : '4.9.0',
             retrofit                   : '2.5.0',
-            okhttp                     : '3.14.2',
+            okhttp                     : '4.0.1',
             moshi                      : '1.8.0',
             canary                     : '2.0-alpha-2',
             dagger                     : '2.22.1',

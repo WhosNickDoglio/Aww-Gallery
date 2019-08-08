@@ -31,7 +31,7 @@ ext {
             recyclerview               : '1.1.0-alpha05',
             constraintlayout           : '2.0.0-alpha5',
             material                   : '1.1.0-alpha06',
-            core_ktx                   : '1.1.0-beta01',
+            core_ktx                   : '1.2.0-alpha03',
             fragment_ktx               : '1.1.0-alpha09',
             navigation                 : '2.1.0-alpha04',
             paging                     : '2.1.0',

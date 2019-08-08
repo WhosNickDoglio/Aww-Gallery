@@ -30,7 +30,7 @@ ext {
             appcompat                  : '1.1.0-alpha05',
             recyclerview               : '1.1.0-alpha05',
             constraintlayout           : '2.0.0-alpha5',
-            material                   : '1.1.0-alpha06',
+            material                   : '1.1.0-alpha09',
             core_ktx                   : '1.1.0-beta01',
             fragment_ktx               : '1.1.0-alpha09',
             navigation                 : '2.1.0-alpha04',

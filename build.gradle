@@ -39,9 +39,9 @@ buildscript {
 }
 
 plugins {
-    id "com.gradle.build-scan" version "2.3"
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC16"
-    id "com.github.ben-manes.versions" version "0.21.0"
+    id "com.gradle.build-scan" version "2.4"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0"
+    id "com.github.ben-manes.versions" version "0.22.0"
 }
 
 
@@ -69,6 +69,13 @@ allprojects {
                 option("-source", "8")
                 option("-target", "8")
             }
+        }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
         }
     }
 }

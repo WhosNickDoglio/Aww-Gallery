@@ -85,6 +85,7 @@ dependencies {
     implementation libs.activity
     implementation libs.recyclerview
     implementation libs.constraint
+    implementation libs.swipe
 
     implementation libs.material
 

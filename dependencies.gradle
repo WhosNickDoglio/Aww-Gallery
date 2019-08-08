@@ -48,7 +48,7 @@ ext {
             junit                      : '4.12',
             assisted_inject            : '0.4.0',
             core_testing               : "2.0.1",
-            ktlint                     : '0.32.0',
+            ktlint                     : '0.34.2',
             coroutines                 : '1.2.1',
             retrofit_coroutines_adapter: '0.9.2'
 

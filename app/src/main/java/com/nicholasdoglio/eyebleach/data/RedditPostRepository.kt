@@ -54,13 +54,13 @@ class RedditPostRepository @Inject constructor(
 
     suspend fun refresh() {
 
-        localSource.deleteAllPosts()
-
         refreshChannel.offer(true)
 
-        val posts = remoteSource.requestsPosts()
+        localSource.deleteAllPosts()
 
-        localSource.insertPosts(posts)
+        // val posts = remoteSource.requestsPosts()
+        //
+        // localSource.insertPosts(posts)
 
         refreshChannel.offer(false)
     }

@@ -97,7 +97,7 @@ class PhotoListAdapter(
             galleryImage.setOnClickListener {
                 findNavController(containerView).navigate(
                     PhotoListFragmentDirections.openDetails(
-                        model.name
+                        model.url
                     )
                 )
             }

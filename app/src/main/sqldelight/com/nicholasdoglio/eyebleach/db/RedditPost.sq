@@ -1,7 +1,6 @@
 CREATE TABLE redditPost (
-id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+url TEXT NOT NULL PRIMARY KEY,
 name TEXT NOT NULL,
-url TEXT NOT NULL,
 thumbnail TEXT NOT NULL,
 permalink TEXT NOT NULL
 );
@@ -19,13 +18,13 @@ LIMIT :limit OFFSET :offset;
 findPostById:
 SELECT *
 FROM redditPost
-WHERE name =:name;
+WHERE url = ?;
 
 deleteAll:
 DELETE FROM redditPost;
 
 
 insert:
-INSERT INTO redditPost (name, url, thumbnail, permalink)
+INSERT INTO redditPost (url, name, thumbnail, permalink)
 VALUES (?, ?, ?, ?);
 

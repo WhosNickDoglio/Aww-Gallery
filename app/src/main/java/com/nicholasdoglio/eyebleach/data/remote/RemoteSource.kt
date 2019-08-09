@@ -16,14 +16,6 @@ class RemoteSource @Inject constructor(
     private val redditService: RedditService,
     private val dispatcherProvider: DispatcherProvider
 ) {
-    suspend fun requestsPosts(after: String = ""): List<RedditPost> {
-        val response = redditService.multiPosts(after).body()
-
-        return withContext(dispatcherProvider.background) {
-            response?.toRedditPosts() ?: emptyList()
-        }
-    }
-
     suspend fun posts(after: String = ""): Flow<Resource<List<RedditPost>>> = flow {
         emit(Resource.loading(null))
         try {

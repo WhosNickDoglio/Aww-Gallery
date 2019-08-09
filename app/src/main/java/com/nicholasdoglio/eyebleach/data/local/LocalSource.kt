@@ -30,8 +30,8 @@ import com.nicholasdoglio.eyebleach.util.DispatcherProvider
 import com.squareup.sqldelight.android.paging.QueryDataSourceFactory
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlinx.coroutines.withContext
 
 class LocalSource @Inject constructor(
     private val redditPostQueries: RedditPostQueries,
@@ -54,6 +54,13 @@ class LocalSource @Inject constructor(
     }
 
     suspend fun insertPosts(data: List<RedditPost>) = withContext(dispatcherProvider.database) {
-        data.forEach { redditPostQueries.insert(it.name, it.url, it.thumbnail, it.permalink) }
+        data.forEach {
+            redditPostQueries.insert(
+                url = it.url,
+                name = it.name,
+                thumbnail = it.thumbnail,
+                permalink = it.permalink
+            )
+        }
     }
 }

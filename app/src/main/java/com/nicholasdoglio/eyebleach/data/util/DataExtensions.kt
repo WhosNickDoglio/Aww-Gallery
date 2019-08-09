@@ -37,9 +37,8 @@ fun ListingResponse.toRedditPosts(): List<RedditPost> = this.data.children.asSeq
 // TODO domain models to avoid this
 fun ChildData.toRedditPost(): RedditPost =
     RedditPost.Impl(
-        id = 0,
-        name = name,
         url = url,
+        name = name,
         thumbnail = thumbnail,
         permalink = permalink
     )

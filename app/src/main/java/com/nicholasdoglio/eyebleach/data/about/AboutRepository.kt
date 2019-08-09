@@ -30,13 +30,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class AboutRepository @Inject constructor() {
-
-    private val items: List<AboutInfo> = listOf(
-        AboutInfo(R.string.source, OpenAction.OpenUrl(R.string.aww_gallery_github)),
-        AboutInfo(R.string.developed_by, OpenAction.OpenUrl(R.string.doglio_website)),
-        AboutInfo(R.string.graphics_by, OpenAction.OpenUrl(R.string.guzz_website)),
-        AboutInfo(R.string.open_source_libraries, OpenAction.OpenLibs)
+    val aboutItems: Flow<List<AboutInfo>> = flowOf(
+        listOf(
+            AboutInfo(R.string.source, OpenAction.OpenUrl(R.string.aww_gallery_github)),
+            AboutInfo(R.string.developed_by, OpenAction.OpenUrl(R.string.doglio_website)),
+            AboutInfo(R.string.graphics_by, OpenAction.OpenUrl(R.string.guzz_website)),
+            AboutInfo(R.string.open_source_libraries, OpenAction.OpenLibs)
+        )
     )
-
-    val aboutItems: Flow<List<AboutInfo>> = flowOf(items)
 }

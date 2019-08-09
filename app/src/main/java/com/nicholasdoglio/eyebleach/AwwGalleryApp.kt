@@ -108,6 +108,7 @@ class AwwGalleryApp : Application(), AppComponentProvider {
     - Other debug tools
     - Custom Retrofit CallAdapter
     - Dependency matching
+     - Move away from Paging Lib, Just use Flow 
 
     https://ivanisidrowu.github.io/android/2017/12/31/customize-your-own-retrofit/
 

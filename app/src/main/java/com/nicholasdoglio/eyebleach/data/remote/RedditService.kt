@@ -32,8 +32,8 @@ interface RedditService {
 
     @GET("user/NicholasDoglio/m/awwgallery/.json")
     suspend fun multiPosts(
-        @Query("api_type") type: String = "json",
         @Query("after") after: String = "",
+        @Query("api_type") type: String = "json",
         @Query("limit") limit: Int = 100
     ): Response<ListingResponse>
 }

@@ -24,12 +24,11 @@
 
 package com.nicholasdoglio.eyebleach.data.local
 
+import com.nicholasdoglio.eyebleach.data.PostModel
 import com.nicholasdoglio.eyebleach.db.RedditPost
 import com.nicholasdoglio.eyebleach.db.RedditPostQueries
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
 import com.squareup.sqldelight.android.paging.QueryDataSourceFactory
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import javax.inject.Inject
 import kotlinx.coroutines.withContext
 
@@ -43,8 +42,6 @@ class LocalSource @Inject constructor(
         countQuery = redditPostQueries.postCount()
     )
 
-    val count = redditPostQueries.postCount().asFlow().mapToOne(dispatcherProvider.database)
-
     suspend fun findPostById(id: String): RedditPost = withContext(dispatcherProvider.database) {
         redditPostQueries.findPostById(id).executeAsOne()
     }
@@ -53,7 +50,7 @@ class LocalSource @Inject constructor(
         redditPostQueries.deleteAll()
     }
 
-    suspend fun insertPosts(data: List<RedditPost>) = withContext(dispatcherProvider.database) {
+    suspend fun insertPosts(data: List<PostModel>) = withContext(dispatcherProvider.database) {
         data.forEach {
             redditPostQueries.insert(
                 url = it.url,

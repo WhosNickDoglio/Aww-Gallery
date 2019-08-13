@@ -29,7 +29,6 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.nicholasdoglio.eyebleach.data.local.LocalSource
 import com.nicholasdoglio.eyebleach.data.local.RedditBoundaryCallback
-import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
 import com.nicholasdoglio.eyebleach.db.RedditPost
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,8 +38,7 @@ import kotlinx.coroutines.flow.asFlow
 @Singleton
 class RedditPostRepository @Inject constructor(
     private val localSource: LocalSource,
-    private val callback: RedditBoundaryCallback,
-    private val remoteSource: RemoteSource
+    private val callback: RedditBoundaryCallback
 ) {
     private val refreshChannel = ConflatedBroadcastChannel<Boolean>()
     val refresh = refreshChannel.asFlow()
@@ -57,10 +55,6 @@ class RedditPostRepository @Inject constructor(
         refreshChannel.offer(true)
 
         localSource.deleteAllPosts()
-
-        // val posts = remoteSource.requestsPosts()
-        //
-        // localSource.insertPosts(posts)
 
         refreshChannel.offer(false)
     }

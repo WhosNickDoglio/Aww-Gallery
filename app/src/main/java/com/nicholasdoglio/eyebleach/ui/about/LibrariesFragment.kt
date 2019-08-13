@@ -37,7 +37,7 @@ class LibrariesFragment : DialogFragment() {
 
         libsWebView.loadUrl("file:///android_asset/open_source_licenses.html")
 
-        return MaterialAlertDialogBuilder(requireActivity())
+        return MaterialAlertDialogBuilder(requireContext())
             .setTitle("Open Source Licenses")
             .setView(libsWebView)
             .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }

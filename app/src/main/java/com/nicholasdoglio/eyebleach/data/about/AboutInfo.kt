@@ -24,8 +24,19 @@
 package com.nicholasdoglio.eyebleach.data.about
 
 import androidx.annotation.StringRes
+import androidx.recyclerview.widget.DiffUtil
 
-data class AboutInfo(@StringRes val name: Int, val action: OpenAction)
+data class AboutInfo(@StringRes val name: Int, val action: OpenAction) {
+    companion object {
+        val diff = object : DiffUtil.ItemCallback<AboutInfo>() {
+            override fun areItemsTheSame(oldItem: AboutInfo, newItem: AboutInfo): Boolean =
+                oldItem.name == newItem.name
+
+            override fun areContentsTheSame(oldItem: AboutInfo, newItem: AboutInfo): Boolean =
+                oldItem == newItem
+        }
+    }
+}
 
 sealed class OpenAction {
     data class OpenUrl(@StringRes val url: Int) : OpenAction()

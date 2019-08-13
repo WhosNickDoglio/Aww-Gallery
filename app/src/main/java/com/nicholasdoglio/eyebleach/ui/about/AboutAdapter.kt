@@ -24,50 +24,16 @@
 
 package com.nicholasdoglio.eyebleach.ui.about
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.data.about.AboutInfo
-import com.nicholasdoglio.eyebleach.data.about.OpenAction
-import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
-import com.nicholasdoglio.eyebleach.ui.util.openWebPage
-import kotlinx.android.synthetic.main.item_about.*
 
-class AboutAdapter(private val navController: NavController) :
-    ListAdapter<AboutInfo, AboutAdapter.AboutViewHolder>(diff) {
-    companion object {
-        private val diff = object : DiffUtil.ItemCallback<AboutInfo>() {
-            override fun areItemsTheSame(oldItem: AboutInfo, newItem: AboutInfo): Boolean =
-                oldItem.name == newItem.name
-
-            override fun areContentsTheSame(oldItem: AboutInfo, newItem: AboutInfo): Boolean =
-                oldItem == newItem
-        }
-    }
-
+class AboutAdapter(private val navController: NavController) : ListAdapter<AboutInfo, AboutViewHolder>(AboutInfo.diff) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AboutViewHolder =
-        AboutViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_about, parent, false)
-        )
+        AboutViewHolder.create(parent, navController)
 
     override fun onBindViewHolder(holder: AboutViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    inner class AboutViewHolder(override val containerView: View) : AwwGalleryHolder<AboutInfo>(containerView) {
-
-        override fun bind(model: AboutInfo) {
-            content.text = content.resources.getString(model.name)
-            containerView.setOnClickListener {
-                when (model.action) {
-                    is OpenAction.OpenLibs -> navController.navigate(R.id.open_libs)
-                    is OpenAction.OpenUrl -> it.context.openWebPage(it.context.getString(model.action.url))
-                }
-            }
-        }
     }
 }

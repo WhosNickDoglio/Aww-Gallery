@@ -23,18 +23,5 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keepnames class * implements android.os.Parcelable {
-    public static final ** CREATOR;
-}
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
--keep class * implements android.arch.lifecycle.GeneratedAdapter {<init>(...);}
--ignorewarnings
--keep class * {
-    public private *;
-}
 
-
--keepnames class com.path.to.your.ParcelableArg
--keepnames class com.path.to.your.SerializableArg
--keepnames class com.path.to.your.EnumArg
+#TODO LOOK AT THIS

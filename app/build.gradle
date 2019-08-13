@@ -103,12 +103,8 @@ dependencies {
 
     implementation libs.work_runtime
 
-    kapt libs.glide_compiler
-    implementation libs.glide
-    implementation libs.glide_okhttp
-    implementation(libs.glide_recyclerview) {
-        transitive = false
-    }
+    implementation libs.coil
+    implementation libs.coil_base
 
     implementation libs.retrofit
     implementation libs.retrofit_converter_moshi

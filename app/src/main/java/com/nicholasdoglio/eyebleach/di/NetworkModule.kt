@@ -48,16 +48,16 @@ object NetworkModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun okHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient =
-        OkHttpClient.Builder().addInterceptor(interceptor).build()
+    fun okHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient.Builder =
+        OkHttpClient.Builder().addInterceptor(interceptor)
 
     @Provides
     @Singleton
     @JvmStatic
-    fun redditService(client: OkHttpClient): RedditService = Retrofit.Builder()
+    fun redditService(client: OkHttpClient.Builder): RedditService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
-        .client(client)
+        .client(client.build())
         .build()
         .create()
 }

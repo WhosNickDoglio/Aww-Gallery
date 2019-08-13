@@ -30,6 +30,7 @@ import androidx.work.Configuration
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import coil.Coil
 import com.nicholasdoglio.eyebleach.di.AppComponent
 import com.nicholasdoglio.eyebleach.di.AppComponentProvider
 import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
@@ -48,6 +49,7 @@ class AwwGalleryApp : Application(), AppComponentProvider {
         initWorkManager()
         initDebugTools()
         initClearDatabaseWorker()
+        Coil.setDefaultImageLoader(component.imageLoader)
     }
 
     private fun initClearDatabaseWorker() {
@@ -95,7 +97,6 @@ class AwwGalleryApp : Application(), AppComponentProvider {
 
 /* TODO
     - RecyclerView columns size and spacing
-    - Optimize Glide preloading
     - Error handling Retrofit calls
     - Error handling for DB
     - ContentLoadingProgressBar with MediatorLiveData (Empty DB and network request in flight)

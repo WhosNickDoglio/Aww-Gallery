@@ -22,35 +22,28 @@
  *   SOFTWARE.
  */
 
-package com.nicholasdoglio.eyebleach.ui.worker
+package com.nicholasdoglio.eyebleach.di
 
-import android.content.Context
-import androidx.work.CoroutineWorker
-import androidx.work.ListenableWorker
-import androidx.work.WorkerParameters
-import com.nicholasdoglio.eyebleach.data.local.LocalSource
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
-import timber.log.Timber
+import android.app.Application
+import coil.ImageLoader
+import com.nicholasdoglio.eyebleach.R
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
+import okhttp3.OkHttpClient
 
-class ClearDataWorker @AssistedInject constructor(
-    @Assisted private val context: Context,
-    @Assisted private val workerParameters: WorkerParameters,
-    private val localSource: LocalSource
-) : CoroutineWorker(context, workerParameters) {
+@Module
+object CoilModule {
 
-    override suspend fun doWork(): Result = try {
-        localSource.deleteAllPosts()
-        Result.success()
-    } catch (e: Exception) {
-        Timber.e(e)
-        Result.failure()
-    }
-
-    @AssistedInject.Factory
-    interface Factory : ChildWorkerFactory
-}
-
-interface ChildWorkerFactory {
-    fun create(context: Context, workerParameters: WorkerParameters): ListenableWorker
+    @Singleton
+    @Provides
+    @JvmStatic
+    fun provideImageLoader(app: Application, okhttp: OkHttpClient.Builder): ImageLoader =
+        ImageLoader(
+            context = app,
+            builder = {
+                error(R.drawable.cat_error)
+                okHttpClient { okhttp }
+            }
+        )
 }

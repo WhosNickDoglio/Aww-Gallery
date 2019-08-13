@@ -28,6 +28,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.WorkerFactory
+import coil.ImageLoader
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -37,6 +38,7 @@ import javax.inject.Singleton
     modules = [
         AssistedModule::class,
         BindingModule::class,
+        CoilModule::class,
         NetworkModule::class,
         DatabaseModule::class,
         ViewModelBindingModule::class
@@ -47,6 +49,8 @@ interface AppComponent {
     val workerFactory: WorkerFactory
 
     val viewModelFactory: ViewModelProvider.Factory
+
+    val imageLoader: ImageLoader
 
     @Component.Factory
     interface Factory {

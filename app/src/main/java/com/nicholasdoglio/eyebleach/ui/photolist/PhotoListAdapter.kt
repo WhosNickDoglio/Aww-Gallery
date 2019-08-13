@@ -24,32 +24,12 @@
 
 package com.nicholasdoglio.eyebleach.ui.photolist
 
-import android.graphics.drawable.Drawable
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation.findNavController
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.ListPreloader
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.bumptech.glide.signature.ObjectKey
-import com.bumptech.glide.util.ViewPreloadSizeProvider
-import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.db.RedditPost
-import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
-import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
-import kotlinx.android.synthetic.main.item_photo_list.*
 
-class PhotoListAdapter(
-    private val sizeProvider: ViewPreloadSizeProvider<RedditPost>,
-    private val request: RequestBuilder<Drawable>
-) : PagedListAdapter<RedditPost,
-    PhotoListAdapter.PhotoGridViewHolder>(diff),
-    ListPreloader.PreloadModelProvider<RedditPost> {
+class PhotoListAdapter : PagedListAdapter<RedditPost, PhotoListViewHolder>(diff) {
 
     companion object {
         private val diff: DiffUtil.ItemCallback<RedditPost> =
@@ -65,73 +45,28 @@ class PhotoListAdapter(
                     oldItem: RedditPost,
                     newItem: RedditPost
                 ): Boolean =
-                    oldItem.name == newItem.name
+                    RedditPost.Impl(
+                        oldItem.url,
+                        oldItem.name,
+                        oldItem.thumbnail,
+                        oldItem.permalink
+                    ) == RedditPost.Impl(
+                        newItem.url,
+                        newItem.name,
+                        newItem.thumbnail,
+                        newItem.permalink
+                    )
             }
     }
 
-    override fun onBindViewHolder(holder: PhotoGridViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
-    }
+    override fun onBindViewHolder(holder: PhotoListViewHolder, position: Int) {
+        val item = getItem(position)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoGridViewHolder =
-        PhotoGridViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_photo_list,
-                parent,
-                false
-            )
-        )
-
-    // TODO make sublist bigger?
-    override fun getPreloadItems(position: Int): MutableList<RedditPost> =
-        currentList?.subList(position, position + 1) ?: mutableListOf()
-
-    override fun getPreloadRequestBuilder(item: RedditPost): RequestBuilder<*>? =
-        request.load(item.thumbnail).error(R.drawable.cat_error)
-
-    inner class PhotoGridViewHolder(override val containerView: View) :
-        AwwGalleryHolder<RedditPost>(containerView) {
-
-        override fun bind(model: RedditPost) {
-            sizeProvider.setView(containerView)
-            galleryImage.setOnClickListener {
-                findNavController(containerView).navigate(
-                    PhotoListFragmentDirections.openDetails(
-                        model.url
-                    )
-                )
-            }
-
-            val placeholder = CircularProgressDrawable(galleryImage.context).apply {
-                setStyle(CircularProgressDrawable.DEFAULT)
-                setColorSchemeColors(
-                    ContextCompat.getColor(
-                        galleryImage.context,
-                        R.color.colorAccent
-                    )
-                )
-            }
-
-            placeholder.start()
-
-            request
-                .load(model.thumbnail)
-                .placeholder(placeholder)
-                .transition(withCrossFade())
-                .listener(CircularProgressPlaceholderListener(placeholder))
-                .signature(ObjectKey(model.thumbnail))
-                .into(galleryImage)
+        if (item != null) {
+            holder.bind(item)
         }
-
-        // companion object {
-        //     fun create(parent: ViewGroup): PhotoGridViewHolder =
-        //         PhotoGridViewHolder(
-        //             LayoutInflater.from(parent.context).inflate(
-        //                 R.layout.item_photo_list,
-        //                 parent,
-        //                 false
-        //             )
-        //         )
-        // }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoListViewHolder =
+        PhotoListViewHolder.create(parent)
 }

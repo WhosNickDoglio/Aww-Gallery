@@ -35,12 +35,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import coil.api.load
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.di.injector
-import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
 import com.nicholasdoglio.eyebleach.ui.util.openWebPage
 import com.nicholasdoglio.eyebleach.ui.util.shareUrl
 import kotlinx.android.synthetic.main.fragment_photo_detail.*
@@ -73,14 +70,11 @@ class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
 
             shareButton.setOnClickListener { requireContext().shareUrl("https://reddit.com${post.permalink}") }
 
-            Glide.with(requireContext())
-                .load(post.url)
-                .error(R.drawable.cat_error)
-                .placeholder(placeholder)
-                .listener(CircularProgressPlaceholderListener(placeholder))
-                .transition(withCrossFade())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(detailPhoto)
+            detailPhoto.load(post.url) {
+                placeholder(placeholder)
+            }
+
+            startPostponedEnterTransition()
         })
     }
 

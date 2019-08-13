@@ -67,7 +67,6 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
         recyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), calculateNumOfColumns())
             adapter = photoListAdapter
-            postponeEnterTransition()
             addItemDecoration(SpacesItemDecoration(SPACE_SIZE))
         }
 

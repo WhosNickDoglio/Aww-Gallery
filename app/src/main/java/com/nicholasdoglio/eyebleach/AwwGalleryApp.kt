@@ -109,12 +109,12 @@ class AwwGalleryApp : Application(), AppComponentProvider {
     - Other debug tools
     - Custom Retrofit CallAdapter
     - Dependency matching
-     - Move away from Paging Lib, Just use Flow 
+     - Move away from Paging Lib, Just use Flow?
+     - SharedElementTransitions
 
     https://ivanisidrowu.github.io/android/2017/12/31/customize-your-own-retrofit/
 
     https://android.jlelse.eu/building-your-own-retrofit-call-adapter-b198169bab69
-
 
     https://stackoverflow.com/questions/56647476/why-dialog-does-not-have-a-navcontroller-missing
  */

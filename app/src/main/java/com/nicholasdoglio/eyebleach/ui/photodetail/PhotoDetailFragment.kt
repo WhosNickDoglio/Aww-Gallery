@@ -58,23 +58,18 @@ class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
             viewModel.postId.offer(myArgs.photoId)
         }
 
-        val placeholder = CircularProgressDrawable(requireContext()).apply {
-            setStyle(CircularProgressDrawable.LARGE)
-            setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-        }
-
-        placeholder.start()
-
         viewModel.post.observe(viewLifecycleOwner, Observer { post ->
             openSourceButton.setOnClickListener { requireContext().openWebPage("https://reddit.com${post.permalink}") }
 
             shareButton.setOnClickListener { requireContext().shareUrl("https://reddit.com${post.permalink}") }
 
             detailPhoto.load(post.url) {
-                placeholder(placeholder)
+                placeholder(CircularProgressDrawable(requireContext()).apply {
+                    setStyle(CircularProgressDrawable.LARGE)
+                    setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    start()
+                })
             }
-
-            startPostponedEnterTransition()
         })
     }
 

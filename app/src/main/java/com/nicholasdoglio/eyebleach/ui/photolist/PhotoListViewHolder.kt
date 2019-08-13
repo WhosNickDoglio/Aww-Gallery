@@ -39,24 +39,19 @@ import kotlinx.android.synthetic.main.item_photo_list.*
 class PhotoListViewHolder(override val containerView: View) : AwwGalleryHolder<RedditPost>(containerView) {
 
     override fun bind(model: RedditPost) {
-        galleryImage.setOnClickListener {
-            findNavController(containerView).navigate(PhotoListFragmentDirections.openDetails(model.url))
-        }
 
-        val placeholder = CircularProgressDrawable(galleryImage.context).apply {
-            setStyle(CircularProgressDrawable.DEFAULT)
-            setColorSchemeColors(
-                ContextCompat.getColor(
-                    galleryImage.context,
-                    R.color.colorAccent
+        galleryImage.apply {
+            setOnClickListener {
+                findNavController(containerView).navigate(PhotoListFragmentDirections.openDetails(model.url))
+            }
+            load(model.url) {
+                placeholder(CircularProgressDrawable(galleryImage.context).apply {
+                    setStyle(CircularProgressDrawable.DEFAULT)
+                    setColorSchemeColors(ContextCompat.getColor(galleryImage.context, R.color.colorAccent))
+                    start()
+                }
                 )
-            )
-        }
-
-        placeholder.start()
-
-        galleryImage.load(model.url) {
-            placeholder(placeholder)
+            }
         }
     }
 

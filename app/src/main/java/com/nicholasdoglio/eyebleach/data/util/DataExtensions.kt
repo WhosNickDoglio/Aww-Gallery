@@ -27,6 +27,7 @@ package com.nicholasdoglio.eyebleach.data.util
 import com.nicholasdoglio.eyebleach.data.PostModel
 import com.nicholasdoglio.eyebleach.data.remote.ChildData
 import com.nicholasdoglio.eyebleach.data.remote.ListingResponse
+import com.nicholasdoglio.eyebleach.db.RedditPost
 
 fun ListingResponse.toRedditPosts(): List<PostModel> = this.data.children.asSequence()
     .filter { !it.data.over18 }
@@ -41,3 +42,6 @@ fun ChildData.toRedditPost(): PostModel =
         thumbnail = thumbnail,
         permalink = permalink
     )
+
+inline val RedditPost.redditUrl: String
+    get() = "https://reddit.com$permalink"

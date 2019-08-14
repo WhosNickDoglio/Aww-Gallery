@@ -37,6 +37,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.api.load
 import com.nicholasdoglio.eyebleach.R
+import com.nicholasdoglio.eyebleach.data.util.redditUrl
 import com.nicholasdoglio.eyebleach.di.injector
 import com.nicholasdoglio.eyebleach.ui.util.openWebPage
 import com.nicholasdoglio.eyebleach.ui.util.shareUrl
@@ -59,9 +60,9 @@ class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
         }
 
         viewModel.post.observe(viewLifecycleOwner, Observer { post ->
-            openSourceButton.setOnClickListener { requireContext().openWebPage("https://reddit.com${post.permalink}") }
+            openSourceButton.setOnClickListener { requireContext().openWebPage(post.redditUrl) }
 
-            shareButton.setOnClickListener { requireContext().shareUrl("https://reddit.com${post.permalink}") }
+            shareButton.setOnClickListener { requireContext().shareUrl(post.redditUrl) }
 
             detailPhoto.load(post.url) {
                 placeholder(CircularProgressDrawable(requireContext()).apply {

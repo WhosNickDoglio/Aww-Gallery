@@ -86,7 +86,7 @@ task clean(type: Delete) {
 }
 
 task quality() {
-    dependsOn 'app:ktlintFormat'
+    dependsOn 'app:ktlint'
     dependsOn 'app:detekt'
 }
 

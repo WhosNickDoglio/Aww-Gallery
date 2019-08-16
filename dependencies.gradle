@@ -37,7 +37,7 @@ ext {
             navigation      : '2.2.0-alpha01',
             paging          : '2.1.0',
             lifecycle       : '2.2.0-alpha03',
-            work            : '2.2.0-rc01',
+            work            : '2.2.0',
             swipe           : '1.1.0-alpha02',
             retrofit        : '2.6.1',
             okhttp          : '4.1.0',

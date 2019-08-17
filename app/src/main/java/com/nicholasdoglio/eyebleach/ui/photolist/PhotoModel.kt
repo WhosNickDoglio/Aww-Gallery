@@ -24,25 +24,29 @@
 
 package com.nicholasdoglio.eyebleach.ui.photolist
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.api.load
+import com.airbnb.epoxy.EpoxyAttribute
+import com.airbnb.epoxy.EpoxyModelClass
+import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.db.RedditPost
-import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
-import kotlinx.android.synthetic.main.item_photo_list.*
+import com.nicholasdoglio.eyebleach.ui.base.KotlinEpoxyHolder
+import kotlinx.android.synthetic.main.item_photo_list.view.*
 
-class PhotoListViewHolder(override val containerView: View) : AwwGalleryHolder<RedditPost>(containerView) {
+@EpoxyModelClass(layout = R.layout.item_photo_list)
+abstract class PhotoModel : EpoxyModelWithHolder<PhotoListViewHolder>() {
 
-    override fun bind(model: RedditPost) {
+    @EpoxyAttribute
+    lateinit var model: RedditPost
 
-        galleryImage.apply {
+    override fun bind(holder: PhotoListViewHolder) {
+        holder.galleryImage.apply {
             setOnClickListener {
-                findNavController(containerView).navigate(PhotoListFragmentDirections.openDetails(model.url))
+                findNavController(it).navigate(PhotoListFragmentDirections.openDetails(model.url))
             }
             load(model.url) {
                 placeholder(CircularProgressDrawable(galleryImage.context).apply {
@@ -54,15 +58,8 @@ class PhotoListViewHolder(override val containerView: View) : AwwGalleryHolder<R
             }
         }
     }
+}
 
-    companion object {
-        fun create(parent: ViewGroup): PhotoListViewHolder =
-            PhotoListViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_photo_list,
-                    parent,
-                    false
-                )
-            )
-    }
+class PhotoListViewHolder : KotlinEpoxyHolder() {
+    val galleryImage by bind<ImageView>(R.id.galleryImage)
 }

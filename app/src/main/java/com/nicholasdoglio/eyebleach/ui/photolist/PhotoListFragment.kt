@@ -40,7 +40,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.di.injector
-import com.nicholasdoglio.eyebleach.ui.util.SpacesItemDecoration
 import com.nicholasdoglio.eyebleach.ui.util.calculateNumOfColumns
 import kotlinx.android.synthetic.main.fragment_photo_list.*
 import kotlinx.coroutines.launch
@@ -51,10 +50,10 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
         requireActivity().injector.viewModelFactory
     }
 
+    // TODO Epoxy not showing right away? Need to scroll?
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val photoListAdapter = PhotoListAdapter()
+        val photoListController = PhotoListController()
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
@@ -65,20 +64,20 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
         }
 
         recyclerView.apply {
+            setController(photoListController)
             layoutManager = GridLayoutManager(requireContext(), calculateNumOfColumns())
-            adapter = photoListAdapter
-            addItemDecoration(SpacesItemDecoration(SPACE_SIZE))
+            setItemSpacingDp(12)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.refreshTrigger.offer(Unit)
             }
+
+            viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { swipeRefreshLayout.isRefreshing = it })
+
+            viewModel.posts.observe(viewLifecycleOwner, Observer { photoListController.submitList(it) })
         }
-
-        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { swipeRefreshLayout.isRefreshing = it })
-
-        viewModel.posts.observe(viewLifecycleOwner, Observer { photoListAdapter.submitList(it) })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -92,9 +91,5 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    companion object {
-        private const val SPACE_SIZE = 24
     }
 }

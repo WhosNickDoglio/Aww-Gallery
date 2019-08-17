@@ -69,6 +69,7 @@ android {
 
 kapt {
     useBuildCache = true
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -103,6 +104,10 @@ dependencies {
     implementation libs.lifecycle_commons
 
     implementation libs.work_runtime
+
+    implementation libs.epoxy
+    implementation libs.epoxy_paging
+    kapt libs.epoxy_processor
 
     implementation libs.coil
     implementation libs.coil_base

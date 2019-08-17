@@ -42,6 +42,7 @@ object CoilModule {
         ImageLoader(
             context = app,
             builder = {
+                crossfade(true)
                 error(R.drawable.cat_error)
                 okHttpClient { okhttp }
             }

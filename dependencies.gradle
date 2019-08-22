@@ -53,7 +53,8 @@ ext {
             sqldelight      : '1.1.4',
             coil            : '0.6.1',
             delect          : '0.1.0',
-            epoxy           : '3.7.0'
+            epoxy           : '3.7.0',
+            jacoco_android  : '0.1.4'
 
     ]
     libs = [

@@ -36,6 +36,7 @@ buildscript {
         classpath "com.jaredsburrows:gradle-license-plugin:${versions.gradle_license}"
         classpath "com.squareup.sqldelight:gradle-plugin:${versions.sqldelight}"
         classpath "com.soundcloud.delect:delect-plugin:${versions.delect}"
+        classpath "com.dicedmelon.gradle:jacoco-android:${versions.jacoco_android}"
     }
 }
 
@@ -61,17 +62,6 @@ allprojects {
 
 //    tasks.matching { task -> task.name.startsWith('assemble') }
 //            .all { task -> task.finalizedBy quality  }
-
-    if (project.hasProperty('kapt')) {
-        // Reference for 'kapt' DSL: https://kotlinlang.org/docs/reference/kapt.html#java-compiler-options
-        kapt {
-            // we expect this closure to run over a org.jetbrains.kotlin.gradle.plugin.KaptExtension
-            javacOptions {
-                option("-source", "8")
-                option("-target", "8")
-            }
-        }
-    }
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {

@@ -57,13 +57,13 @@ tasks.withType(Test) {
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Config.compileSdkVersion
     defaultConfig {
         applicationId "com.nicholasdoglio.eyebleach"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "0.0.1"
+        minSdkVersion Config.minSdkVersion
+        targetSdkVersion Config.targetSdkVersion
+        versionCode Config.versionCode
+        versionName Config.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -88,62 +88,63 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation libs.kotlin
+    implementation Libs.org_jetbrains_kotlin_kotlin_stdlib_jdk8
 
-    implementation libs.sqldelight_android_driver
-    implementation libs.sqldelight_android_paging
-    implementation libs.sqldelight_coroutines
 
-    implementation libs.coroutines_core
-    implementation libs.coroutines_android
+    implementation Libs.android_driver
+    implementation Libs.android_paging_extensions
+    implementation Libs.coroutines_extensions
 
-    implementation libs.appcompat
-    implementation libs.activity
-    implementation libs.recyclerview
-    implementation libs.constraint
-    implementation libs.swipe
+    implementation Libs.kotlinx_coroutines_core
+    implementation Libs.kotlinx_coroutines_android
 
-    implementation libs.material
+    implementation Libs.appcompat
+    implementation Libs.activity_ktx
+    implementation Libs.recyclerview
+    implementation Libs.constraintlayout
+    implementation Libs.swiperefreshlayout
 
-    implementation libs.core_ktx
-    implementation libs.fragment
-    implementation libs.navigation_ui_ktx
-    implementation libs.navigation_fragment_ktx
+    implementation Libs.material
 
-    implementation libs.paging_runtime
+    implementation Libs.core_ktx
+    implementation Libs.fragment_ktx
+    implementation Libs.navigation_ui_ktx
+    implementation Libs.navigation_fragment_ktx
 
-    implementation libs.lifecycle_viewmodel
-    implementation libs.lifecycle_runtime
-    implementation libs.lifecycle_livedata
-    implementation libs.lifecycle_commons
+    implementation Libs.paging_runtime_ktx
 
-    implementation libs.work_runtime
+    implementation Libs.lifecycle_viewmodel_ktx
+    implementation Libs.lifecycle_runtime_ktx
+    implementation Libs.lifecycle_livedata_ktx
+    implementation Libs.lifecycle_common_java8
 
-    implementation libs.epoxy
-    implementation libs.epoxy_paging
-    kapt libs.epoxy_processor
+    implementation Libs.work_runtime_ktx
 
-    implementation libs.coil
-    implementation libs.coil_base
+    implementation Libs.epoxy
+    implementation Libs.epoxy_paging
+    kapt Libs.epoxy_processor
 
-    implementation libs.retrofit
-    implementation libs.retrofit_converter_moshi
-    implementation libs.okhttp
-    implementation libs.okhttp_logging
+    implementation Libs.coil
+    implementation Libs.coil_base
 
-    implementation libs.moshi
-    kapt libs.moshi_codegen
+    implementation Libs.retrofit
+    implementation Libs.converter_moshi
+    implementation Libs.okhttp
+    implementation Libs.logging_interceptor
 
-    debugImplementation libs.leak_canary
+    implementation Libs.moshi
+    kapt Libs.moshi_kotlin_codegen
 
-    implementation libs.dagger
-    kapt libs.dagger_compiler
+    debugImplementation Libs.leakcanary_android
 
-    compileOnly libs.assisted_inject
-    kapt libs.assisted_inject_processor
+    implementation Libs.dagger
+    kapt Libs.dagger_compiler
 
-    implementation libs.timber
+    compileOnly Libs.assisted_inject_annotations_dagger2
+    kapt Libs.assisted_inject_processor_dagger2
 
-    testImplementation libs.junit
-    testImplementation libs.core_testing
+    implementation Libs.timber
+
+    testImplementation Libs.junit
+    testImplementation Libs.core_testing
 }

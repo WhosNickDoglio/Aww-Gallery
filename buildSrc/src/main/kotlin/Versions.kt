@@ -39,9 +39,9 @@ object Versions {
 
     const val aapt2: String = "3.5.0-5435860"
 
-    const val com_android_tools_build_gradle: String = "3.5.0" // available: "3.6.0-alpha07"
+    const val com_android_tools_build_gradle: String = "3.5.0" // available: "3.6.0-alpha08"
 
-    const val lint_gradle: String = "26.5.0" // available: "26.6.0-alpha07"
+    const val lint_gradle: String = "26.5.0" // available: "26.6.0-alpha08"
 
     const val jacoco_android: String = "0.1.4"
 
@@ -75,7 +75,7 @@ object Versions {
 
     const val io_coil_kt: String = "0.6.1"
 
-    const val io_gitlab_arturbosch_detekt: String = "1.0.0"
+    const val io_gitlab_arturbosch_detekt: String = "1.0.1"
 
     const val junit: String = "4.12"
 
@@ -108,9 +108,9 @@ object Versions {
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "5.6"
+    const val gradleLatestVersion: String = "5.6.1"
 
-    const val gradleCurrentVersion: String = "5.6"
+    const val gradleCurrentVersion: String = "5.6.1"
 }
 
 /**

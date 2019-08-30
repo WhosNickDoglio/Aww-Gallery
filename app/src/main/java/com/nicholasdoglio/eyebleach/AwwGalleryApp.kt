@@ -117,4 +117,6 @@ class AwwGalleryApp : Application(), AppComponentProvider {
 
     https://android.jlelse.eu/building-your-own-retrofit-call-adapter-b198169bab69
 
+    https://handstandsam.com/2019/08/23/sqldelight-1-x-quick-start-guide-for-android/
+
  */

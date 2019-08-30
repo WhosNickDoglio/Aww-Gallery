@@ -39,9 +39,9 @@ object Versions {
 
     const val aapt2: String = "3.5.0-5435860"
 
-    const val com_android_tools_build_gradle: String = "3.5.0" // available: "3.6.0-alpha08"
+    const val com_android_tools_build_gradle: String = "3.5.0" // available: "3.6.0-alpha09"
 
-    const val lint_gradle: String = "26.5.0" // available: "26.6.0-alpha08"
+    const val lint_gradle: String = "26.5.0" // available: "26.6.0-alpha09"
 
     const val jacoco_android: String = "0.1.4"
 
@@ -69,7 +69,7 @@ object Versions {
 
     const val com_squareup_retrofit2: String = "2.6.1"
 
-    const val com_squareup_sqldelight: String = "1.1.4"
+    const val com_squareup_sqldelight: String = "1.2.0"
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.4.2"
 

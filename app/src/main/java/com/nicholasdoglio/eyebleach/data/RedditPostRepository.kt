@@ -31,11 +31,9 @@ import com.nicholasdoglio.eyebleach.data.local.LocalSource
 import com.nicholasdoglio.eyebleach.data.local.RedditBoundaryCallback
 import com.nicholasdoglio.eyebleach.db.RedditPost
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 
-@Singleton
 class RedditPostRepository @Inject constructor(
     private val localSource: LocalSource,
     private val callback: RedditBoundaryCallback

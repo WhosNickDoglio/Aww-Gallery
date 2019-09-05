@@ -104,14 +104,14 @@ object Libs {
     /**
      * https://developer.android.com/topic/libraries/architecture/index.html
      */
-    const val work_runtime_ktx: String =
-        "androidx.work:work-runtime-ktx:" + Versions.work_runtime_ktx
+    const val work_runtime_ktx: String = "androidx.work:work-runtime-ktx:" +
+        Versions.work_runtime_ktx
 
     /**
      * https://github.com/airbnb/epoxy
      */
-    const val epoxy_paging: String =
-        "com.airbnb.android:epoxy-paging:" + Versions.com_airbnb_android
+    const val epoxy_paging: String = "com.airbnb.android:epoxy-paging:" +
+        Versions.com_airbnb_android
 
     /**
      * https://github.com/airbnb/epoxy
@@ -167,11 +167,12 @@ object Libs {
 
     const val ktlint: String = "com.pinterest:ktlint:" + Versions.ktlint
 
-    const val delect_plugin: String =
-        "com.soundcloud.delect:delect-plugin:" + Versions.delect_plugin
+    const val delect_plugin: String = "com.soundcloud.delect:delect-plugin:" +
+        Versions.delect_plugin
 
     const val assisted_inject_annotations_dagger2: String =
-        "com.squareup.inject:assisted-inject-annotations-dagger2:" + Versions.com_squareup_inject
+        "com.squareup.inject:assisted-inject-annotations-dagger2:" +
+            Versions.com_squareup_inject
 
     const val assisted_inject_processor_dagger2: String =
         "com.squareup.inject:assisted-inject-processor-dagger2:" + Versions.com_squareup_inject
@@ -210,8 +211,8 @@ object Libs {
     /**
      * http://github.com/square/retrofit/
      */
-    const val retrofit: String =
-        "com.squareup.retrofit2:retrofit:" + Versions.com_squareup_retrofit2
+    const val retrofit: String = "com.squareup.retrofit2:retrofit:" +
+        Versions.com_squareup_retrofit2
 
     /**
      * https://github.com/square/sqldelight/
@@ -267,8 +268,7 @@ object Libs {
      * https://kotlinlang.org/
      */
     const val kotlin_android_extensions: String =
-        "org.jetbrains.kotlin:kotlin-android-extensions:" +
-            Versions.kotlin_android_extensions
+        "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.kotlin_android_extensions
 
     /**
      * https://kotlinlang.org/

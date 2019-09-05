@@ -110,7 +110,7 @@ class AwwGalleryApp : Application(), AppComponentProvider {
     - Custom Retrofit CallAdapter
     - Dependency matching
     - Move away from Paging Lib, Just use Flow?
-    - SharedElementTransitions
+    - MotionLayout Animations
     - Have gradle quality task not run every build, only certain circumstances
 
     https://ivanisidrowu.github.io/android/2017/12/31/customize-your-own-retrofit/

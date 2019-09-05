@@ -46,7 +46,7 @@ plugins {
 }
 
 buildSrcVersions {
-    singleFileMode = true
+    indent = "    "
     rejectedVersionKeywords("")
 }
 
@@ -82,6 +82,11 @@ task clean(type: Delete) {
 task quality() {
     dependsOn 'app:ktlint'
     dependsOn 'app:detekt'
+}
+
+wrapper {
+    gradleVersion = Versions.gradleLatestVersion
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 

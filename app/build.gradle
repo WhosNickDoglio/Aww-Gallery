@@ -90,10 +90,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation Libs.kotlin_stdlib_jdk8
 
-
     implementation Libs.android_driver
     implementation Libs.android_paging_extensions
-    implementation Libs.coroutines_extensions
 
     implementation Libs.kotlinx_coroutines_core
     implementation Libs.kotlinx_coroutines_android
@@ -147,4 +145,5 @@ dependencies {
 
     testImplementation Libs.junit
     testImplementation Libs.core_testing
+    testImplementation Libs.fragment_testing
 }

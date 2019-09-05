@@ -34,7 +34,13 @@ object Libs {
     /**
      * https://developer.android.com/jetpack/androidx
      */
-    const val fragment_ktx: String = "androidx.fragment:fragment-ktx:" + Versions.fragment_ktx
+    const val fragment_ktx: String = "androidx.fragment:fragment-ktx:" + Versions.androidx_fragment
+
+    /**
+     * https://developer.android.com/jetpack/androidx
+     */
+    const val fragment_testing: String = "androidx.fragment:fragment-testing:" +
+        Versions.androidx_fragment
 
     /**
      * https://developer.android.com/topic/libraries/architecture/index.html
@@ -215,9 +221,6 @@ object Libs {
 
     const val android_paging_extensions: String =
         "com.squareup.sqldelight:android-paging-extensions:" + Versions.com_squareup_sqldelight
-
-    const val coroutines_extensions: String = "com.squareup.sqldelight:coroutines-extensions:" +
-        Versions.com_squareup_sqldelight
 
     /**
      * https://github.com/square/sqldelight/

@@ -26,6 +26,7 @@ package com.nicholasdoglio.eyebleach.di
 
 import android.app.Application
 import coil.ImageLoader
+import coil.util.CoilUtils
 import com.nicholasdoglio.eyebleach.R
 import dagger.Module
 import dagger.Provides
@@ -44,7 +45,7 @@ object CoilModule {
             builder = {
                 crossfade(true)
                 error(R.drawable.cat_error)
-                okHttpClient { okhttp }
+                callFactory { okhttp.cache(CoilUtils.createDefaultCache(app)).build() }
             }
         )
 }

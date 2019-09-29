@@ -28,6 +28,7 @@ import android.app.Application
 import coil.ImageLoader
 import coil.util.CoilUtils
 import com.nicholasdoglio.eyebleach.R
+import com.nicholasdoglio.eyebleach.util.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -39,12 +40,17 @@ object CoilModule {
     @Singleton
     @Provides
     @JvmStatic
-    fun provideImageLoader(app: Application, okhttp: OkHttpClient.Builder): ImageLoader =
+    fun provideImageLoader(
+        app: Application,
+        okhttp: OkHttpClient.Builder,
+        dispatcherProvider: DispatcherProvider
+    ): ImageLoader =
         ImageLoader(
             context = app,
             builder = {
                 crossfade(true)
                 error(R.drawable.cat_error)
+                dispatcher(dispatcherProvider.network)
                 callFactory { okhttp.cache(CoilUtils.createDefaultCache(app)).build() }
             }
         )

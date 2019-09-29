@@ -35,11 +35,11 @@ object Versions {
 
     const val com_squareup_sqldelight: String = "1.2.0"
 
-    const val com_squareup_retrofit2: String = "2.6.1"
+    const val com_squareup_retrofit2: String = "2.6.2"
 
     const val gradle_license_plugin: String = "0.8.5"
 
-    const val org_jetbrains_kotlinx: String = "1.3.1"
+    const val org_jetbrains_kotlinx: String = "1.3.2"
 
     const val com_squareup_okhttp3: String = "4.2.0"
 
@@ -65,7 +65,7 @@ object Versions {
 
     const val com_google_dagger: String = "2.24"
 
-    const val constraintlayout: String = "2.0.0-beta2"
+    const val constraintlayout: String = "2.0.0-beta1"
 
     const val work_runtime_ktx: String = "2.3.0-alpha01"
 

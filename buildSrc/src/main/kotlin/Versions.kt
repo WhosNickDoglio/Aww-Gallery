@@ -27,7 +27,7 @@ object Versions {
 
     const val kotlin_android_extensions_runtime: String = "1.3.50"
 
-    const val com_android_tools_build_gradle: String = "3.5.0"
+    const val com_android_tools_build_gradle: String = "3.5.1"
 
     const val kotlin_android_extensions: String = "1.3.50"
 
@@ -81,7 +81,7 @@ object Versions {
 
     const val recyclerview: String = "1.1.0-beta04"
 
-    const val lint_gradle: String = "26.5.0"
+    const val lint_gradle: String = "26.5.1"
 
     const val io_coil_kt: String = "0.7.0"
 
@@ -95,7 +95,7 @@ object Versions {
 
     const val timber: String = "4.7.1"
 
-    const val aapt2: String = "3.5.0-5435860"
+    const val aapt2: String = "3.5.1-5435860"
 
     const val junit: String = "4.12"
 

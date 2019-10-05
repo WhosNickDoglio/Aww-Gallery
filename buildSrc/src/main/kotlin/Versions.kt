@@ -15,7 +15,7 @@ object Versions {
 
     const val io_gitlab_arturbosch_detekt_gradle_plugin: String = "1.0.1"
 
-    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.6.2"
+    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.6.4"
 
     const val org_jetbrains_kotlin_kotlin_stdlib_jdk8: String = "1.3.50"
 
@@ -41,7 +41,7 @@ object Versions {
 
     const val org_jetbrains_kotlinx: String = "1.3.2"
 
-    const val com_squareup_okhttp3: String = "4.2.0"
+    const val com_squareup_okhttp3: String = "4.2.1"
 
     const val kotlin_gradle_plugin: String = "1.3.50"
 

@@ -5,67 +5,18 @@
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
-    const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String =
-        "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:" +
-            Versions.org_gradle_kotlin_kotlin_dsl_gradle_plugin
-
-    const val io_gitlab_arturbosch_detekt_gradle_plugin: String =
-        "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin:" +
-            Versions.io_gitlab_arturbosch_detekt_gradle_plugin
-
-    const val de_fayard_buildsrcversions_gradle_plugin: String =
-        "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +
-            Versions.de_fayard_buildsrcversions_gradle_plugin
+    /**
+     * https://github.com/Kotlin/kotlinx.coroutines
+     */
+    const val kotlinx_coroutines_android: String =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:" +
+            Versions.org_jetbrains_kotlinx_kotlinx_coroutines
 
     /**
-     * https://kotlinlang.org/
+     * https://github.com/Kotlin/kotlinx.coroutines
      */
-    const val org_jetbrains_kotlin_kotlin_stdlib_jdk8: String =
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.org_jetbrains_kotlin_kotlin_stdlib_jdk8
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_scripting_compiler_embeddable: String =
-        "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
-            Versions.kotlin_scripting_compiler_embeddable
-
-    const val com_gradle_build_scan_gradle_plugin: String =
-        "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:" +
-            Versions.com_gradle_build_scan_gradle_plugin
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_annotation_processing_gradle: String =
-        "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:" +
-            Versions.kotlin_annotation_processing_gradle
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions_runtime: String =
-        "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
-            Versions.kotlin_android_extensions_runtime
-
-    /**
-     * https://developer.android.com/studio
-     */
-    const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
-        Versions.com_android_tools_build_gradle
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions: String =
-        "org.jetbrains.kotlin:kotlin-android-extensions:" +
-            Versions.kotlin_android_extensions
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_sam_with_receiver: String = "org.jetbrains.kotlin:kotlin-sam-with-receiver:" +
-        Versions.kotlin_sam_with_receiver
+    const val kotlinx_coroutines_core: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
+        Versions.org_jetbrains_kotlinx_kotlinx_coroutines
 
     /**
      * https://github.com/square/sqldelight/
@@ -101,24 +52,6 @@ object Libs {
         "com.squareup.retrofit2:retrofit:" + Versions.com_squareup_retrofit2
 
     /**
-     * https://github.com/jaredsburrows/gradle-license-plugin
-     */
-    const val gradle_license_plugin: String = "com.jaredsburrows:gradle-license-plugin:" +
-        Versions.gradle_license_plugin
-
-    /**
-     * https://github.com/Kotlin/kotlinx.coroutines
-     */
-    const val kotlinx_coroutines_android: String =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.org_jetbrains_kotlinx
-
-    /**
-     * https://github.com/Kotlin/kotlinx.coroutines
-     */
-    const val kotlinx_coroutines_core: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
-        Versions.org_jetbrains_kotlinx
-
-    /**
      * https://github.com/square/okhttp
      */
     const val logging_interceptor: String = "com.squareup.okhttp3:logging-interceptor:" +
@@ -128,12 +61,6 @@ object Libs {
      * https://github.com/square/okhttp
      */
     const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.com_squareup_okhttp3
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
-        Versions.kotlin_gradle_plugin
 
     /**
      * https://developer.android.com/topic/libraries/architecture/index.html
@@ -172,18 +99,21 @@ object Libs {
         Versions.androidx_lifecycle
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://developer.android.com/jetpack/androidx
      */
     const val lifecycle_livedata_ktx: String = "androidx.lifecycle:lifecycle-livedata-ktx:" +
         Versions.androidx_lifecycle
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://developer.android.com/jetpack/androidx
      */
-    const val lifecycle_viewmodel_ktx: String = "androidx.lifecycle:lifecycle-viewmodel-ktx:" +
+    const val lifecycle_runtime_ktx: String = "androidx.lifecycle:lifecycle-runtime-ktx:" +
         Versions.androidx_lifecycle
 
-    const val lifecycle_runtime_ktx: String = "androidx.lifecycle:lifecycle-runtime-ktx:" +
+    /**
+     * https://developer.android.com/jetpack/androidx
+     */
+    const val lifecycle_viewmodel_ktx: String = "androidx.lifecycle:lifecycle-viewmodel-ktx:" +
         Versions.androidx_lifecycle
 
     /**
@@ -215,24 +145,6 @@ object Libs {
         Versions.com_squareup_moshi
 
     /**
-     * http://github.com/square/leakcanary/
-     */
-    const val leakcanary_android: String = "com.squareup.leakcanary:leakcanary-android:" +
-        Versions.leakcanary_android
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val paging_runtime_ktx: String = "androidx.paging:paging-runtime-ktx:" +
-        Versions.paging_runtime_ktx
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val swiperefreshlayout: String = "androidx.swiperefreshlayout:swiperefreshlayout:" +
-        Versions.swiperefreshlayout
-
-    /**
      * https://developer.android.com/jetpack/androidx
      */
     const val fragment_ktx: String = "androidx.fragment:fragment-ktx:" + Versions.androidx_fragment
@@ -253,6 +165,108 @@ object Libs {
      */
     const val dagger_compiler: String = "com.google.dagger:dagger-compiler:" +
         Versions.com_google_dagger
+
+    /**
+     * https://github.com/coil-kt/coil
+     */
+    const val coil: String = "io.coil-kt:coil:" + Versions.io_coil_kt
+
+    /**
+     * https://github.com/coil-kt/coil
+     */
+    const val coil_base: String = "io.coil-kt:coil-base:" + Versions.io_coil_kt
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val org_jetbrains_kotlin_kotlin_stdlib_jdk8: String =
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.org_jetbrains_kotlin_kotlin_stdlib_jdk8
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
+        Versions.com_android_tools_build_gradle
+
+    const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String =
+        "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:" +
+            Versions.org_gradle_kotlin_kotlin_dsl_gradle_plugin
+
+    const val io_gitlab_arturbosch_detekt_gradle_plugin: String =
+        "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin:" +
+            Versions.io_gitlab_arturbosch_detekt_gradle_plugin
+
+    const val de_fayard_buildsrcversions_gradle_plugin: String =
+        "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +
+            Versions.de_fayard_buildsrcversions_gradle_plugin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_scripting_compiler_embeddable: String =
+        "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
+            Versions.kotlin_scripting_compiler_embeddable
+
+    const val com_gradle_build_scan_gradle_plugin: String =
+        "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:" +
+            Versions.com_gradle_build_scan_gradle_plugin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_annotation_processing_gradle: String =
+        "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:" +
+            Versions.kotlin_annotation_processing_gradle
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions_runtime: String =
+        "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
+            Versions.kotlin_android_extensions_runtime
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions: String =
+        "org.jetbrains.kotlin:kotlin-android-extensions:" +
+            Versions.kotlin_android_extensions
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_sam_with_receiver: String = "org.jetbrains.kotlin:kotlin-sam-with-receiver:" +
+        Versions.kotlin_sam_with_receiver
+
+    /**
+     * https://github.com/jaredsburrows/gradle-license-plugin
+     */
+    const val gradle_license_plugin: String = "com.jaredsburrows:gradle-license-plugin:" +
+        Versions.gradle_license_plugin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
+        Versions.kotlin_gradle_plugin
+
+    /**
+     * http://github.com/square/leakcanary/
+     */
+    const val leakcanary_android: String = "com.squareup.leakcanary:leakcanary-android:" +
+        Versions.leakcanary_android
+
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val paging_runtime_ktx: String = "androidx.paging:paging-runtime-ktx:" +
+        Versions.paging_runtime_ktx
+
+    /**
+     * https://developer.android.com/jetpack/androidx
+     */
+    const val swiperefreshlayout: String = "androidx.swiperefreshlayout:swiperefreshlayout:" +
+        Versions.swiperefreshlayout
 
     /**
      * http://tools.android.com
@@ -292,7 +306,7 @@ object Libs {
     const val core_testing: String = "androidx.arch.core:core-testing:" + Versions.core_testing
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://developer.android.com/jetpack/androidx
      */
     const val recyclerview: String = "androidx.recyclerview:recyclerview:" + Versions.recyclerview
 
@@ -302,22 +316,12 @@ object Libs {
     const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
 
     /**
-     * https://github.com/coil-kt/coil
-     */
-    const val coil: String = "io.coil-kt:coil:" + Versions.io_coil_kt
-
-    /**
-     * https://github.com/coil-kt/coil
-     */
-    const val coil_base: String = "io.coil-kt:coil-base:" + Versions.io_coil_kt
-
-    /**
      * https://developer.android.com/jetpack/androidx
      */
     const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://developer.android.com/jetpack/androidx
      */
     const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
 

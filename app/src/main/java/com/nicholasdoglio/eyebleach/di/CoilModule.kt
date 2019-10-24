@@ -39,7 +39,6 @@ object CoilModule {
 
     @Singleton
     @Provides
-    @JvmStatic
     fun provideImageLoader(
         app: Application,
         okhttp: OkHttpClient.Builder,

@@ -39,15 +39,12 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    @JvmStatic
     fun driver(app: Application): AndroidSqliteDriver = AndroidSqliteDriver(Database.Schema, app, REDDIT_POST)
 
     @Provides
     @Singleton
-    @JvmStatic
     fun database(driver: AndroidSqliteDriver): Database = Database(driver)
 
     @Provides
-    @JvmStatic
     fun postQueries(database: Database): RedditPostQueries = database.redditPostQueries
 }

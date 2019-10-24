@@ -24,39 +24,33 @@
 
 buildscript {
     repositories {
-        mavenCentral()
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:${Versions.com_android_tools_build_gradle}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin_gradle_plugin}"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.androidx_navigation}"
-        classpath "com.jaredsburrows:gradle-license-plugin:${Versions.gradle_license_plugin}"
-        classpath "com.squareup.sqldelight:gradle-plugin:${Versions.com_squareup_sqldelight}"
-        classpath "com.soundcloud.delect:delect-plugin:${Versions.delect_plugin}"
-        classpath "com.dicedmelon.gradle:jacoco-android:${Versions.jacoco_android}"
+        classpath("com.android.tools.build:gradle:${Versions.com_android_tools_build_gradle}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin_gradle_plugin}")
+        classpath("com.dicedmelon.gradle:jacoco-android:${Versions.jacoco_android}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.androidx_navigation}")
+        classpath("com.jaredsburrows:gradle-license-plugin:${Versions.gradle_license_plugin}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${Versions.com_squareup_sqldelight}")
+        classpath("com.soundcloud.delect:delect-plugin:${Versions.delect_plugin}")
     }
 }
 
 plugins {
-    id "com.gradle.build-scan" version "2.4.2"
-    id "io.gitlab.arturbosch.detekt" version "1.1.0"
-    id "de.fayard.buildSrcVersions" version "0.6.4"
+    id("com.gradle.build-scan") version("3.0")
+    id("io.gitlab.arturbosch.detekt") version("1.1.1")
+    id("de.fayard.buildSrcVersions") version("0.7.0")
 }
 
 buildSrcVersions {
+    rejectVersionIf {
+        candidate.version.contains("EAP")
+    }
     indent = "\t"
     useFqdnFor("org_jetbrains_kotlin_kotlin_stdlib_jdk8")
 }
-
-
-buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
-    publishAlways()
-}
-
 
 allprojects {
     repositories {
@@ -67,26 +61,18 @@ allprojects {
 //    tasks.matching { task -> task.name.startsWith('assemble') }
 //            .all { task -> task.finalizedBy quality  }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions {
-            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
-            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
-        }
-    }
+    // tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    //     kotlinOptions {
+    //         freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    //         freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+    //     }
+    // }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-task quality() {
-    dependsOn 'app:ktlint'
-    dependsOn 'app:detekt'
-}
-
-wrapper {
-    gradleVersion = Versions.gradleLatestVersion
+tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-
+tasks.register<Delete>("clean") {
+    delete("build")
+}

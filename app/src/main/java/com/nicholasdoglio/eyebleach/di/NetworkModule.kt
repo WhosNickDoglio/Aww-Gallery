@@ -39,7 +39,6 @@ object NetworkModule {
     private const val BASE_URL = "https://www.reddit.com/"
 
     @Provides
-    @JvmStatic
     fun interceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -47,13 +46,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @JvmStatic
     fun okHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient.Builder =
         OkHttpClient.Builder().addInterceptor(interceptor)
 
     @Provides
     @Singleton
-    @JvmStatic
     fun redditService(client: OkHttpClient.Builder): RedditService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())

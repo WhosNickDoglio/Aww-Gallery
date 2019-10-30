@@ -21,13 +21,13 @@ object Versions {
 
     const val androidx_navigation: String = "2.2.0-rc01"
 
-    const val com_squareup_inject: String = "0.5.0"
+    const val com_squareup_inject: String = "0.5.1"
 
     const val androidx_lifecycle: String = "2.2.0-rc01"
 
     const val com_airbnb_android: String = "3.8.0"
 
-    const val com_squareup_moshi: String = "1.8.0"
+    const val com_squareup_moshi: String = "1.9.0"
 
     const val androidx_fragment: String = "1.2.0-rc01"
 
@@ -37,9 +37,9 @@ object Versions {
 
     const val org_jetbrains_kotlin_kotlin_stdlib_jdk8: String = "1.3.50"
 
-    const val com_android_tools_build_gradle: String = "3.5.1" // available: "4.0.0-alpha01"
+    const val com_android_tools_build_gradle: String = "3.5.1"
 
-    const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String = "1.2.9" // available: "1.3.1"
+    const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String = "1.2.9"
 
     const val io_gitlab_arturbosch_detekt_gradle_plugin: String = "1.1.1"
 
@@ -57,7 +57,7 @@ object Versions {
 
     const val kotlin_sam_with_receiver: String = "1.3.50"
 
-    const val gradle_license_plugin: String = "0.8.5" // available: "0.8.42"
+    const val gradle_license_plugin: String = "0.8.5"
 
     const val kotlin_gradle_plugin: String = "1.3.50"
 
@@ -73,7 +73,7 @@ object Versions {
 
     const val jacoco_android: String = "0.1.4"
 
-    const val kotlin_reflect: String = "1.3.41" // available: "1.3.50"
+    const val kotlin_reflect: String = "1.3.50"
 
     const val delect_plugin: String = "0.1.0"
 
@@ -83,7 +83,7 @@ object Versions {
 
     const val recyclerview: String = "1.1.0-rc01"
 
-    const val lint_gradle: String = "26.5.1" // available: "27.0.0-alpha01"
+    const val lint_gradle: String = "26.5.1"
 
     const val appcompat: String = "1.1.0"
 
@@ -95,9 +95,9 @@ object Versions {
 
     const val timber: String = "4.7.1"
 
-    const val aapt2: String = "3.5.1-5435860" // available: "4.0.0-alpha01-5910961"
+    const val aapt2: String = "3.5.1-5435860"
 
-    const val junit: String = "4.12" // available: "4.13-beta-3"
+    const val junit: String = "4.12"
 
     /**
      * Current version: "5.6.2"

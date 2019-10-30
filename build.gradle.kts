@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /*
  * MIT License
  *
@@ -58,19 +60,17 @@ allprojects {
         google()
     }
 
-//    tasks.matching { task -> task.name.startsWith('assemble') }
-//            .all { task -> task.finalizedBy quality  }
-
-    // tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    //     kotlinOptions {
-    //         freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
-    //         freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
-    //     }
-    // }
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.freeCompilerArgs = listOf(
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+        )
+    }
 }
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = Versions.gradleLatestVersion
 }
 
 tasks.register<Delete>("clean") {

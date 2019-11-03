@@ -1,3 +1,4 @@
+import kotlin.String
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
@@ -27,7 +28,7 @@ object Versions {
 
     const val com_airbnb_android: String = "3.8.0"
 
-    const val com_squareup_moshi: String = "1.9.0"
+    const val com_squareup_moshi: String = "1.9.1"
 
     const val androidx_fragment: String = "1.2.0-rc01"
 
@@ -100,11 +101,11 @@ object Versions {
     const val junit: String = "4.12"
 
     /**
-     * Current version: "5.6.2"
+     * Current version: "5.6.3"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "5.6.3"
+    const val gradleLatestVersion: String = "5.6.4"
 }
 
 /**

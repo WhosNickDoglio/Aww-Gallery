@@ -26,19 +26,20 @@ package com.nicholasdoglio.eyebleach.ui.photodetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import com.nicholasdoglio.eyebleach.data.RedditPostRepository
 import com.nicholasdoglio.eyebleach.db.RedditPost
 import javax.inject.Inject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 
-class PhotoDetailViewModel @Inject constructor(private val repository: RedditPostRepository) : ViewModel() {
+class PhotoDetailViewModel @Inject constructor(private val repository: RedditPostRepository) :
+    ViewModel() {
 
     val postId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
 
-    val post: LiveData<RedditPost> = liveData {
-        postId.asFlow().collect { emit(repository.findPostById(it)) }
-    }
+    val post: LiveData<RedditPost> = postId.asFlow()
+        .map { repository.findPostById(it) }
+        .asLiveData()
 }

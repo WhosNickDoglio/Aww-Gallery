@@ -26,17 +26,12 @@ package com.nicholasdoglio.eyebleach.ui.about
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import com.nicholasdoglio.eyebleach.data.about.AboutInfo
 import com.nicholasdoglio.eyebleach.data.about.AboutRepository
 import javax.inject.Inject
-import kotlinx.coroutines.flow.collect
 
 class AboutViewModel @Inject constructor(private val aboutStore: AboutRepository) : ViewModel() {
 
-    val aboutInfo: LiveData<List<AboutInfo>> = liveData {
-        aboutStore.aboutItems.collect {
-            emit(it)
-        }
-    }
+    val aboutInfo: LiveData<List<AboutInfo>> = aboutStore.aboutItems.asLiveData()
 }

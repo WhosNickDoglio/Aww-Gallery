@@ -26,7 +26,7 @@ package com.nicholasdoglio.eyebleach.ui.photolist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.nicholasdoglio.eyebleach.data.RedditPostRepository
@@ -52,11 +52,7 @@ class PhotoListViewModel @Inject constructor(private val repository: RedditPostR
 
     val posts: LiveData<PagedList<RedditPost>> = repository.posts
 
-    val refreshStatus = liveData {
-        repository.refresh.collect {
-            emit(it)
-        }
-    }
+    val refreshStatus = repository.refresh.asLiveData()
 
     // val loading: LiveData<Boolean>
 

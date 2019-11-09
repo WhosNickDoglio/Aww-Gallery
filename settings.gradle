@@ -22,4 +22,4 @@
  * SOFTWARE.
  */
 
-include ':app', ':buildSrc'
+include ':app'

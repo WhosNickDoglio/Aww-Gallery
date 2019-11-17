@@ -30,7 +30,6 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.data.about.AboutInfo
-import com.nicholasdoglio.eyebleach.data.about.OpenAction
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryHolder
 import com.nicholasdoglio.eyebleach.ui.util.openWebPage
 import kotlinx.android.synthetic.main.item_about.*
@@ -45,8 +44,8 @@ class AboutViewHolder(
         content.text = content.resources.getString(model.name)
         containerView.setOnClickListener {
             when (model.action) {
-                is OpenAction.OpenLibs -> navController.navigate(R.id.open_libs)
-                is OpenAction.OpenUrl -> it.context.openWebPage(it.context.getString(model.action.url))
+                is AboutInfo.Action.OpenLibs -> navController.navigate(R.id.open_libs)
+                is AboutInfo.Action.OpenUrl -> it.context.openWebPage(it.context.getString(model.action.url))
             }
         }
     }

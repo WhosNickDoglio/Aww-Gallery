@@ -19,7 +19,7 @@ object Versions {
 
     const val com_squareup_okhttp3: String = "4.2.2"
 
-    const val org_jetbrains_kotlin: String = "1.3.50"
+    const val org_jetbrains_kotlin: String = "1.3.60"
 
     const val androidx_navigation: String = "2.2.0-rc02"
 

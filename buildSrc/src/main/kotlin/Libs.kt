@@ -90,9 +90,8 @@ object Libs {
     /**
      * https://kotlinlang.org/
      */
-    const val org_jetbrains_kotlin_kotlin_stdlib_jdk8: String =
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
-            Versions.org_jetbrains_kotlin
+    const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
+        Versions.org_jetbrains_kotlin
 
     /**
      * https://developer.android.com/topic/libraries/architecture/index.html

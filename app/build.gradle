@@ -73,7 +73,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation Libs.org_jetbrains_kotlin_kotlin_stdlib_jdk8
+    implementation Libs.kotlin_stdlib_jdk8
 
     implementation Libs.android_driver
     implementation Libs.android_paging_extensions

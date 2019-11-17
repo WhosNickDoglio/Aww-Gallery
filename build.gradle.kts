@@ -48,7 +48,6 @@ buildSrcVersions {
         candidate.version.contains("EAP")
     }
     indent = "\t"
-    useFqdnFor("org_jetbrains_kotlin_kotlin_stdlib_jdk8")
 }
 
 allprojects {

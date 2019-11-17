@@ -25,6 +25,7 @@
 package com.nicholasdoglio.eyebleach.di
 
 import com.nicholasdoglio.eyebleach.data.remote.RedditService
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -51,10 +52,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun redditService(client: OkHttpClient.Builder): RedditService = Retrofit.Builder()
+    fun redditService(client: Lazy<OkHttpClient.Builder>): RedditService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
-        .client(client.build())
+        .callFactory(client.get().build())
         .build()
         .create()
 }

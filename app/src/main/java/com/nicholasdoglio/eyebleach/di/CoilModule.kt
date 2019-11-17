@@ -29,6 +29,7 @@ import coil.ImageLoader
 import coil.util.CoilUtils
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -41,7 +42,7 @@ object CoilModule {
     @Provides
     fun provideImageLoader(
         app: Application,
-        okhttp: OkHttpClient.Builder,
+        okhttp: Lazy<OkHttpClient.Builder>,
         dispatcherProvider: DispatcherProvider
     ): ImageLoader =
         ImageLoader(
@@ -50,7 +51,7 @@ object CoilModule {
                 crossfade(true)
                 error(R.drawable.cat_error)
                 dispatcher(dispatcherProvider.network)
-                callFactory { okhttp.cache(CoilUtils.createDefaultCache(app)).build() }
+                callFactory { okhttp.get().cache(CoilUtils.createDefaultCache(app)).build() }
             }
         )
 }

@@ -29,7 +29,7 @@ object Versions {
 
     const val com_airbnb_android: String = "3.8.0"
 
-    const val com_squareup_moshi: String = "1.9.1"
+    const val com_squareup_moshi: String = "1.9.2"
 
     const val androidx_fragment: String = "1.2.0-rc02"
 
@@ -45,7 +45,7 @@ object Versions {
 
     const val gradle_license_plugin: String = "0.8.5"
 
-    const val leakcanary_android: String = "2.0-beta-3"
+    const val leakcanary_android: String = "2.0-beta-4"
 
     const val paging_runtime_ktx: String = "2.1.0"
 
@@ -53,21 +53,21 @@ object Versions {
 
     const val constraintlayout: String = "2.0.0-beta3"
 
-    const val work_runtime_ktx: String = "2.3.0-alpha03"
+    const val work_runtime_ktx: String = "2.3.0-beta01"
 
     const val activity_ktx: String = "1.1.0-rc02"
 
     const val core_testing: String = "2.1.0"
 
-    const val recyclerview: String = "1.1.0-rc01"
+    const val recyclerview: String = "1.1.0"
 
     const val lint_gradle: String = "26.5.2"
 
     const val appcompat: String = "1.1.0"
 
-    const val core_ktx: String = "1.2.0-beta02"
+    const val core_ktx: String = "1.2.0-rc01"
 
-    const val material: String = "1.2.0-alpha01"
+    const val material: String = "1.2.0-alpha02"
 
     const val ktlint: String = "0.35.0"
 
@@ -78,11 +78,11 @@ object Versions {
     const val junit: String = "4.12"
 
     /**
-     * Current version: "6.0"
+     * Current version: "6.0.1"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.0"
+    const val gradleLatestVersion: String = "6.0.1"
 }
 
 /**

@@ -27,12 +27,12 @@ package com.nicholasdoglio.eyebleach.data.local
 import androidx.paging.PagedList
 import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class RedditBoundaryCallback
 @Inject constructor(

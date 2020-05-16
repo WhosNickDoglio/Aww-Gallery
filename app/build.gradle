@@ -36,14 +36,19 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.nicholasdoglio.eyebleach"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 4
-        versionName "0.0.10"
+        targetSdkVersion 29
+        versionCode 5
+        versionName "0.0.11"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental": "true"]
+            }
+        }
     }
     buildTypes {
         release {
@@ -75,6 +80,7 @@ dependencies {
     implementation libs.appcompat
     implementation libs.recyclerview
     implementation libs.constraint
+    implementation libs.swiperefreshlayout
 
     implementation libs.material
 
@@ -103,7 +109,6 @@ dependencies {
 
     implementation libs.retrofit
     implementation libs.retrofit_converter_moshi
-    implementation libs.retrofit_coroutines_adapter
     implementation libs.okhttp
     implementation libs.okhttp_logging
 

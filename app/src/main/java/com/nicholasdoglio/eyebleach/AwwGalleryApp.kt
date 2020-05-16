@@ -33,8 +33,8 @@ import com.nicholasdoglio.eyebleach.di.AppComponent
 import com.nicholasdoglio.eyebleach.di.AppComponentProvider
 import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
 import com.nicholasdoglio.eyebleach.worker.ClearDataWorker
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import timber.log.Timber
 
 /**
  * @author Nicholas Doglio

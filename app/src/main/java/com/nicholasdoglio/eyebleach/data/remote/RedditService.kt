@@ -24,7 +24,6 @@
 
 package com.nicholasdoglio.eyebleach.data.remote
 
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -33,9 +32,9 @@ import retrofit2.http.Query
  */
 interface RedditService {
 
-    @GET("user/NicholasDoglio/m/awwgallery/.json")
-    fun multiPosts(
+    @GET("user/awwgalleryapp/m/awwgalleryapp/.json")
+    suspend fun multiPosts(
         @Query("after") after: String,
         @Query("limit") limit: Int = 100
-    ): Deferred<ListingResponse>
+    ): ListingResponse
 }

@@ -34,8 +34,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.di.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment @Inject constructor(
     private val factory: ViewModelFactory

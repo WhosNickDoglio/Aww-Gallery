@@ -42,8 +42,8 @@ import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryFragment
 import com.nicholasdoglio.eyebleach.ui.util.CircularProgressPlaceholderListener
 import com.nicholasdoglio.eyebleach.util.openWebPage
 import com.nicholasdoglio.eyebleach.util.shareUrl
-import kotlinx.android.synthetic.main.fragment_photo_detail.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_photo_detail.*
 
 class PhotoDetailFragment @Inject constructor(override val factory: ViewModelFactory) :
     AwwGalleryFragment<PhotoDetailViewModel>(factory, R.layout.fragment_photo_detail) {

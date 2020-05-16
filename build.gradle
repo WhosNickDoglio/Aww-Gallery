@@ -38,16 +38,8 @@ buildscript {
 }
 
 plugins {
-    id "com.gradle.build-scan" version "2.3"
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
+    id "io.gitlab.arturbosch.detekt" version "1.9.0"
 }
-
-buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
-    publishAlways()
-}
-
 
 allprojects {
     repositories {
@@ -58,22 +50,6 @@ allprojects {
     // TODO does this work how I want it to?
     tasks.matching { task -> task.name.startsWith('assemble') }
             .all { task -> task.finalizedBy quality  }
-
-
-    tasks.withType(JavaCompile).configureEach {
-        options.compilerArgs += [
-                "-Adagger.formatGeneratedSource=disabled",
-                "-Adagger.gradle.incremental=true"
-        ]
-
-    }
-
-    afterEvaluate {
-        extensions.findByName("kapt")?.arguments {
-            arg("dagger.formatGeneratedSource", "disabled")
-            arg("dagger.gradle.incremental", "true")
-        }
-    }
 }
 
 task clean(type: Delete) {

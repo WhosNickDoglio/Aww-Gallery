@@ -2,9 +2,9 @@ package com.nicholasdoglio.eyebleach.di
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
+import timber.log.Timber
 
 class InjectingFragmentFactory @Inject constructor(
     private val creators: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<Fragment>>

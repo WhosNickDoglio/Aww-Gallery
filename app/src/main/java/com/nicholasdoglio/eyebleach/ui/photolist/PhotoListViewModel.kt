@@ -30,8 +30,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.nicholasdoglio.eyebleach.data.RedditPostRepository
 import com.nicholasdoglio.eyebleach.data.local.RedditPost
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class PhotoListViewModel @Inject constructor(private val repository: RedditPostRepository) :
     ViewModel() {

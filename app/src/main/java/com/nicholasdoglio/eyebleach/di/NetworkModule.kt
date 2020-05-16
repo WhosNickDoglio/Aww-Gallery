@@ -24,16 +24,15 @@
 
 package com.nicholasdoglio.eyebleach.di
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.nicholasdoglio.eyebleach.data.remote.RedditService
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import javax.inject.Singleton
 
 /**
  * @author Nicholas Doglio
@@ -43,7 +42,6 @@ object NetworkModule {
     private const val BASE_URL = "https://www.reddit.com/"
 
     @Provides
-    @JvmStatic
     fun interceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -51,17 +49,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @JvmStatic
     fun okHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient.Builder().addInterceptor(interceptor).build()
 
     @Provides
     @Singleton
-    @JvmStatic
     fun redditService(client: OkHttpClient): RedditService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
         .client(client)
         .build()
         .create()

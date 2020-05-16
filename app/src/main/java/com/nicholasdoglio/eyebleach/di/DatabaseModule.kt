@@ -41,7 +41,6 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    @JvmStatic
     fun room(application: Application): RedditPostDatabase =
         Room.databaseBuilder(application, RedditPostDatabase::class.java, REDDI_POST)
             .fallbackToDestructiveMigration()

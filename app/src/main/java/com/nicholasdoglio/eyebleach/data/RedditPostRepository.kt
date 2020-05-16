@@ -33,9 +33,9 @@ import com.nicholasdoglio.eyebleach.data.local.RedditBoundaryCallback
 import com.nicholasdoglio.eyebleach.data.local.RedditPost
 import com.nicholasdoglio.eyebleach.data.remote.RemoteSource
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.withContext
 
 /**
  * @author Nicholas Doglio

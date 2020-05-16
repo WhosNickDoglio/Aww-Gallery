@@ -46,9 +46,9 @@ import com.nicholasdoglio.eyebleach.di.ViewModelFactory
 import com.nicholasdoglio.eyebleach.ui.base.AwwGalleryFragment
 import com.nicholasdoglio.eyebleach.ui.util.SpacesItemDecoration
 import com.nicholasdoglio.eyebleach.util.calculateNoOfColumns
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_photo_list.*
 import kotlinx.android.synthetic.main.item_photo_list.*
-import javax.inject.Inject
 
 class PhotoListFragment @Inject constructor(
     override val factory: ViewModelFactory

@@ -21,20 +21,4 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.nicholasdoglio.eyebleach.di
-
-import com.nicholasdoglio.eyebleach.util.AppDispatchers
-import com.nicholasdoglio.eyebleach.util.DispatcherProvider
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-
-@InstallIn(SingletonComponent::class)
-@Module
-interface BindingModule {
-
-    @Binds
-    fun bindDispatchers(appDispatchers: AppDispatchers): DispatcherProvider
-}
+include(":app")

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2019 Nicholas Doglio
+  ~ Copyright (c) 2020 Nicholas Doglio
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
   ~ SOFTWARE.
   -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/grid_item_size"
-    android:layout_height="@dimen/grid_item_size"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
     android:elevation="24dp">
 
     <ImageView

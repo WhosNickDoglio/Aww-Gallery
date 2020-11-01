@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Aww Gallery.iml" filepath="$PROJECT_DIR$/Aww Gallery.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aww_Gallery.iml" filepath="$PROJECT_DIR$/.idea/modules/Aww_Gallery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Aww_Gallery.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Aww_Gallery.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aww_Gallery.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Aww_Gallery.buildSrc.iml" />
     </modules>
   </component>
 </project>

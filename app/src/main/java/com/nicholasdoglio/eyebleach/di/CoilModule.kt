@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2019. Nicholas Doglio
+ *   Copyright (c) 2020 Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -26,32 +26,30 @@ package com.nicholasdoglio.eyebleach.di
 
 import android.app.Application
 import coil.ImageLoader
-import coil.util.CoilUtils
 import com.nicholasdoglio.eyebleach.R
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
-import dagger.Lazy
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 object CoilModule {
 
     @Singleton
     @Provides
-    fun provideImageLoader(
+    fun imageLoader(
         app: Application,
-        okhttp: Lazy<OkHttpClient.Builder>,
-        dispatcherProvider: DispatcherProvider
-    ): ImageLoader =
-        ImageLoader(
-            context = app,
-            builder = {
-                crossfade(true)
-                error(R.drawable.cat_error)
-                dispatcher(dispatcherProvider.network)
-                callFactory { okhttp.get().cache(CoilUtils.createDefaultCache(app)).build() }
-            }
-        )
+        dispatcherProvider: DispatcherProvider,
+        okHttpClient: OkHttpClient
+    ): ImageLoader = ImageLoader.Builder(app)
+        .crossfade(true)
+        .error(R.drawable.cat_error)
+        .dispatcher(dispatcherProvider.background)
+        .launchInterceptorChainOnMainThread(false)
+        .okHttpClient(okHttpClient)
+        .build()
 }

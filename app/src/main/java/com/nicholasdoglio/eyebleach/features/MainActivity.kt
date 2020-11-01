@@ -22,19 +22,23 @@
  * SOFTWARE.
  */
 
-package com.nicholasdoglio.eyebleach.di
+package com.nicholasdoglio.eyebleach.features
 
-import com.nicholasdoglio.eyebleach.util.AppDispatchers
-import com.nicholasdoglio.eyebleach.util.DispatcherProvider
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.nicholasdoglio.eyebleach.R
+import com.nicholasdoglio.eyebleach.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-@InstallIn(SingletonComponent::class)
-@Module
-interface BindingModule {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
-    @Binds
-    fun bindDispatchers(appDispatchers: AppDispatchers): DispatcherProvider
+    private lateinit var activityBinding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityBinding = ActivityMainBinding.inflate(layoutInflater)
+        setTheme(R.style.AppTheme)
+        setContentView(activityBinding.root)
+    }
 }

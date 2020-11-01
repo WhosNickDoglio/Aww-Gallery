@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2019 Nicholas Doglio
+  ~ Copyright (c) 2020 Nicholas Doglio
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,13 @@
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nav_graph"
-            app:startDestination="@id/photoListFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/photoListFragment">
 
     <fragment
         android:id="@+id/photoListFragment"
-        android:name="com.nicholasdoglio.eyebleach.ui.photolist.PhotoListFragment"
+        android:name="com.nicholasdoglio.eyebleach.features.photolist.PhotoListFragment"
         android:label="PhotoListFragment">
         <action
             android:id="@+id/open_details"
@@ -37,23 +37,25 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action android:id="@+id/open_about" app:destination="@id/aboutFragment"/>
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/openAbout"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/photoDetailFragment"
-        android:name="com.nicholasdoglio.eyebleach.ui.photodetail.PhotoDetailFragment"
+        android:name="com.nicholasdoglio.eyebleach.features.photodetail.PhotoDetailFragment"
         android:label="PhotoDetailFragment">
         <argument
-            android:name="photoId"
-            app:argType="string"/>
+            android:name="post"
+            app:argType="com.nicholasdoglio.eyebleach.data.RedditPost" />
     </fragment>
-    <dialog android:id="@+id/aboutFragment"
-            android:name="com.nicholasdoglio.eyebleach.ui.about.AboutFragment"
-            android:label="AboutFragment">
-        <action android:id="@+id/open_libs" app:destination="@id/librariesFragment"/>
-    </dialog>
-    <dialog android:id="@+id/librariesFragment"
-            android:name="com.nicholasdoglio.eyebleach.ui.about.LibrariesFragment"
-            android:label="LibrariesFragment"/>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.nicholasdoglio.eyebleach.features.about.AboutFragment"
+        android:label="AboutFragment">
+        <argument
+            android:name="data"
+            app:argType="com.mikepenz.aboutlibraries.LibsBuilder" />
+    </fragment>
 </navigation>

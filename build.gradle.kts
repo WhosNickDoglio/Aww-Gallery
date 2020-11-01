@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 /*
  * MIT License
  *
- * Copyright (c) 2019 Nicholas Doglio
+ * Copyright (c) 2020 Nicholas Doglio
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,26 +30,21 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.com_android_tools_build_gradle}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.org_jetbrains_kotlin}")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.androidx_navigation}")
-        classpath("com.jaredsburrows:gradle-license-plugin:${Versions.gradle_license_plugin}")
-        classpath("com.squareup.sqldelight:gradle-plugin:${Versions.com_squareup_sqldelight}")
+        classpath(Libs.com_android_tools_build_gradle)
+        classpath(Libs.kotlin_gradle_plugin)
+        classpath(Libs.navigation_safe_args_gradle_plugin)
+        classpath(Libs.aboutPlugin)
+        classpath(Libs.play_publisher)
+        classpath(Libs.hilt_plugin)
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt") version("1.1.1")
-    buildSrcVersions
+    detekt
+    benManesVersions
 }
 
-buildSrcVersions {
-    rejectVersionIf {
-        candidate.version.contains("EAP")
-    }
-    indent = "\t"
-}
-
+// TODO dependency matching
 allprojects {
     repositories {
         jcenter()
@@ -59,7 +54,8 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions.freeCompilerArgs = listOf(
             "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+            "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
+            "-Xjvm-default=all"
         )
     }
 }

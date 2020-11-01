@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2019. Nicholas Doglio
+ *   Copyright (c) 2020 Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
  */
 
 object Config {
-    const val compileSdkVersion = 29
-    const val minSdkVersion = 21
-    const val targetSdkVersion = 29
+    const val compileSdkVersion = 30
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 30
     const val versionCode = 1
     const val versionName = "0.0.1"
 }

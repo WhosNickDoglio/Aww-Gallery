@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2020 Nicholas Doglio
+ *   Copyright (c) 2020. Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,20 @@
  *   SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
+package com.nicholasdoglio.eyebleach.util
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
+
+interface DispatcherProvider {
+    val ui: CoroutineDispatcher
+    val background: CoroutineDispatcher
+    val io: CoroutineDispatcher
 }
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
-
-
-repositories {
-    jcenter()
+class AppDispatchers @Inject constructor() : DispatcherProvider {
+    override val ui: CoroutineDispatcher = Dispatchers.Main
+    override val background: CoroutineDispatcher = Dispatchers.Default
+    override val io: CoroutineDispatcher = Dispatchers.IO
 }

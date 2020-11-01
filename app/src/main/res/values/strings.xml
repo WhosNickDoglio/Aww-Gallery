@@ -1,7 +1,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2019 Nicholas Doglio
+  ~ Copyright (c) 2020 Nicholas Doglio
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,5 @@
     <string name="app_name">Aww Gallery</string>
     <string name="empty_view_text">Unable to download images</string>
     <string name="about_menu_item">About</string>
-
-
-    <string name="libs">Libraries</string>
-    <string name="source">Source code</string>
-    <string name="aww_gallery_github">https://github.com/WhosNickDoglio/Aww-Gallery</string>
-    <string name="developed_by">Developed by Nicholas Doglio</string>
-    <string name="doglio_website">https://whosnickdoglio.dev/</string>
-    <string name="graphics_by">Icon and Graphics by Guzman Gonzalez</string>
-    <string name="guzz_website">http://guzzgonzalez.com/</string>
-    <string name="open_source_libraries">Open Source Libraries</string>
-
 
 </resources>

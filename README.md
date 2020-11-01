@@ -43,7 +43,7 @@ Full changelog is available [here](https://github.com/WhosNickDoglio/Aww-Gallery
   
       MIT License
 
-      Copyright (c) 2019 Nicholas Doglio
+      Copyright (c) 2020 Nicholas Doglio
 
       Permission is hereby granted, free of charge, to any person obtaining a copy
       of this software and associated documentation files (the "Software"), to deal

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2020 Nicholas Doglio
+ *   Copyright (c) 2020. Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,17 @@
  *   SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
-}
+package com.nicholasdoglio.eyebleach.data
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
+import retrofit2.http.GET
+import retrofit2.http.Query
 
+interface PostService {
 
-repositories {
-    jcenter()
+    @GET("/user/awwgalleryapp/m/awwgalleryapp/.json")
+    suspend fun posts(
+        @Query("after") after: String = "",
+        @Query("limit") limit: Int = 50,
+        @Query("api_type") type: String = "json"
+    ): ListingResponse
 }

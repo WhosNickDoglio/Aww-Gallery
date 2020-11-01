@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2020 Nicholas Doglio
+ *   Copyright (c) 2020. Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,13 @@
  *   SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
-}
+import org.gradle.plugin.use.PluginDependenciesSpec
+import org.gradle.plugin.use.PluginDependencySpec
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
+val PluginDependenciesSpec.detekt: PluginDependencySpec
+    inline get() =
+        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 
-
-repositories {
-    jcenter()
-}
+val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
+    inline get() =
+        id("com.github.ben-manes.versions").version(Versions.benManesVersions)

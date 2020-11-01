@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2019. Nicholas Doglio
+ *   Copyright (c) 2020 Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -26,47 +26,22 @@ package com.nicholasdoglio.eyebleach
 
 import android.app.Application
 import android.os.StrictMode
-import androidx.work.Configuration
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import coil.Coil
-import com.nicholasdoglio.eyebleach.di.AppComponent
-import com.nicholasdoglio.eyebleach.di.AppComponentProvider
-import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
-import com.nicholasdoglio.eyebleach.ui.worker.ClearDataWorker
-import java.util.concurrent.TimeUnit
+import coil.ImageLoader
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
-class AwwGalleryApp : Application(), AppComponentProvider {
+@HiltAndroidApp
+class AwwGalleryApp : Application() {
 
-    override val component: AppComponent by lazy {
-        DaggerAppComponent.factory().create(this)
-    }
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     override fun onCreate() {
         super.onCreate()
-        initWorkManager()
         initDebugTools()
-        initClearDatabaseWorker()
-        Coil.setDefaultImageLoader(component.imageLoader)
-    }
-
-    private fun initClearDatabaseWorker() {
-        WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork(
-                CLEAR_DATABASE_WORK,
-                ExistingPeriodicWorkPolicy.KEEP,
-                PeriodicWorkRequestBuilder<ClearDataWorker>(INTERVAL_TWELVE_HOURS, TimeUnit.HOURS).build()
-            )
-    }
-
-    private fun initWorkManager() {
-        WorkManager.initialize(
-            this, Configuration.Builder()
-                .setWorkerFactory(component.workerFactory)
-                .build()
-        )
+        Coil.setImageLoader(imageLoader)
     }
 
     private fun initDebugTools() {
@@ -88,35 +63,19 @@ class AwwGalleryApp : Application(), AppComponentProvider {
             )
         }
     }
-
-    companion object {
-        private const val CLEAR_DATABASE_WORK = "CLEAR_DATABASE"
-        private const val INTERVAL_TWELVE_HOURS: Long = 12
-    }
 }
 
 /* TODO
     - RecyclerView columns size and spacing
     - Error handling Retrofit calls
-    - Error handling for DB
-    - ContentLoadingProgressBar with MediatorLiveData (Empty DB and network request in flight)
-    - Combine all errors into single MediatorLiveData
-    - Network Connectivity LiveData
+    - ContentLoadingProgressBar with Flow (Empty DB and network request in flight)
+    - Combine all errors into single Flow
+    - Network Connectivity Flow
     - Tests, lots of tests
     - Proguard?
     - Hide toolbar on scroll
-    - Move LiveData to only presentation layer
     - Other debug tools
-    - Custom Retrofit CallAdapter
     - Dependency matching
     - Move away from Paging Lib, Just use Flow?
     - MotionLayout Animations
-    - Have gradle quality task not run every build, only certain circumstances
-
-    https://ivanisidrowu.github.io/android/2017/12/31/customize-your-own-retrofit/
-
-    https://android.jlelse.eu/building-your-own-retrofit-call-adapter-b198169bab69
-
-    https://handstandsam.com/2019/08/23/sqldelight-1-x-quick-start-guide-for-android/
-
  */

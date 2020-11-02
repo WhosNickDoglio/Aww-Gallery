@@ -24,15 +24,9 @@
 
 package com.nicholasdoglio.eyebleach.util
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
-import androidx.annotation.ColorInt
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import com.nicholasdoglio.eyebleach.R
 
 fun Context.openWebPage(url: String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))

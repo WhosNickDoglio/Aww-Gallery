@@ -34,26 +34,20 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PhotoListViewModel @Inject constructor(
-        private val pagingSource: RedditPagingSource
+    private val pagingSource: RedditPagingSource
 ) : ViewModel(), ListViewModel {
     private val pager = Pager(
-            config = PagingConfig(pageSize = 8),
-            pagingSourceFactory = { pagingSource }
+        config = PagingConfig(pageSize = 8),
+        pagingSourceFactory = { pagingSource }
     )
 
     override val state: Flow<PagingData<RedditPost>>
         get() = pager.flow
-
-    override fun input(intent: PhotoListIntent) {
-
-    }
 }
-
 
 interface ListViewModel {
 
     val state: Flow<PagingData<RedditPost>>
 
-    fun input(intent: PhotoListIntent)
-
+    // fun input(intent: PhotoListIntent)
 }

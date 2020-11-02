@@ -5,6 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aww-Gallery.iml" filepath="$PROJECT_DIR$/.idea/modules/Aww-Gallery.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Aww-Gallery.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Aww-Gallery.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aww-Gallery.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Aww-Gallery.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aww_Gallery.iml" filepath="$PROJECT_DIR$/.idea/modules/Aww_Gallery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Aww_Gallery.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Aww_Gallery.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aww_Gallery.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Aww_Gallery.buildSrc.iml" />
     </modules>
   </component>
 </project>

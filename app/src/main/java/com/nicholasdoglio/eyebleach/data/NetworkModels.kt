@@ -27,7 +27,6 @@ package com.nicholasdoglio.eyebleach.data
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-
 @JsonClass(generateAdapter = true)
 data class ListingResponse(val data: Data)
 
@@ -39,8 +38,9 @@ data class Children(val data: ChildData)
 
 @JsonClass(generateAdapter = true)
 data class ChildData(
-        val name: String,
-        val permalink: String,
-        val thumbnail: String,
-        val url: String,
-        @Json(name = "over_18") val over18: Boolean)
+    val name: String,
+    val permalink: String,
+    val thumbnail: String,
+    val url: String,
+    @Json(name = "over_18") val over18: Boolean
+)

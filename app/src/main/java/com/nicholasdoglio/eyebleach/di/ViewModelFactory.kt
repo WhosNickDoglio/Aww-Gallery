@@ -34,14 +34,15 @@ import javax.inject.Singleton
 class ViewModelFactory
 @Inject
 constructor(
-        private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
+    @Suppress("TooGenericExceptionCaught", "TooGenericExceptionThrown")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val creator = creators[modelClass] ?: creators.asIterable().firstOrNull {
             modelClass.isAssignableFrom(it.key)
         }?.value
-        ?: throw IllegalArgumentException("unknown model class $modelClass")
+            ?: throw IllegalArgumentException("unknown model class $modelClass")
 
         return try {
             creator.get() as T

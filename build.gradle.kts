@@ -55,10 +55,10 @@ allprojects {
         kotlinOptions.freeCompilerArgs = listOf(
 //                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
 //                "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
-                "-Xjvm-default=all",
-                "-Xallow-jvm-ir-dependencies",
-                "-Xopt-in=kotlin.Experimental",
-                "-Xskip-prerelease-check"
+            "-Xjvm-default=all",
+            "-Xallow-jvm-ir-dependencies",
+            "-Xopt-in=kotlin.Experimental",
+            "-Xskip-prerelease-check"
         )
     }
 }

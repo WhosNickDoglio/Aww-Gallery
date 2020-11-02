@@ -25,9 +25,7 @@
 package com.nicholasdoglio.eyebleach.features.photolist
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import com.nicholasdoglio.eyebleach.ui.PhotoList
-
 
 @Composable
 fun PhotoListScreen(viewModel: ListViewModel) {

@@ -41,17 +41,19 @@ object NetworkModule {
     @Singleton
     @Provides
     fun okhttp(): OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
+        .addInterceptor(
+            HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
+            }
+        )
+        .build()
 
     @Singleton
     @Provides
     fun service(okHttpClient: OkHttpClient): PostService = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-            .create()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(okHttpClient)
+        .build()
+        .create()
 }

@@ -100,9 +100,8 @@ android {
 
     composeOptions {
         kotlinCompilerVersion = Versions.kotlin
-        kotlinCompilerExtensionVersion  = Versions.compose
+        kotlinCompilerExtensionVersion = Versions.compose
     }
-
 }
 
 dependencies {

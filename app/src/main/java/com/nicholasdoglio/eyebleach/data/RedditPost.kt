@@ -24,10 +24,9 @@
 
 package com.nicholasdoglio.eyebleach.data
 
-
 data class RedditPost(
-        val url: String,
-        val name: String,
-        val thumbnail: String,
-        val permalink: String,
+    val url: String,
+    val name: String,
+    val thumbnail: String,
+    val permalink: String,
 )

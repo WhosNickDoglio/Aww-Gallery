@@ -24,17 +24,15 @@
 
 package com.nicholasdoglio.eyebleach.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 
 @Composable
 fun ErrorView(
-        type: ErrorType,
-        message: String
+    type: ErrorType,
+    message: String
 ) {
     Column {
-
     }
 }
 

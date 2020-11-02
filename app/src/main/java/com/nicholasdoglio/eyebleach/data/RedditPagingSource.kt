@@ -25,20 +25,19 @@
 package com.nicholasdoglio.eyebleach.data
 
 import androidx.paging.PagingSource
-import com.nicholasdoglio.eyebleach.data.util.toRedditPost
 import com.nicholasdoglio.eyebleach.data.util.toRedditPosts
 import com.nicholasdoglio.eyebleach.util.DispatcherProvider
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import timber.log.Timber
-import java.io.IOException
 import javax.inject.Inject
 
 class RedditPagingSource @Inject constructor(
-        private val dispatcherProvider: DispatcherProvider,
-        private val postService: PostService
+    private val dispatcherProvider: DispatcherProvider,
+    private val postService: PostService
 ) : PagingSource<String, RedditPost>() {
 
+    @Suppress("ReturnCount")
     override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditPost> {
         Timber.i("Load request key: ${params.key}")
 
@@ -54,11 +53,10 @@ class RedditPagingSource @Inject constructor(
             if (data.isEmpty()) return LoadResult.Error(NoDataException())
 
             return LoadResult.Page(
-                    data = data,
-                    prevKey = after,
-                    nextKey = data.last().name
+                data = data,
+                prevKey = after,
+                nextKey = data.last().name
             )
-
         } catch (e: HttpException) {
             return LoadResult.Error(e)
         }

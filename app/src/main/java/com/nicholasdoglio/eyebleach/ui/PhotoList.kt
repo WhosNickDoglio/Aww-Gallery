@@ -24,7 +24,6 @@
 
 package com.nicholasdoglio.eyebleach.ui
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable

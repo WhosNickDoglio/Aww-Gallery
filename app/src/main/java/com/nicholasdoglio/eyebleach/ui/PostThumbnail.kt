@@ -42,16 +42,18 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable // TODO sizing here is horrific, fix this
 fun PostThumbnail(post: RedditPost) {
-    Column(modifier = Modifier.height(200.dp).fillMaxWidth()) {
+    Column(modifier = Modifier.height(THUMBNAIL_HEIGHT.dp).fillMaxWidth()) {
         CoilImage(
-                data = post.url,
-                loading = {
-                    Box(Modifier.fillMaxSize()) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
-                },
-                modifier = Modifier.fillMaxSize(),
-                error = { Image(asset = imageResource(R.drawable.cat_error)) }
+            data = post.url,
+            loading = {
+                Box(Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(Modifier.align(Alignment.Center))
+                }
+            },
+            modifier = Modifier.fillMaxSize(),
+            error = { Image(asset = imageResource(R.drawable.cat_error)) }
         )
     }
 }
+
+private const val THUMBNAIL_HEIGHT = 200

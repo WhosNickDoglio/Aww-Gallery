@@ -31,11 +31,9 @@ import javax.inject.Inject
 interface DispatcherProvider {
     val ui: CoroutineDispatcher
     val background: CoroutineDispatcher
-    val io: CoroutineDispatcher
 }
 
 class AppDispatchers @Inject constructor() : DispatcherProvider {
     override val ui: CoroutineDispatcher = Dispatchers.Main
     override val background: CoroutineDispatcher = Dispatchers.Default
-    override val io: CoroutineDispatcher = Dispatchers.IO
 }

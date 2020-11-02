@@ -22,17 +22,34 @@
  *   SOFTWARE.
  */
 
-import org.gradle.plugin.use.PluginDependenciesSpec
-import org.gradle.plugin.use.PluginDependencySpec
+package com.nicholasdoglio.eyebleach
 
-val PluginDependenciesSpec.detekt: PluginDependencySpec
-    inline get() =
-        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.viewinterop.viewModel
+import androidx.lifecycle.ViewModelProvider
+import com.nicholasdoglio.eyebleach.di.injector
+import com.nicholasdoglio.eyebleach.features.photolist.PhotoListScreen
+import javax.inject.Inject
 
-val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
-    inline get() =
-        id("com.github.ben-manes.versions").version(Versions.benManesVersions)
+class MainActivity : AppCompatActivity() {
 
-val PluginDependenciesSpec.ktlint: PluginDependencySpec
-    inline get() =
-        id("org.jlleitschuh.gradle.ktlint").version(Versions.ktlintGradle)
+    @Inject
+    lateinit var viewModeFactory: ViewModelProvider.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        injector.inject(this)
+        super.onCreate(savedInstanceState)
+        setContent { AwwGallery(viewModeFactory) }
+    }
+}
+
+@Composable
+fun AwwGallery(factory: ViewModelProvider.Factory) {
+    MaterialTheme {
+        PhotoListScreen(viewModel(factory = factory))
+    }
+}

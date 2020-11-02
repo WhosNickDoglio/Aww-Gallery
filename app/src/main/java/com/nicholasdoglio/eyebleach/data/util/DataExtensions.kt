@@ -24,24 +24,24 @@
 
 package com.nicholasdoglio.eyebleach.data.util
 
-import com.nicholasdoglio.eyebleach.data.PostModel
-import com.nicholasdoglio.eyebleach.data.remote.ChildData
-import com.nicholasdoglio.eyebleach.data.remote.ListingResponse
-import com.nicholasdoglio.eyebleach.db.RedditPost
+import com.nicholasdoglio.eyebleach.data.ChildData
+import com.nicholasdoglio.eyebleach.data.ListingResponse
+import com.nicholasdoglio.eyebleach.data.RedditPost
 
-fun ListingResponse.toRedditPosts(): List<PostModel> = this.data.children.asSequence()
-    .filter { !it.data.over18 }
-    .filter { it.data.url.contains(".jpg") || it.data.url.contains(".png") }
-    .map { it.data.toRedditPost() }
-    .toList()
 
-fun ChildData.toRedditPost(): PostModel =
-    PostModel(
-        url = url,
-        name = name,
-        thumbnail = thumbnail,
-        permalink = permalink
-    )
+fun ListingResponse.toRedditPosts(): List<RedditPost> = this.data.children.asSequence()
+        .filter { !it.data.over18 }
+        .filter { it.data.url.contains(".jpg") || it.data.url.contains(".png") }
+        .map { it.data.toRedditPost() }
+        .toList()
+
+fun ChildData.toRedditPost(): RedditPost =
+        RedditPost(
+                url = url,
+                name = name,
+                thumbnail = thumbnail,
+                permalink = permalink
+        )
 
 inline val RedditPost.redditUrl: String
     get() = "https://reddit.com$permalink"

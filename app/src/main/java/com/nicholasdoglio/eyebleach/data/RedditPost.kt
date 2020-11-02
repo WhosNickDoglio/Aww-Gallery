@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2019. Nicholas Doglio
+ *   Copyright (c) 2020. Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,12 @@
  *   SOFTWARE.
  */
 
-package com.nicholasdoglio.eyebleach.ui.photolist
+package com.nicholasdoglio.eyebleach.data
 
-import com.airbnb.epoxy.EpoxyAsyncUtil
-import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.nicholasdoglio.eyebleach.db.RedditPost
 
-class PhotoListController :
-    PagedListEpoxyController<RedditPost>(
-        diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()
-    ) {
-
-    init {
-        isDebugLoggingEnabled = true
-    }
-
-    override fun buildItemModel(currentPosition: Int, item: RedditPost?): EpoxyModel<*> {
-        return if (item != null) {
-            PhotoModel_()
-                .id(item.permalink)
-                .model(item)
-        } else {
-            LoadingModel_()
-                .id(currentPosition)
-        }
-    }
-}
+data class RedditPost(
+        val url: String,
+        val name: String,
+        val thumbnail: String,
+        val permalink: String,
+)

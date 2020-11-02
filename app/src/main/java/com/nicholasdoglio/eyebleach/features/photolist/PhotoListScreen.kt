@@ -22,17 +22,14 @@
  *   SOFTWARE.
  */
 
-import org.gradle.plugin.use.PluginDependenciesSpec
-import org.gradle.plugin.use.PluginDependencySpec
+package com.nicholasdoglio.eyebleach.features.photolist
 
-val PluginDependenciesSpec.detekt: PluginDependencySpec
-    inline get() =
-        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import com.nicholasdoglio.eyebleach.ui.PhotoList
 
-val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
-    inline get() =
-        id("com.github.ben-manes.versions").version(Versions.benManesVersions)
 
-val PluginDependenciesSpec.ktlint: PluginDependencySpec
-    inline get() =
-        id("org.jlleitschuh.gradle.ktlint").version(Versions.ktlintGradle)
+@Composable
+fun PhotoListScreen(viewModel: ListViewModel) {
+    PhotoList(data = viewModel.state)
+}

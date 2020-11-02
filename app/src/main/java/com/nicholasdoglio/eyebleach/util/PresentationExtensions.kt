@@ -53,25 +53,3 @@ fun Context.shareUrl(url: String) {
         )
     )
 }
-
-val RecyclerView.calculateNumOfColumns: Int
-    get() {
-        val displayMetrics = context.resources.displayMetrics
-
-        val density = displayMetrics.density
-
-        val dpWidth = displayMetrics.widthPixels / density
-
-        val imageSize = context.resources.getDimension(R.dimen.grid_item_size) / density
-
-        return (dpWidth / imageSize).toInt()
-    }
-
-fun Fragment.setStatusBarColor(@ColorInt color: Int = Color.BLACK) {
-    ObjectAnimator.ofArgb(
-        requireActivity().window,
-        "statusBarColor",
-        requireActivity().window.statusBarColor,
-        color
-    ).start()
-}

@@ -22,17 +22,38 @@
  *   SOFTWARE.
  */
 
-import org.gradle.plugin.use.PluginDependenciesSpec
-import org.gradle.plugin.use.PluginDependencySpec
+package com.nicholasdoglio.eyebleach.features.photolist
 
-val PluginDependenciesSpec.detekt: PluginDependencySpec
-    inline get() =
-        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+import androidx.lifecycle.ViewModel
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.nicholasdoglio.eyebleach.data.RedditPagingSource
+import com.nicholasdoglio.eyebleach.data.RedditPost
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
-    inline get() =
-        id("com.github.ben-manes.versions").version(Versions.benManesVersions)
+class PhotoListViewModel @Inject constructor(
+        private val pagingSource: RedditPagingSource
+) : ViewModel(), ListViewModel {
+    private val pager = Pager(
+            config = PagingConfig(pageSize = 8),
+            pagingSourceFactory = { pagingSource }
+    )
 
-val PluginDependenciesSpec.ktlint: PluginDependencySpec
-    inline get() =
-        id("org.jlleitschuh.gradle.ktlint").version(Versions.ktlintGradle)
+    override val state: Flow<PagingData<RedditPost>>
+        get() = pager.flow
+
+    override fun input(intent: PhotoListIntent) {
+
+    }
+}
+
+
+interface ListViewModel {
+
+    val state: Flow<PagingData<RedditPost>>
+
+    fun input(intent: PhotoListIntent)
+
+}

@@ -28,13 +28,9 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
     id("io.gitlab.arturbosch.detekt")
-    id("com.mikepenz.aboutlibraries.plugin")
-    id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version Versions.ktlintGradle
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 kapt {
@@ -99,52 +95,42 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
+
+    composeOptions {
+        kotlinCompilerVersion = Versions.kotlin
+        kotlinCompilerExtensionVersion  = Versions.compose
+    }
+
 }
 
 dependencies {
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_android)
+    implementation(Libs.Coroutines.core)
+    implementation(Libs.Coroutines.android)
+
+    implementation("androidx.compose.ui:ui:1.0.0-alpha06")
+    implementation("androidx.compose.animation:animation:1.0.0-alpha06")
+    implementation("androidx.compose.material:material:1.0.0-alpha06")
+    implementation("androidx.compose.foundation:foundation:1.0.0-alpha06")
+    implementation("androidx.compose.compiler:compiler:1.0.0-alpha06")
+    implementation("androidx.compose.runtime:runtime:1.0.0-alpha06")
+    implementation("androidx.ui:ui-tooling:1.0.0-alpha06")
+    implementation("androidx.ui:ui-test:1.0.0-alpha06")
+
+//    implementation("dev.chrisbanes.accompanist:accompanist-insets:0.3.2")
+    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.3.2")
 
     implementation(Libs.appcompat)
-    implementation(Libs.activity_ktx)
-    implementation(Libs.recyclerview)
-    implementation(Libs.constraintlayout)
-    implementation(Libs.swiperefreshlayout)
-
     implementation(Libs.material)
 
-    implementation(Libs.core_ktx)
-    implementation(Libs.fragment_ktx)
-    implementation(Libs.navigation_ui_ktx)
-    implementation(Libs.navigation_fragment_ktx)
-
-    implementation(Libs.paging_runtime_ktx)
-
-    implementation(Libs.lifecycle_viewmodel_ktx)
-    implementation(Libs.lifecycle_runtime_ktx)
-    implementation(Libs.lifecycle_livedata_ktx)
-    implementation(Libs.lifecycle_common_java8)
-    implementation(Libs.hilt_viewmodel)
-    kapt(Libs.hilt_compiler)
-
-    // TODO look into more FlowBindings?
-    implementation(Libs.flow_binding_android)
-    implementation(Libs.flow_binding_material)
-    implementation(Libs.flow_binding_swipe)
-
-    implementation(Libs.coil)
-    implementation(Libs.coil_base)
+    implementation("androidx.paging:paging-compose:1.0.0-alpha01")
 
     implementation(Libs.retrofit)
     implementation(Libs.retrofitMoshiConverter)
 
     implementation(Libs.okhttp)
     implementation(Libs.okhttpLogging)
-
-    implementation(Libs.about)
-    implementation(Libs.aboutCore)
 
     implementation(Libs.moshi)
     kapt(Libs.moshiCodeGen)
@@ -158,6 +144,4 @@ dependencies {
 
     testImplementation(Libs.junit)
     testImplementation(Libs.truth)
-    testImplementation(Libs.core_testing)
-    testImplementation(Libs.fragment_testing)
 }

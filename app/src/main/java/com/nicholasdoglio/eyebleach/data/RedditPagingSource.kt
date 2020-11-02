@@ -24,47 +24,41 @@
 
 package com.nicholasdoglio.eyebleach.data
 
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
+import com.nicholasdoglio.eyebleach.data.util.toRedditPost
+import com.nicholasdoglio.eyebleach.data.util.toRedditPosts
+import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
+import javax.inject.Inject
 
-@ExperimentalPagingApi
-class RedditPagingSource(
-    private val postService: PostService
+class RedditPagingSource @Inject constructor(
+        private val dispatcherProvider: DispatcherProvider,
+        private val postService: PostService
 ) : PagingSource<String, RedditPost>() {
 
-    @Suppress("ReturnCount")
     override suspend fun load(params: LoadParams<String>): LoadResult<String, RedditPost> {
-        Timber.i("LOAD REQUEST KEY ${params.key}")
+        Timber.i("Load request key: ${params.key}")
 
         try {
             val after = params.key
 
             val response = postService.posts(after = after ?: "")
 
-            val data = response.data.children.asSequence()
-                .filter { !it.data.over18 }
-                .filter { it.data.url.contains(".jpg") || it.data.url.contains(".png") }
-                .map { it.data.toRedditPost }
-                .toList()
+            val data = withContext(dispatcherProvider.background) { response.toRedditPosts() }
 
-            Timber.i("FETCH SIZE ${data.size}")
+            Timber.i("Fetch size: ${data.size}")
 
-            data.forEach { Timber.i("POST $it") }
-
-            if (data.isEmpty()) {
-                return LoadResult.Error(NoDataException())
-            }
+            if (data.isEmpty()) return LoadResult.Error(NoDataException())
 
             return LoadResult.Page(
-                data = data,
-                prevKey = after,
-                nextKey = data.last().name
+                    data = data,
+                    prevKey = after,
+                    nextKey = data.last().name
             )
-        } catch (e: IOException) {
-            return LoadResult.Error(e)
+
         } catch (e: HttpException) {
             return LoadResult.Error(e)
         }

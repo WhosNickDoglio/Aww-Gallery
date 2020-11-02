@@ -22,17 +22,25 @@
  *   SOFTWARE.
  */
 
-import org.gradle.plugin.use.PluginDependenciesSpec
-import org.gradle.plugin.use.PluginDependencySpec
+package com.nicholasdoglio.eyebleach.data
 
-val PluginDependenciesSpec.detekt: PluginDependencySpec
-    inline get() =
-        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
-    inline get() =
-        id("com.github.ben-manes.versions").version(Versions.benManesVersions)
 
-val PluginDependenciesSpec.ktlint: PluginDependencySpec
-    inline get() =
-        id("org.jlleitschuh.gradle.ktlint").version(Versions.ktlintGradle)
+@JsonClass(generateAdapter = true)
+data class ListingResponse(val data: Data)
+
+@JsonClass(generateAdapter = true)
+data class Data(val children: List<Children>)
+
+@JsonClass(generateAdapter = true)
+data class Children(val data: ChildData)
+
+@JsonClass(generateAdapter = true)
+data class ChildData(
+        val name: String,
+        val permalink: String,
+        val thumbnail: String,
+        val url: String,
+        @Json(name = "over_18") val over18: Boolean)

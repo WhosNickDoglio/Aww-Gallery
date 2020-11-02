@@ -22,17 +22,12 @@
  *   SOFTWARE.
  */
 
-import org.gradle.plugin.use.PluginDependenciesSpec
-import org.gradle.plugin.use.PluginDependencySpec
+package com.nicholasdoglio.eyebleach.di
 
-val PluginDependenciesSpec.detekt: PluginDependencySpec
-    inline get() =
-        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+import androidx.lifecycle.ViewModel
+import dagger.MapKey
+import kotlin.reflect.KClass
 
-val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
-    inline get() =
-        id("com.github.ben-manes.versions").version(Versions.benManesVersions)
-
-val PluginDependenciesSpec.ktlint: PluginDependencySpec
-    inline get() =
-        id("org.jlleitschuh.gradle.ktlint").version(Versions.ktlintGradle)
+@Target(AnnotationTarget.FUNCTION)
+@MapKey
+internal annotation class ViewModelKey(val value: KClass<out ViewModel>)

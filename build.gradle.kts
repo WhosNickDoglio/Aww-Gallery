@@ -32,16 +32,16 @@ buildscript {
     dependencies {
         classpath(Libs.com_android_tools_build_gradle)
         classpath(Libs.kotlin_gradle_plugin)
-        classpath(Libs.navigation_safe_args_gradle_plugin)
-        classpath(Libs.aboutPlugin)
         classpath(Libs.play_publisher)
-        classpath(Libs.hilt_plugin)
     }
 }
 
 plugins {
     detekt
     benManesVersions
+    ktlint
+    id("com.autonomousapps.dependency-analysis") version "0.64.0"
+    id("com.osacky.doctor") version "0.6.3"
 }
 
 // TODO dependency matching
@@ -53,9 +53,12 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions.freeCompilerArgs = listOf(
-            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
-            "-Xjvm-default=all"
+//                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+//                "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
+                "-Xjvm-default=all",
+                "-Xallow-jvm-ir-dependencies",
+                "-Xopt-in=kotlin.Experimental",
+                "-Xskip-prerelease-check"
         )
     }
 }

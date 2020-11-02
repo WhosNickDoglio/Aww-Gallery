@@ -22,17 +22,22 @@
  *   SOFTWARE.
  */
 
-import org.gradle.plugin.use.PluginDependenciesSpec
-import org.gradle.plugin.use.PluginDependencySpec
+package com.nicholasdoglio.eyebleach.di
 
-val PluginDependenciesSpec.detekt: PluginDependencySpec
-    inline get() =
-        id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+import android.content.Context
+import com.nicholasdoglio.eyebleach.MainActivity
+import dagger.Component
+import javax.inject.Singleton
 
-val PluginDependenciesSpec.benManesVersions: PluginDependencySpec
-    inline get() =
-        id("com.github.ben-manes.versions").version(Versions.benManesVersions)
+@Singleton
+@Component(modules = [BindingModule::class, NetworkModule::class, ViewModelBindingModule::class])
+interface AppComponent {
 
-val PluginDependenciesSpec.ktlint: PluginDependencySpec
-    inline get() =
-        id("org.jlleitschuh.gradle.ktlint").version(Versions.ktlintGradle)
+    fun inject(target: MainActivity)
+}
+
+interface AppComponentProvider {
+    val component: AppComponent
+}
+
+val Context.injector get() = (applicationContext as AppComponentProvider).component

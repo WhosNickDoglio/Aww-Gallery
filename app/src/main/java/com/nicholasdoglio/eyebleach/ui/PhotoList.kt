@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2019. Nicholas Doglio
+ *   Copyright (c) 2020. Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,35 +22,27 @@
  *   SOFTWARE.
  */
 
-package com.nicholasdoglio.eyebleach.ui.worker
+package com.nicholasdoglio.eyebleach.ui
 
-import android.content.Context
-import androidx.work.CoroutineWorker
-import androidx.work.ListenableWorker
-import androidx.work.WorkerParameters
-import com.nicholasdoglio.eyebleach.data.local.LocalSource
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
-import timber.log.Timber
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.lazy.ExperimentalLazyDsl
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
+import com.nicholasdoglio.eyebleach.data.RedditPost
+import kotlinx.coroutines.flow.Flow
 
-class ClearDataWorker @AssistedInject constructor(
-    @Assisted private val context: Context,
-    @Assisted private val workerParameters: WorkerParameters,
-    private val localSource: LocalSource
-) : CoroutineWorker(context, workerParameters) {
-
-    override suspend fun doWork(): Result = try {
-        localSource.deleteAllPosts()
-        Result.success()
-    } catch (e: Exception) {
-        Timber.e(e)
-        Result.failure()
+@OptIn(ExperimentalLazyDsl::class)
+@Composable
+fun PhotoList(data: Flow<PagingData<RedditPost>>) {
+    val lazyPagingItems: LazyPagingItems<RedditPost> = data.collectAsLazyPagingItems()
+    // TODO no native grid lazy list yet, look into making my own
+    LazyColumn {
+        items(lazyPagingItems) { post ->
+            post?.let { PostThumbnail(post) }
+        }
     }
-
-    @AssistedInject.Factory
-    interface Factory : ChildWorkerFactory
-}
-
-interface ChildWorkerFactory {
-    fun create(context: Context, workerParameters: WorkerParameters): ListenableWorker
 }

@@ -24,37 +24,34 @@
 
 package com.nicholasdoglio.eyebleach.di
 
-import android.app.Application
-import coil.util.CoilUtils
 import com.nicholasdoglio.eyebleach.data.PostService
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
     private const val BASE_URL = "https://www.reddit.com"
 
     @Singleton
     @Provides
-    fun okhttp(app: Application): OkHttpClient =
-        OkHttpClient.Builder()
-            .cache(CoilUtils.createDefaultCache(app))
+    fun okhttp(): OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
 
     @Singleton
     @Provides
     fun service(okHttpClient: OkHttpClient): PostService = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .client(okHttpClient)
-        .build()
-        .create()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create()
 }

@@ -28,20 +28,20 @@ import android.app.Application
 import android.os.StrictMode
 import coil.Coil
 import coil.ImageLoader
-import dagger.hilt.android.HiltAndroidApp
+import com.nicholasdoglio.eyebleach.di.AppComponent
+import com.nicholasdoglio.eyebleach.di.AppComponentProvider
+import com.nicholasdoglio.eyebleach.di.DaggerAppComponent
 import timber.log.Timber
-import javax.inject.Inject
 
-@HiltAndroidApp
-class AwwGalleryApp : Application() {
+class AwwGalleryApp : Application(), AppComponentProvider {
 
-    @Inject
-    lateinit var imageLoader: ImageLoader
+    override val component: AppComponent by lazy {
+        DaggerAppComponent.create()
+    }
 
     override fun onCreate() {
         super.onCreate()
         initDebugTools()
-        Coil.setImageLoader(imageLoader)
     }
 
     private fun initDebugTools() {
@@ -49,17 +49,17 @@ class AwwGalleryApp : Application() {
             Timber.plant(Timber.DebugTree())
 
             StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
+                    StrictMode.ThreadPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog()
+                            .build()
             )
 
             StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
+                    StrictMode.VmPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog()
+                            .build()
             )
         }
     }

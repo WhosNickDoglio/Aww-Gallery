@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- *   Copyright (c) 2020 Nicholas Doglio
+ *   Copyright (c) 2020. Nicholas Doglio
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -24,32 +24,21 @@
 
 package com.nicholasdoglio.eyebleach.di
 
-import android.app.Application
-import coil.ImageLoader
-import com.nicholasdoglio.eyebleach.R
-import com.nicholasdoglio.eyebleach.util.DispatcherProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.nicholasdoglio.eyebleach.features.photolist.PhotoListViewModel
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import javax.inject.Singleton
+import dagger.multibindings.IntoMap
 
-@InstallIn(SingletonComponent::class)
 @Module
-object CoilModule {
+interface ViewModelBindingModule {
 
-    @Singleton
-    @Provides
-    fun imageLoader(
-        app: Application,
-        dispatcherProvider: DispatcherProvider,
-        okHttpClient: OkHttpClient
-    ): ImageLoader = ImageLoader.Builder(app)
-        .crossfade(true)
-        .error(R.drawable.cat_error)
-        .dispatcher(dispatcherProvider.background)
-        .launchInterceptorChainOnMainThread(false)
-        .okHttpClient(okHttpClient)
-        .build()
+    @Binds
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PhotoListViewModel::class)
+    fun bindViewModel(viewModel: PhotoListViewModel): ViewModel
 }
